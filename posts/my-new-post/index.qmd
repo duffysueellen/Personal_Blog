@@ -1,7 +1,7 @@
 ---
-title: "My New Post"
+title: "Future Post"
 author: "Sue-Ellen Duffy"
-date: "2024-02-10"
+date: "2024-02-20"
 categories: [news, code, analysis]
 image: "image.jpg"
 ---
