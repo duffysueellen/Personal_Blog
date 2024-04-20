@@ -1126,16 +1126,12 @@ Network edgelist matrix:
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a graph from the edgelist</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(encounters_el, </span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>map_g <span class="ot">&lt;-</span> <span class="fu">bipartite.mapping</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `bipartite.mapping()` was deprecated in igraph 2.0.0.
-ℹ Please use `bipartite_mapping()` instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>map_g <span class="ot">&lt;-</span> <span class="fu">bipartite_mapping</span>(g)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Akiko835 Larkin917   Anneliese170 Berge125    Annice210 McClure239 
                   FALSE                   FALSE                   FALSE 
@@ -1144,41 +1140,59 @@ Network edgelist matrix:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign overall Graph Color Scheme for Consistency</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign vertex attributes</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g)<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"PATIENT"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PATIENT)), </span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">rep</span>(<span class="st">"PROVIDER"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PROVIDER)))</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(attribute_list<span class="sc">$</span>GENDER <span class="sc">==</span> <span class="st">"F"</span>, <span class="st">"green"</span>, <span class="st">"yellow"</span>)</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g)<span class="sc">$</span>type <span class="sc">==</span> <span class="st">"PATIENT"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the range of counts in the graph</span></span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>count_range <span class="ot">&lt;-</span> <span class="fu">range</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT)</span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the edge widths based on the counts</span></span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="dv">1</span>,</span>
-<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">50</span>,</span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">3</span> <span class="sc">*</span> (<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">-</span> count_range[<span class="dv">1</span>]) <span class="sc">/</span> (count_range[<span class="dv">2</span>] <span class="sc">-</span> count_range[<span class="dv">1</span>])))</span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> edge_widths <span class="sc">*</span><span class="dv">300</span></span>
-<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>edge_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="st">"yellow"</span>, </span>
-<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign overall Graph Color Scheme for Consistency</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign vertex attributes</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g)<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"PATIENT"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PATIENT)), </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">rep</span>(<span class="st">"PROVIDER"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PROVIDER)))</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(attribute_list<span class="sc">$</span>GENDER <span class="sc">==</span> <span class="st">"F"</span>, <span class="st">"green"</span>, <span class="st">"yellow"</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g)<span class="sc">$</span>type <span class="sc">==</span> <span class="st">"PATIENT"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the range of counts in the graph</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>count_range <span class="ot">&lt;-</span> <span class="fu">range</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT)</span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the edge widths based on the counts</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="dv">1</span>,</span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">50</span>,</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">3</span> <span class="sc">*</span> (<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">-</span> count_range[<span class="dv">1</span>]) <span class="sc">/</span> (count_range[<span class="dv">2</span>] <span class="sc">-</span> count_range[<span class="dv">1</span>])))</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> edge_widths <span class="sc">*</span><span class="dv">300</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>edge_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="st">"yellow"</span>, </span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g, </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">2</span>, </span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> edge_widths,</span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> edge_colors,</span>
-<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g, </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">2</span>, </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> edge_widths,</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> edge_colors,</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex colors</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"yellow"</span>),   <span class="co"># Fill colors corresponding to vertex colors</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Gender"</span>)              <span class="co"># Legend title</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex shapes</span></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Patient"</span>, <span class="st">"Provider"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),                      <span class="co"># Point shapes corresponding to vertex shapes</span></span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Who"</span>)                     <span class="co"># Legend title</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,</span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"0-5"</span>, <span class="st">"6-20"</span>, <span class="st">"21+"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>),  <span class="co"># Line colors corresponding to edge colors</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,                            <span class="co"># Line width</span></span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Edges: # of Visits"</span>)              <span class="co"># Legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
