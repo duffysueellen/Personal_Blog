@@ -162,6 +162,9 @@ ggplot(data = encounters %>%
 
 I am noticing a lot of kidney related diseases in this dataset
 
+## Combine Patient, Provider, and Encounter Data 
+I am taking this step here so that I have a master dataset (encounters_attributes) and so that I can create an edgelist more easily.
+
 ```{r}
 # Perform a left join to merge encounters with provider_attributes based on PROVIDER
 encounters_cleaning <- left_join(encounters, providers, by = "PROVIDER")
