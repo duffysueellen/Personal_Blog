@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sue-Ellen Duffy">
-<meta name="dcterms.date" content="2024-04-17">
+<meta name="dcterms.date" content="2024-04-20">
 
 <title>Social_Networks_Blog_Space - The Patient Provider Relationship, A Synthetic Social Network</title>
 <style>
@@ -143,6 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">The Patient Provider Relationship, A Synthetic Social Network</h1>
+            <p class="subtitle lead">Data Cleaning, Exploration, and Network Analysis</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">news</div>
               </div>
@@ -162,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 17, 2024</p>
+        <p class="date">April 20, 2024</p>
       </div>
     </div>
     
@@ -180,7 +181,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>Tasks - rename the attribute dimensions for - Marital Status, Gender - fix the age code (need to subtract from DEATHDATE if one exists first) - age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER - add titles to graphs - blocking - maybe different graph for income</p>
 <p>Data for this project were taken from Synthetic Mass, which creates Synthetic patient data from Synthea.</p>
 <p><img src="SyntheticMassLogo.png" class="img-fluid"></p>
 <p>While a whole host of datasets are available within each download, I will focus this project on three datasets: patients.csv, providers.csv, and encounters.csv.</p>
@@ -491,7 +491,7 @@ dttm (2): START, STOP
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(encounters, <span class="fu">aes</span>(ENCOUNTERCLASS)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(encounters, <span class="fu">aes</span>(ENCOUNTERCLASS)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Type of Visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -500,7 +500,7 @@ dttm (2): START, STOP
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> DESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Visit Description"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_1_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -509,7 +509,7 @@ dttm (2): START, STOP
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> REASONDESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Reason Patient Visited Provider"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_1_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
 </div>
@@ -1189,7 +1189,7 @@ Network edgelist matrix:
 <span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
 <span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,</span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"0-5"</span>, <span class="st">"6-20"</span>, <span class="st">"21+"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"1-4"</span>, <span class="st">"5-19"</span>, <span class="st">"20+"</span>),  <span class="co"># You can customize these labels</span></span>
 <span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>),  <span class="co"># Line colors corresponding to edge colors</span></span>
 <span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,                            <span class="co"># Line width</span></span>
 <span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Edges: # of Visits"</span>)              <span class="co"># Legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1197,6 +1197,14 @@ Network edgelist matrix:
 <p><img src="post_1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Next Steps:</p>
+<ul>
+<li><p>rename the attribute dimensions for - Marital Status, Gender</p></li>
+<li><p>fix the age code (need to subtract from DEATHDATE if one exists first)</p></li>
+<li><p>age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER</p></li>
+<li><p>blocking</p></li>
+<li><p>maybe different graph for income</p></li>
+</ul>
 
 
 </section>

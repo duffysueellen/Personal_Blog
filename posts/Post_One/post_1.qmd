@@ -1,17 +1,11 @@
 ---
 title: "The Patient Provider Relationship, A Synthetic Social Network"
+subtitle: "Data Cleaning, Exploration, and Network Analysis"
 author: "Sue-Ellen Duffy"
-date: "2024-04-17"
+date: "2024-04-20"
 categories: [news]
 ---
 
-Tasks 
-- rename the attribute dimensions for - Marital Status, Gender
-- fix the age code (need to subtract from DEATHDATE if one exists first)
-- age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER
-- add titles to graphs
-- blocking
-- maybe different graph for income
 
 
 
@@ -144,19 +138,24 @@ head(encounters)
 ```
 
 ```{r}
-ggplot(encounters, aes(ENCOUNTERCLASS)) + geom_bar() + coord_flip()
+ggplot(encounters, aes(ENCOUNTERCLASS)) + geom_bar() + coord_flip()+ labs(title = "Type of Visit")
 ggplot(data = encounters %>% 
          count(DESCRIPTION) %>% 
          filter(n > 50),  # Filter for counts higher than 10
        aes(x = DESCRIPTION, y = n)) +
   geom_bar(stat = "identity") +
-  coord_flip()
+  coord_flip() + labs(title = paste("Visit Description", "\n*filtered to show >50 visits"))
+
+
+
+
+
 ggplot(data = encounters %>% 
          count(REASONDESCRIPTION) %>% 
          filter(n > 50),  # Filter for counts higher than 10
        aes(x = REASONDESCRIPTION, y = n)) +
   geom_bar(stat = "identity") +
-  coord_flip()
+  coord_flip() + labs(title = paste("Reason Patient Visited Provider", "\n*filtered to show >50 visits"))
 ```
 
 I am noticing a lot of kidney related diseases in this dataset
@@ -284,8 +283,21 @@ legend("topright",
 
 # Define legend for edge colors
 legend("topleft",
-       legend = c("0-5", "6-20", "21+"),  # You can customize these labels
+       legend = c("1-4", "5-19", "20+"),  # You can customize these labels
        col = c("yellow", "blue", "red"),  # Line colors corresponding to edge colors
        lwd = 2,                            # Line width
        title = "Edges: # of Visits")              # Legend title
 ```
+
+
+Next Steps: 
+
+- rename the attribute dimensions for - Marital Status, Gender
+
+- fix the age code (need to subtract from DEATHDATE if one exists first)
+
+- age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER
+
+- blocking
+
+- maybe different graph for income
