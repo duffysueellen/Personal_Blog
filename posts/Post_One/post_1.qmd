@@ -1,0 +1,274 @@
+---
+title: "The Patient Provider Relationship, A Synthetic Social Network"
+author: "Sue-Ellen Duffy"
+date: "2024-04-17"
+categories: [news]
+---
+
+Tasks 
+- rename the attribute dimensions for - Marital Status, Gender
+- fix the age code (need to subtract from DEATHDATE if one exists first)
+- age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER
+- add titles to graphs
+- add legend to network graph
+- blocking
+- maybe different graph for income
+
+
+
+Data for this project were taken from Synthetic Mass, which creates Synthetic patient data from Synthea.
+
+![](SyntheticMassLogo.png)
+
+While a whole host of datasets are available within each download, I will focus this project on three datasets: patients.csv, providers.csv, and encounters.csv.
+
+-   Patients and Providers will be the actors analyzed. The patient and provider datasets contain information on the person level details, with names and some demographic information, with more detail available for patients than providers.
+
+-   Encounters will be the relationships analyzed. Encounters are appointments, visits, and clinical encounters and include notes on the visit including the date, reason, and cost breakdown.
+
+    -   Reminder none of this data is real, it is synthetic, so to personally identifiable information I share is not data on real people and cannot be used to identify real people.
+
+
+This post will primarily focus on data cleaning and data exploration with some exploration into social network analysis through transforming the data into an incidence matrix and plotting some attributes. 
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(statnet)
+library(ggplot2)
+library(patchwork)
+```
+
+# Read in Patient, Provider, and Encounter Data
+
+## PATIENT DATA
+
+The following table is the data available in the patient dataset.
+
+```{r}
+patients <- read_csv("synthea_sample_data_csv_latest/patients.csv") %>%
+    rename(PATIENT = Id) %>%
+  unite(NAME, FIRST, LAST, sep = " ")
+head(patients)
+```
+
+```{r}
+str(patients)
+summary(patients)
+```
+
+I am only keeping the demographic data below (gender, race, marital status, income, and age) which will be used as an attribute for each patient.
+
+```{r}
+#Create AGE from BIRTHDATE
+patients <- patients %>%
+  mutate(
+    BIRTHDATE = as.Date(BIRTHDATE),  # Ensure 'dob' is in Date format
+    AGE = interval(BIRTHDATE, today()) / years(1)  # Calculate age in years
+  ) %>%
+  mutate(
+    AGE = floor(AGE)  # complete years only, removing decimal
+  )
+# Only keep patient name and demographics. This will be utilized as the attribute data for analysis.
+pat_attr <- patients%>% 
+  select(NAME, GENDER, RACE, MARITAL, INCOME, AGE)
+
+head(pat_attr)
+```
+
+```{r}
+pat_race <- ggplot(pat_attr,aes(RACE)) + geom_bar()
+pat_gender <- ggplot(pat_attr,aes(GENDER)) + geom_bar()
+
+pat_race + pat_gender + plot_annotation(title = "Patient Race and Gender Breakdown")
+
+ggplot(pat_attr,aes(MARITAL)) + geom_bar() + labs(title = "Patient Marital Status")
+
+pat_income <- ggplot(pat_attr, aes(x = 1, y = INCOME)) +
+    geom_jitter(width = 0.2) +
+    labs(x = NULL, y = "Income") +
+    theme_minimal() + labs(title = "Patient Income")
+
+summary(pat_attr$INCOME)
+
+pat_age <- ggplot(pat_attr,aes(AGE)) + geom_bar()
+
+```
+
+Key for marital status: M (married), S (single), D (divorced), W (widowed) (There is missing data here)
+
+
+## PROVIDER DATA
+
+The following table is the data available in the provider dataset.
+
+```{r}
+providers <- read_csv("synthea_sample_data_csv_latest/providers.csv") %>%
+    rename(PROVIDER = Id)
+head(providers)
+```
+
+I am only keeping the demographic data below (gender) which will be used as an attribute for each provider.
+
+```{r}
+# Only keep provider name and demographics. This will be utilized as the attribute data for analysis. The only demographic data available for Providers is gender.
+pro_attr <- providers %>%
+  select(NAME, GENDER)
+head(pro_attr)
+```
+
+```{r}
+ggplot(pro_attr, aes(GENDER)) +geom_bar() + labs(title = "Provider Gender Breakdown")
+```
+
+## PATIENT AND PROVIDER
+
+```{r}
+#combine pro and pat attr
+pat_attr$type <- "PATIENT"
+pro_attr$type <- "PROVIDER"
+both_attr <- bind_rows(pat_attr, pro_attr)
+head(both_attr)
+```
+
+## ENCOUNTER DATA
+
+```{r}
+encounters <- read_csv("synthea_sample_data_csv_latest/encounters.csv")
+head(encounters)
+```
+
+```{r}
+ggplot(encounters, aes(ENCOUNTERCLASS)) + geom_bar() + coord_flip()
+ggplot(data = encounters %>% 
+         count(DESCRIPTION) %>% 
+         filter(n > 50),  # Filter for counts higher than 10
+       aes(x = DESCRIPTION, y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+ggplot(data = encounters %>% 
+         count(REASONDESCRIPTION) %>% 
+         filter(n > 50),  # Filter for counts higher than 10
+       aes(x = REASONDESCRIPTION, y = n)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+```
+
+I am noticing a lot of kidney related diseases in this dataset
+
+```{r}
+# Perform a left join to merge encounters with provider_attributes based on PROVIDER
+encounters_cleaning <- left_join(encounters, providers, by = "PROVIDER")
+# Replace the PROVIDER column with the corresponding names from the NAME column
+encounters_cleaning$PROVIDER <- encounters_cleaning$NAME
+# Remove the NAME column if no longer needed
+encounters_cleaning <- encounters_cleaning %>%
+  select(-NAME)
+#Repeat for Provider
+encounters_cleaning <- left_join(encounters_cleaning, patients, by = "PATIENT")
+encounters_cleaning$PATIENT <- encounters_cleaning$NAME
+encounters_cleaning <- encounters_cleaning %>%
+  select(-NAME) 
+#Clearly identify the Encounter ID
+encounters_cleaning <- encounters_cleaning %>%
+  rename(ENCOUNTER_ID = Id)
+
+encounter_attributes <- encounters_cleaning %>%
+  select(ENCOUNTER_ID, PATIENT, PROVIDER, GENDER.x, GENDER.y, RACE, MARITAL, ETHNICITY, INCOME)
+
+# View the updated dataframe
+head(encounter_attributes)
+```
+
+## EDGELIST
+
+```{r}
+# Create Edgelist
+encounters_el <- encounter_attributes %>%
+  group_by(PATIENT, PROVIDER) %>%
+  summarize(COUNT = n()) 
+head(encounters_el)
+dim(encounters_el)
+
+encounters_el2 <- encounter_attributes %>%
+  group_by(PATIENT, PROVIDER) 
+```
+
+## COMBINED ATTRIBUTE LIST
+
+```{r}
+#create combined attribute list
+attribute_list <- do.call(list, both_attr)
+```
+
+## NETWORK
+
+```{r}
+# create bipartite network with attributes
+encounters.st.3 <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+summary(encounters.st.3)
+```
+
+# Graph Section
+
+```{r}
+incidence_graph <- graph_from_biadjacency_matrix(encounters.st.3)
+```
+
+```{r}
+# Create a graph from the edgelist
+g <- graph_from_data_frame(encounters_el, 
+                                        directed = FALSE)
+map_g <- bipartite.mapping(g)
+head(map_g$res)
+head(map_g$type)
+```
+
+```{r}
+# Assign overall Graph Color Scheme for Consistency
+
+# Assign vertex attributes
+V(g)$type <- c(rep("PATIENT", n_distinct(encounters_el$PATIENT)), 
+                             rep("PROVIDER", n_distinct(encounters_el$PROVIDER)))
+
+vertex_colors <- ifelse(attribute_list$GENDER == "F", "green", "yellow")
+
+vertex_shape <- ifelse(V(g)$type == "PATIENT", "circle", "square")
+# Find the range of counts in the graph
+count_range <- range(E(g)$COUNT)
+
+# Define the edge widths based on the counts
+edge_widths <- ifelse(E(g)$COUNT < 5, 1,
+                      ifelse(E(g)$COUNT < 20, 50,
+                             3 * (E(g)$COUNT - count_range[1]) / (count_range[2] - count_range[1])))
+edge_widths <- edge_widths *300
+
+edge_widths <- ifelse(E(g)$COUNT < 5, 0.5, ifelse(E(g)$COUNT < 20, 1, 2))
+edge_colors <- ifelse(E(g)$COUNT < 5, "yellow", 
+                      ifelse(E(g)$COUNT <= 20, "blue", "red"))
+```
+
+```{r}
+plot(g, 
+     layout = layout.fruchterman.reingold, 
+     vertex.label.dist = 2, 
+     vertex.size = 2, 
+     vertex.color = vertex_colors,
+     vertex.shape = vertex_shape,
+     edge.label = NA,
+     vertex.label = NA,
+     vertex.label.cex = 0.2, 
+     edge.width = edge_widths,
+     edge.color = edge_colors,
+     main = "SN Graph")
+```
