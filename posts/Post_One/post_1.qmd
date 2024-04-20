@@ -198,9 +198,6 @@ encounters_el <- encounter_attributes %>%
   summarize(COUNT = n()) 
 head(encounters_el)
 dim(encounters_el)
-
-encounters_el2 <- encounter_attributes %>%
-  group_by(PATIENT, PROVIDER) 
 ```
 
 ## COMBINED ATTRIBUTE LIST
