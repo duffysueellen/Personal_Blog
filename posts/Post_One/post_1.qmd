@@ -10,7 +10,6 @@ Tasks
 - fix the age code (need to subtract from DEATHDATE if one exists first)
 - age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER
 - add titles to graphs
-- add legend to network graph
 - blocking
 - maybe different graph for income
 
