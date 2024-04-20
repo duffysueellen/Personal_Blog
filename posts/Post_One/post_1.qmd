@@ -289,15 +289,11 @@ legend("topleft",
        title = "Edges: # of Visits")              # Legend title
 ```
 
+This graph shows a myriad of patient, provider relationships. One provider seems to be at the center of the graph, having the most edges reaching out to different patients. This central provider sees many patients only 1-4 times (indicated in yellow).
 
-Next Steps: 
+We see many providers close to the center that also have blue and red edges, indicating that they see 5-19 patients (blue) or more than 20 patients (red).
 
-- rename the attribute dimensions for - Marital Status, Gender
+There are also many patients and providers that are not linked into the larger group, with pairings of one patient and one provider, one patient and two providers, one patient and three providers, two patients and three providers, two patients and four providers, and so on.
 
-- fix the age code (need to subtract from DEATHDATE if one exists first)
 
-- age might be a better attribute to just add to the encounter data and create a column for AGE_AT_TIME_OF_ENCOUNTER
-
-- blocking
-
-- maybe different graph for income
+My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.
