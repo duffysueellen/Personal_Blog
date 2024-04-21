@@ -33,6 +33,7 @@ encounters_el  <- read_csv("post_one_data/encounters_el.csv",
     col_types = cols(...1 = col_skip()))
 encounters_st_3 <- read_csv("post_one_data/encounters.st.3.csv", 
     col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post_one_data/attribute_list.csv")
 ```
 # Graph Section
 

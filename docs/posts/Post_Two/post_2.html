@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sue-Ellen Duffy">
+<meta name="dcterms.date" content="2024-04-21">
+
+<title>Social_Networks_Blog_Space - The Patient Provider Relationship, A Synthetic Social Network</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Social_Networks_Blog_Space</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">The Patient Provider Relationship, A Synthetic Social Network</h1>
+            <p class="subtitle lead">Network Analysis</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Sue-Ellen Duffy </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 21, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sna)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read in Data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/pat_attr.csv"</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pro_attr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/pro_attr.csv"</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data//encounters_cleaning.csv"</span>, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/encounter_attributes.csv"</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>encounters_el  <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/encounters_el.csv"</span>, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>encounters_st_3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/encounters.st.3.csv"</span>, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"post_one_data/attribute_list.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="graph-section" class="level1">
+<h1>Graph Section</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combine pro and pat attr</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PATIENT"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PROVIDER"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  NAME                       GENDER RACE  MARITAL INCOME   AGE type   
+  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
+1 Avril120 Olson653          F      white &lt;NA&gt;    482269    36 PATIENT
+2 Norma469 Langosh790        F      white &lt;NA&gt;    190464    25 PATIENT
+3 Peggie783 Eichmann909      F      white &lt;NA&gt;     78997    21 PATIENT
+4 Ashlie138 Williamson769    F      white M         6472    37 PATIENT
+5 Christiane220 Ankunding277 F      white &lt;NA&gt;    141475    24 PATIENT
+6 Dione665 O'Kon634          F      white M       482269    36 PATIENT</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create bipartite network with attributes</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>encounters.st<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">network</span>(encounters_el,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">bipartite =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">matrix.type =</span> <span class="st">"edgelist"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertex.attr =</span> attribute_list)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">network.vertex.names</span>( encounters.st<span class="fl">.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Akiko835 Larkin917"      "Anneliese170 Berge125"  
+[3] "Annice210 McClure239"    "Anthony633 Renner328"   
+[5] "Arleen939 Kling921"      "Ashlie138 Williamson769"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the sna library to get the gplot() function</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( sna )</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed to reproduce the plot layout</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>( <span class="dv">507</span> )</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># execute the plot</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">gplot</span>(</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  encounters.st<span class="fl">.3</span>,             </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">gmode =</span> <span class="st">"twomode"</span>,                     <span class="co"># indicate it is two modes</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">usearrows =</span> <span class="cn">FALSE</span>,                     <span class="co"># turn off the arrowheads</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.cex=</span><span class="dv">2</span>,                          <span class="co"># size the nodes     </span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.cex=</span><span class="fl">1.2</span>,                         <span class="co"># size the labels</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Bipartite Graph of Encounters"</span>                 <span class="co"># add a title</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>incidence_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(encounters.st<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">"package:sna"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(attribute_list<span class="sc">$</span>GENDER <span class="sc">==</span> <span class="st">"F"</span>, <span class="st">"blue"</span>, <span class="st">"magenta"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(incidence_graph)<span class="sc">$</span>shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(incidence_graph)<span class="sc">$</span>type, <span class="st">"square"</span>, <span class="st">"circle"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(incidence_graph)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="st">"lightgray"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(incidence_graph,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">3</span>, </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculating centrality</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>types <span class="ot">&lt;-</span> <span class="fu">V</span>(incidence_graph)<span class="sc">$</span>type</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>deg<span class="ot">&lt;-</span> <span class="fu">degree</span>(incidence_graph)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>bet <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(incidence_graph)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>clos <span class="ot">&lt;-</span> <span class="fu">closeness</span>(incidence_graph)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">eigen_centrality</span>(incidence_graph)<span class="sc">$</span>vector</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>cent_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(types, deg, bet, clos, eig)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>cent_df[<span class="fu">order</span>(cent_df<span class="sc">$</span>deg, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            types deg          bet         clos          eig
+Ted955 Reilly981             TRUE  28 2.701366e+04 0.0012239902 1.000000e+00
+Timmy68 Nolan344            FALSE   7 8.856299e+02 0.0007002801 2.480592e-02
+Trula820 Johns824           FALSE   7 6.649982e+03 0.0010000000 2.063592e-01
+Chun678 Hirthe744           FALSE   6 1.404013e+03 0.0009578544 2.443291e-01
+Corey514 Gaylord332         FALSE   6 2.402500e+03 0.0009578544 1.965200e-01
+Dennis979 Dickens475        FALSE   6 1.785493e+03 0.0009652510 2.200485e-01
+Enola75 Tromp100            FALSE   6 7.586271e+02 0.0009560229 2.971639e-01
+Jacqualine965 Aufderhar910  FALSE   6 3.265033e+03 0.0010080645 2.213730e-01
+Jed345 Muller251            FALSE   6 3.019533e+03 0.0010080645 2.269312e-01
+Mamie949 Leannon79          FALSE   6 7.991374e+02 0.0009560229 2.836136e-01
+Ramona980 O'Hara248         FALSE   6 7.586271e+02 0.0009560229 2.971639e-01
+Rocco842 Spencer878         FALSE   6 2.921041e+03 0.0009803922 2.283437e-01
+Yesenia104 Wilderman619      TRUE   6 1.600325e+03 0.0008110300 1.245017e-01
+Paulene52 Kihn564            TRUE   6 3.214286e+02 0.0007980846 2.426148e-01
+Anderson154 Lemke654         TRUE   6 6.442433e+03 0.0008598452 1.254987e-01
+Akiko835 Larkin917          FALSE   5 1.559652e+03 0.0009541985 1.901950e-01
+Arleen939 Kling921          FALSE   5 2.273176e+03 0.0009633911 1.981720e-01
+Avril120 Olson653           FALSE   5 4.194772e+02 0.0006821282 9.591581e-03
+Casandra937 Grimes165       FALSE   5 1.600440e+03 0.0009671180 2.055935e-01
+Daron260 Hudson301          FALSE   5 1.772833e+03 0.0009765625 2.206678e-01
+Hollis7 Mraz590             FALSE   5 2.260000e+03 0.0009578544 1.883837e-01
+Hunter736 Moen819           FALSE   5 1.698333e+03 0.0009523810 1.897944e-01
+Joaquin141 Roberts511       FALSE   5 2.615767e+03 0.0010060362 2.198175e-01
+Korey682 Abbott774          FALSE   5 2.685699e+03 0.0009881423 2.058482e-01
+Meri607 Stracke611          FALSE   5 1.414680e+03 0.0009596929 2.358650e-01
+Retha410 Beatty507          FALSE   5 2.623500e+03 0.0007204611 2.388633e-02
+Shanika235 McDermott739     FALSE   5 3.333000e+03 0.0007235890 2.368900e-02
+Tabitha433 Stoltenberg489   FALSE   5 2.551381e+03 0.0009881423 2.326237e-01
+Hellen346 Roberts511         TRUE   5 8.021984e+02 0.0007892660 8.418676e-02
+Rudolf736 Vandervort697      TRUE   5 3.750216e+02 0.0008097166 1.736143e-01
+Lorie307 Grady603            TRUE   5 4.333031e+03 0.0008382230 9.216599e-02
+Ashlie138 Williamson769     FALSE   4 5.618153e+02 0.0007012623 1.398345e-02
+Benjamin360 Hintz995        FALSE   4 3.698333e+02 0.0006587615 1.372729e-02
+Carin553 Kassulke119        FALSE   4 4.958524e+02 0.0006839945 1.453706e-02
+Christeen33 Schmitt836      FALSE   4 1.350000e+01 0.0588235294 3.014886e-17
+Christiane220 Ankunding277  FALSE   4 1.500000e+01 0.0833333333 3.333072e-17
+Damian46 Satterfield305     FALSE   4 5.732833e+02 0.0006675567 1.492829e-02
+Dione665 O'Kon634           FALSE   4 4.940833e+02 0.0006821282 1.500107e-02
+Dominic463 Wilderman619     FALSE   4 8.560000e+02 0.0005399568 7.937845e-04
+Emmanuel930 Effertz744      FALSE   4 1.113356e+03 0.0009560229 2.001067e-01
+Evelia928 Kuhn96            FALSE   4 6.033333e+01 0.0263157895 2.523273e-17
+Garry927 Olson653           FALSE   4 7.380000e+02 0.0009451796 1.824515e-01
+Jay242 Emard19              FALSE   4 7.380000e+02 0.0009451796 1.824515e-01
+Keira502 Hessel84           FALSE   4 6.000000e+00 0.2500000000 1.954976e-17
+Leah288 Orn563              FALSE   4 3.887165e+02 0.0007072136 6.740695e-02
+Leontine92 Schmidt332       FALSE   4 3.727500e+03 0.0007102273 1.687868e-02
+Luanne915 Veum823           FALSE   4 1.800000e+01 0.0666666667 1.541985e-17
+Malcolm243 Leuschke194      FALSE   4 7.380000e+02 0.0009451796 1.824515e-01
+Manuela585 Jáquez824        FALSE   4 5.500000e+00 0.1666666667 2.993587e-17
+Margart214 Bogisich202      FALSE   4 1.104500e+03 0.0006640106 6.125493e-03
+Nathan164 Rau926            FALSE   4 2.100000e+01 0.0588235294 3.777514e-17
+Nerissa37 Botsford977       FALSE   4 3.016667e+01 0.0208333333 2.785120e-17
+Noble66 Douglas31           FALSE   4 2.161167e+03 0.0006954103 7.759674e-03
+Paul232 Walker122           FALSE   4 9.500000e+00 0.1111111111 2.518373e-17
+Peggie783 Eichmann909       FALSE   4 1.800000e+01 0.0666666667 1.992132e-17
+Ronna740 Feeney44           FALSE   4 2.535000e+02 0.0005370569 2.305261e-03
+Russell422 Cummerata161     FALSE   4 2.397000e+03 0.0004344049 3.244998e-05
+Ruthanne627 Fahey393        FALSE   4 6.000000e+00 0.2500000000 2.615932e-17
+Shira43 Mraz590             FALSE   4 2.511667e+02 0.0006811989 2.782949e-02
+Steven797 Morissette863     FALSE   4 4.969048e+02 0.0006631300 2.146289e-02
+Stormy472 Carter549         FALSE   4 3.617610e+02 0.0006784261 3.081866e-02
+Susana117 Rivera179         FALSE   4 3.850843e+02 0.0006784261 3.734944e-02
+Theodore876 Bechtelar572    FALSE   4 2.590550e+02 0.0006896552 9.327849e-02
+Valentin929 O'Hara248       FALSE   4 2.100000e+01 0.0588235294 2.602569e-17
+Vernon254 Yundt842          FALSE   4 3.753000e+02 0.0007022472 2.861451e-02
+Waylon572 McDermott739      FALSE   4 1.461000e+03 0.0003610108 1.021777e-06
+Williams176 Mraz590         FALSE   4 7.500000e+00 0.1666666667 3.542819e-17
+Randy380 Bergstrom287        TRUE   4 4.438667e+02 0.0008149959 7.852256e-02
+Caroline183 Lang846          TRUE   4 1.037706e+03 0.0007955449 7.711233e-02
+Kyoko885 Price929            TRUE   4 3.060596e+03 0.0008271299 4.227552e-02
+Cira533 Hane680              TRUE   4 7.333333e+01 0.0263157895 3.308496e-17
+Elmer371 Gusikowski974       TRUE   4 1.222500e+03 0.0005844535 3.921082e-03
+Cristi782 Leannon79          TRUE   4 1.048410e+03 0.0008163265 4.357851e-02
+Violette536 Halvorson124     TRUE   4 4.998333e+02 0.0007843137 8.839924e-02
+Sam879 Rippin620             TRUE   4 1.060333e+03 0.0007806401 3.811331e-02
+Johna806 Klein929            TRUE   4 1.380333e+03 0.0006169031 4.649367e-03
+Pearline482 Pagac496         TRUE   4 5.415987e+01 0.0008097166 1.856393e-01
+Refugio197 Crooks415         TRUE   4 2.481939e+02 0.0008058018 1.262062e-01
+Carson894 Krajcik437         TRUE   4 1.257500e+03 0.0005977286 1.468425e-03
+Anneliese170 Berge125       FALSE   3 1.100000e+01 0.0714285714 2.553919e-17
+Annice210 McClure239        FALSE   3 5.329000e+02 0.0009505703 1.854654e-01
+Anthony633 Renner328        FALSE   3 3.770000e+02 0.0006596306 5.591614e-03
+Basil991 Hilll811           FALSE   3 4.930000e+02 0.0006775068 2.204324e-02
+Brendan864 MacGyver246      FALSE   3 1.856746e+02 0.0006720430 2.816650e-02
+Bula88 Prohaska837          FALSE   3 2.350000e+01 0.0217391304 2.613361e-17
+Byron202 Rempel203          FALSE   3 1.123188e+03 0.0006765900 1.421597e-02
+Carey440 Stroman228         FALSE   3 3.000000e+00 0.3333333333 2.241200e-17
+Cedrick207 King743          FALSE   3 4.930000e+02 0.0005117707 6.942344e-04
+Delmar187 Armstrong51       FALSE   3 1.243333e+02 0.0006587615 2.432193e-02
+Devon268 Lakin515           FALSE   3 3.228528e+02 0.0009451796 1.914675e-01
+Drucilla444 Yost751         FALSE   3 1.233333e+02 0.0006518905 1.274263e-02
+Elliott563 Wilderman619     FALSE   3 4.930000e+02 0.0005364807 8.231786e-04
+Fabian647 Farrell962        FALSE   3 3.100000e+01 0.0200000000 2.084981e-17
+Francis500 Koss676          FALSE   3 2.907000e+02 0.0007153076 3.508400e-02
+Garth972 Schamberger479     FALSE   3 5.648121e+02 0.0006747638 7.872917e-03
+Horace32 Wiegand701         FALSE   3 5.500000e+00 0.0526315789 2.216880e-17
+Jesusa437 Mayer370          FALSE   3 2.475000e+02 0.0005020080 3.736323e-04
+Josiah310 Strosin214        FALSE   3 3.000000e+00 0.3333333333 1.020295e-17
+Keturah238 Doyle959         FALSE   3 3.288333e+02 0.0005219207 2.747190e-04
+Margarite168 Turcotte120    FALSE   3 1.660000e+02 0.0005219207 4.977694e-04
+Merle11 Baumbach677         FALSE   3 3.100000e+01 0.0192307692 2.061336e-17
+Milo271 Vandervort697       FALSE   3 9.000000e+00 0.0909090909 1.460977e-17
+Mirella222 Schinner682      FALSE   3 5.500000e+00 0.0006561680 1.838026e-02
+Nikita578 Predovic534       FALSE   3 1.500000e+00 0.2000000000 2.223655e-17
+Norma469 Langosh790         FALSE   3 1.243333e+02 0.0006587615 2.432193e-02
+Onita767 Kemmer137          FALSE   3 1.050000e+01 0.0526315789 1.994419e-17
+Ranee391 O'Keefe54          FALSE   3 1.500000e+00 0.1250000000 1.765265e-17
+Ricardo560 Ibarra303        FALSE   3 1.050000e+01 0.0526315789 1.462950e-17
+Roselia779 Bauch723         FALSE   3 5.445238e+00 0.0006622517 3.385259e-02
+Roxane435 Koss676           FALSE   3 1.500000e+00 0.2000000000 3.053578e-17
+Salvador46 Schuster709      FALSE   3 9.000000e+00 0.0909090909 2.292925e-17
+Shirley182 Durgan499        FALSE   3 4.930000e+02 0.0005359057 7.224705e-04
+Susana117 Ochoa950          FALSE   3 2.832500e+03 0.0005405405 1.030527e-03
+Tatum703 Balistreri607      FALSE   3 4.930000e+02 0.0003073141 3.116230e-08
+Tawny381 Hills818           FALSE   3 2.479000e+02 0.0006784261 2.054599e-02
+Valentine262 Wilderman619   FALSE   3 1.071000e+03 0.0009487666 1.772173e-01
+Velia837 Price929           FALSE   3 5.500000e+00 0.0909090909 2.176466e-17
+Vicente970 Towne435         FALSE   3 1.228333e+02 0.0006578947 1.334373e-02
+Werner409 Boyer713          FALSE   3 1.233333e+02 0.0006518905 1.274263e-02
+Kirby843 McKenzie376         TRUE   3 6.109762e+02 0.0008019246 3.765813e-02
+Lyndon118 Trantow673         TRUE   3 4.866667e+02 0.0007830854 3.765107e-02
+Rhett759 Padberg411          TRUE   3 4.866667e+02 0.0007830854 3.765107e-02
+Patrina117 Strosin214        TRUE   3 9.631701e+02 0.0008123477 3.852778e-02
+Floy720 Greenfelder433       TRUE   3 1.352588e+03 0.0008019246 7.743196e-02
+Chris95 Kub800               TRUE   3 1.688500e+03 0.0006191950 4.217754e-03
+Winston220 McCullough561     TRUE   3 4.935000e+02 0.0004777831 2.655936e-04
+Madelaine318 Walker122       TRUE   3 2.066667e+01 0.0666666667 4.382746e-17
+Jeromy156 Okuneva707         TRUE   3 2.408333e+02 0.0007782101 4.897263e-02
+Vito638 Barton704            TRUE   3 2.397616e+02 0.0007955449 8.129889e-02
+Alta896 Pfannerstill264      TRUE   3 9.764524e+01 0.0007830854 7.589083e-02
+Eliseo499 Reinger292         TRUE   3 1.296649e+02 0.0007980846 7.047790e-02
+Michel472 Zulauf375          TRUE   3 1.313280e+02 0.0007980846 7.495364e-02
+Paris331 Ruecker817          TRUE   3 6.679073e+02 0.0008123477 4.114853e-02
+Burton124 Schoen8            TRUE   3 3.663333e+02 0.0007745933 3.598562e-02
+Quentin28 Fritsch593         TRUE   3 3.663333e+02 0.0007745933 3.598562e-02
+Roberto515 Macías944         TRUE   3 5.500000e+01 0.0250000000 3.516599e-17
+Duncan491 Halvorson124       TRUE   3 3.291333e+02 0.0008123477 7.811183e-02
+Sharron285 Batz141           TRUE   3 2.200000e+01 0.0666666667 2.650392e-17
+Carol737 Watsica258         FALSE   2 2.470000e+02 0.0005112474 6.742788e-04
+Cecille691 Mraz590          FALSE   2 3.630000e+02 0.0005387931 7.494253e-04
+Chet188 Bruen238            FALSE   2 5.000000e-01 0.1000000000 2.079364e-17
+Clara183 Roque844           FALSE   2 2.470000e+02 0.0006553080 6.554058e-03
+Donnetta255 Ratke343        FALSE   2 1.000000e+00 0.5000000000 1.008428e-17
+Erika442 Schultz619         FALSE   2 2.470000e+02 0.0004277160 4.567212e-05
+Fredrick998 Wilkinson796    FALSE   2 1.590909e+00 0.0006702413 2.430998e-02
+Gita759 Daniel959           FALSE   2 1.600000e+01 0.0192307692 1.446502e-17
+Herlinda751 Wunsch504       FALSE   2 3.000000e+00 0.1428571429 1.508832e-17
+Isidro558 Grimes165         FALSE   2 1.000000e+00 0.5000000000 0.000000e+00
+Johnetta529 Volkman526      FALSE   2 2.470000e+02 0.0005359057 7.995164e-04
+Latrina689 Smith67          FALSE   2 2.470000e+02 0.0006535948 6.980550e-03
+Malcom15 Harber290          FALSE   2 2.470000e+02 0.0009416196 1.719624e-01
+Meri607 Mosciski958         FALSE   2 2.470000e+02 0.0006702413 6.475784e-03
+Nicolás801 Rosas160         FALSE   2 1.000000e+00 0.5000000000 1.959946e-17
+Regine404 Orn563            FALSE   2 1.000000e+00 0.5000000000 1.321779e-17
+Sal878 Beahan375            FALSE   2 3.000000e+00 0.1428571429 1.907209e-17
+Sammy219 Spinka232          FALSE   2 2.470000e+02 0.0006553080 6.554058e-03
+Toney527 Crona259           FALSE   2 2.470000e+02 0.0005213764 2.525139e-04
+Frederic454 Larkin917        TRUE   2 1.189762e+02 0.0007993605 3.657566e-02
+Linette249 Runte676          TRUE   2 1.200000e+01 0.0833333333 3.811073e-17
+Brock407 VonRueden376        TRUE   2 2.650000e+01 0.0005737235 1.958603e-03
+Chang901 Kutch271            TRUE   2 5.975000e+02 0.0007782101 3.055788e-02
+Cira533 Jakubowski832        TRUE   2 3.929748e+02 0.0008045052 3.670394e-02
+Lynsey2 Lemke654             TRUE   2 1.125238e+01 0.0005991612 5.749802e-03
+Marshall526 Jenkins714       TRUE   2 1.125238e+01 0.0005991612 5.749802e-03
+Neville893 Schoen8           TRUE   2 1.125238e+01 0.0005991612 5.749802e-03
+Bettina657 Marquardt819      TRUE   2 6.666667e-01 0.0005672150 4.525125e-03
+Ricky354 Renner328           TRUE   2 7.266667e+00 0.0005783690 7.203618e-03
+Luvenia178 Breitenberg711    TRUE   2 6.333333e+00 0.0200000000 1.042528e-17
+Precious140 Runolfsson901    TRUE   2 6.333333e+00 0.0200000000 2.252963e-17
+Archie818 McCullough561      TRUE   2 1.500000e+00 0.0005810575 3.692324e-03
+Chad48 Weissnat378           TRUE   2 1.500000e+00 0.1250000000 2.289946e-17
+Maryann106 Hintz995          TRUE   2 1.500000e+00 0.1250000000 2.283152e-17
+Joanna347 Abbott774          TRUE   2 6.666667e-01 0.0434782609 2.362484e-17
+Lita714 White193             TRUE   2 6.666667e-01 0.0434782609 2.629760e-17
+Colin861 Witting912          TRUE   2 8.033333e+01 0.0007757952 3.592219e-02
+Obdulia648 Schroeder447      TRUE   2 8.033333e+01 0.0007757952 3.592219e-02
+Verda448 Bahringer146        TRUE   2 3.333333e-01 0.0005672150 8.131188e-03
+Jacque955 Streich926         TRUE   2 4.809444e+01 0.0007806401 4.244149e-02
+Jean712 Koelpin146           TRUE   2 3.333333e-01 0.0005621135 4.260055e-03
+Pedro316 Ozuna605            TRUE   2 2.310500e+02 0.0007770008 3.703703e-02
+Omer483 Koepp521             TRUE   2 7.918121e+02 0.0007993605 3.948538e-02
+Gerry91 Block661             TRUE   2 4.000000e+00 0.1666666667 2.070381e-17
+Abraham100 McDermott739      TRUE   2 1.314500e+03 0.0007843137 3.251367e-02
+Delicia67 Bernhard322        TRUE   2 1.203333e+02 0.0008097166 4.165607e-02
+Lashanda692 Gutmann970       TRUE   2 1.203333e+02 0.0008097166 4.165607e-02
+Bea654 Daniel959             TRUE   2 1.626667e+02 0.0008097166 4.136768e-02
+Damian46 Hansen121           TRUE   2 1.400000e+00 0.0008097166 7.467741e-02
+Alvin56 Crona259             TRUE   2 2.450000e+02 0.0005717553 1.086378e-03
+Ilene33 Greenholt190         TRUE   2 2.450000e+02 0.0005717553 1.086378e-03
+Clora637 Pagac496            TRUE   2 1.666667e+00 0.0004631774 1.291272e-04
+Hyman89 Schmeler639          TRUE   2 4.920000e+02 0.0007782101 4.059346e-02
+Eugenio846 Streich926        TRUE   2 1.521000e+03 0.0006138735 2.993659e-03
+Imogene688 Braun514          TRUE   2 1.521000e+03 0.0006138735 2.993659e-03
+Abdul218 White193            TRUE   2 1.600000e+01 0.0714285714 2.065390e-17
+Ashlyn643 Lehner980          TRUE   2 6.666667e-01 0.1250000000 2.221548e-17
+Reggie481 Kassulke119        TRUE   2 6.666667e-01 0.1250000000 2.316168e-17
+Veronika907 Rogahn59         TRUE   2 6.666667e-01 0.1250000000 2.117635e-17
+Henry768 Ebert178            TRUE   2 2.008333e+02 0.0005948840 1.380294e-03
+Araceli695 Willms744         TRUE   2 9.000000e+00 0.1000000000 2.551668e-17
+Cleveland582 Kuphal363       TRUE   2 3.333333e-01 0.1666666667 1.610659e-17
+Natividad796 Davis923        TRUE   2 3.333333e-01 0.1666666667 2.235201e-17
+Shemeka786 Conn188           TRUE   2 3.333333e-01 0.1666666667 2.080999e-17
+Maricruz991 Considine820     TRUE   2 2.000000e+00 0.0434782609 1.592033e-17
+Clarence5 Hyatt152           TRUE   2 3.000000e+00 0.1000000000 2.886023e-17
+Zachery872 Pagac496          TRUE   2 3.000000e+00 0.1000000000 2.192721e-17
+Majorie11 Bergstrom287       TRUE   2 1.593333e+02 0.0006131208 4.378121e-03
+Shella455 Reichel38          TRUE   2 1.593333e+02 0.0006131208 4.378121e-03
+Nerissa37 Hahn503            TRUE   2 1.437326e+02 0.0007930214 4.332094e-02
+Mickey576 Gerlach374         TRUE   2 2.607000e+03 0.0004819277 1.776846e-04
+Pablo44 Solís294             TRUE   2 1.687000e+03 0.0003944773 5.595056e-06
+Sulema841 Ryan260            TRUE   2 7.350000e+02 0.0006161429 4.080561e-03
+Leopoldo762 Keebler762       TRUE   2 2.900000e+00 0.0005830904 1.139481e-02
+Nickolas58 Schumm995         TRUE   2 7.350000e+02 0.0003321156 1.760067e-07
+Morris740 Ullrich385        FALSE   1 0.000000e+00 1.0000000000 1.289974e-17
+Wilfred787 Robel940         FALSE   1 0.000000e+00 1.0000000000 2.891891e-18
+Emilio417 Barton704          TRUE   1 0.000000e+00 0.0007722008 3.179252e-02
+Jim478 Goyette777            TRUE   1 0.000000e+00 0.0007722008 3.179252e-02
+Althea11 Ankunding277        TRUE   1 0.000000e+00 0.0500000000 1.187666e-17
+Jerrell6 Rippin620           TRUE   1 0.000000e+00 0.0500000000 1.392941e-17
+Irene779 Garza151            TRUE   1 0.000000e+00 0.0007698229 3.100193e-02
+Booker670 Casper496          TRUE   1 0.000000e+00 0.0005672150 9.346803e-04
+Monte325 Parisian75          TRUE   1 0.000000e+00 0.0007782101 3.312594e-02
+Dion244 Sanford861           TRUE   1 0.000000e+00 0.0005977286 2.337439e-03
+Pamelia915 Kilback373        TRUE   1 0.000000e+00 0.0005977286 2.337439e-03
+Laverna97 Rippin620          TRUE   1 0.000000e+00 0.0005837712 1.603305e-03
+Beatriz277 Monroy712         TRUE   1 0.000000e+00 0.0005803831 3.684693e-03
+Velda682 Gutmann970          TRUE   1 0.000000e+00 0.0005803831 3.684693e-03
+Mickey576 Borer986           TRUE   1 0.000000e+00 0.0005665722 2.294620e-03
+Barbara209 Maldonado119      TRUE   1 0.000000e+00 0.2000000000 1.148867e-17
+Silvia880 Howe413            TRUE   1 0.000000e+00 0.2000000000 8.956451e-18
+Zackary401 Mohr916           TRUE   1 0.000000e+00 0.2000000000 1.200824e-17
+Elvin140 Marks830            TRUE   1 0.000000e+00 0.0005851375 2.429980e-03
+Mariano761 Pagan507          TRUE   1 0.000000e+00 0.0005851375 2.429980e-03
+Sharilyn202 Wolff180         TRUE   1 0.000000e+00 0.0004539265 1.127108e-04
+Karey608 Torp761             TRUE   1 0.000000e+00 0.0007806401 3.436650e-02
+Waylon572 Lakin515           TRUE   1 0.000000e+00 0.0007806401 3.436650e-02
+Marisol435 Cedillo160        TRUE   1 0.000000e+00 0.0004543389 1.160465e-04
+Merrilee429 Daugherty69      TRUE   1 0.000000e+00 0.0004543389 1.160465e-04
+Robert854 Klein929           TRUE   1 0.000000e+00 0.0400000000 5.862698e-18
+Julio255 Calvillo618         TRUE   1 0.000000e+00 0.0555555556 1.377108e-17
+Kristopher775 Schiller186    TRUE   1 0.000000e+00 0.0555555556 1.369906e-17
+Tereasa291 Mueller846        TRUE   1 0.000000e+00 0.0555555556 1.189988e-17
+Jerónimo599 Alba338          TRUE   1 0.000000e+00 0.0007745933 4.084144e-02
+Sheldon401 Hoeger474         TRUE   1 0.000000e+00 0.0007745933 4.084144e-02
+Shaquita282 Graham902        TRUE   1 0.000000e+00 0.0005640158 1.095560e-03
+Freeda113 Crooks415          TRUE   1 0.000000e+00 0.0007745933 3.284979e-02
+Landon622 Kihn564            TRUE   1 0.000000e+00 0.0007745933 3.284979e-02
+Jessie665 Pagac496           TRUE   1 0.000000e+00 0.0005730659 2.495376e-03
+Tynisha348 Bogisich202       TRUE   1 0.000000e+00 0.0005730659 2.495376e-03
+Lamar193 Daniel959           TRUE   1 0.000000e+00 0.0007867821 3.688628e-02
+Eustolia154 Paucek755        TRUE   1 0.000000e+00 0.0007794232 3.678277e-02
+Greta919 Reinger292          TRUE   1 0.000000e+00 0.0005837712 2.507542e-03
+Rutha66 Bergstrom287         TRUE   1 0.000000e+00 0.0005837712 2.507542e-03
+Mozell819 Prohaska837        TRUE   1 0.000000e+00 0.0004764173 1.326871e-04
+Walton167 Turner526          TRUE   1 0.000000e+00 0.0004764173 1.326871e-04
+Boris111 Romaguera67         TRUE   1 0.000000e+00 0.3333333333 1.327780e-17
+Tracie996 Lesch175           TRUE   1 0.000000e+00 0.3333333333 1.164501e-17
+Irina619 Stiedemann542       TRUE   1 0.000000e+00 0.0004737091 1.376005e-04
+Orpha286 Marks830            TRUE   1 0.000000e+00 0.0004737091 1.376005e-04
+María Soledad68 González124  TRUE   1 0.000000e+00 0.0007733952 4.967319e-02
+Duane703 Bosco882            TRUE   1 0.000000e+00 0.0003868472 7.634439e-06
+Blanca837 Oquendo599         TRUE   1 0.000000e+00 0.0185185185 1.379292e-17
+Nannie905 Mayert710          TRUE   1 0.000000e+00 0.0185185185 7.200678e-18
+Emerita401 Satterfield305    TRUE   1 0.000000e+00 0.0151515152 1.026763e-17
+Rod343 Goyette777            TRUE   1 0.000000e+00 0.0151515152 9.329955e-18
+Evangeline16 Howe413         TRUE   1 0.000000e+00 0.0006079027 5.864554e-03
+Carla633 Cano735             TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Hermelinda327 Hyatt152       TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Mathilde204 Wintheiser220    TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Kathi607 Hilpert278          TRUE   1 0.000000e+00 0.0147058824 5.714156e-18
+Jack927 Rippin620            TRUE   1 0.000000e+00 0.1000000000 1.199567e-17
+Carlton317 Koch169           TRUE   1 0.000000e+00 0.0007745933 3.148975e-02
+Chris95 Haag279              TRUE   1 0.000000e+00 0.0007745933 3.148975e-02
+Greg949 Hilll811             TRUE   1 0.000000e+00 0.0007745933 3.148975e-02
+Dee580 Schuster709           TRUE   1 0.000000e+00 0.0007710100 3.172556e-02
+Miyoko154 Paucek755          TRUE   1 0.000000e+00 0.0007710100 3.172556e-02
+Eleni953 Franecki195         TRUE   1 0.000000e+00 0.3333333333 6.110871e-18
+Mckinley734 Rodriguez71      TRUE   1 0.000000e+00 0.3333333333 5.317402e-18
+Robert854 Nicolas769         TRUE   1 0.000000e+00 0.0008071025 3.700416e-02
+Terrence276 Kiehn525         TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Thomas756 Strosin214         TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Tyler508 Ferry570            TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Shelli447 Schowalter414      TRUE   1 0.000000e+00 0.0008071025 3.793326e-02
+Elma843 McCullough561        TRUE   1 0.000000e+00 0.0004466280 6.245546e-05
+Ross213 Wisozk929            TRUE   1 0.000000e+00 0.0008058018 3.674415e-02
+Shanita956 Wolff180          TRUE   1 0.000000e+00 0.0004732608 1.336452e-04
+Caryl47 Bernier607           TRUE   1 0.000000e+00 0.2000000000 1.410468e-17
+Ronald408 Huels583           TRUE   1 0.000000e+00 0.2000000000 1.047072e-17
+Rosaria177 Volkman526        TRUE   1 0.000000e+00 0.2000000000 8.784800e-18
+Amparo58 Hayes766            TRUE   1 0.000000e+00 0.1428571429 1.283036e-17
+Blanche121 Bailey598         TRUE   1 0.000000e+00 0.1428571429 1.314807e-17
+Lucien408 Howe413            TRUE   1 0.000000e+00 0.1428571429 1.487809e-17
+Vella930 Ankunding277        TRUE   1 0.000000e+00 0.1428571429 9.391371e-18
+Jamal145 Stroman228          TRUE   1 0.000000e+00 0.0004623209 4.592134e-05
+Donya787 Emmerich580         TRUE   1 0.000000e+00 0.0007942812 3.440907e-02
+Peter292 Cartwright189       TRUE   1 0.000000e+00 0.0007942812 3.440907e-02
+Malka46 Gerhold939           TRUE   1 0.000000e+00 0.0005627462 1.166852e-03
+Moshe758 Stamm704            TRUE   1 0.000000e+00 0.0006020470 1.126758e-02
+Leland44 Bernier607          TRUE   1 0.000000e+00 0.0006042296 2.821399e-03
+Guillermo498 Fay398          TRUE   1 0.000000e+00 0.0454545455 4.779891e-18
+Kellee902 Buckridge80        TRUE   1 0.000000e+00 0.0454545455 1.738723e-17
+Óscar156 Zaragoza109         TRUE   1 0.000000e+00 0.0454545455 8.878883e-18
+Olympia319 Bradtke547        TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Sallie654 Jast432            TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Valentine262 Leannon79       TRUE   1 0.000000e+00 0.0007662835 3.049814e-02
+Antonette454 Tromp100        TRUE   1 0.000000e+00 0.0007639419 2.874482e-02
+Leah288 Sauer652             TRUE   1 0.000000e+00 0.0007733952 4.740815e-02
+Stella203 Hammes673          TRUE   1 0.000000e+00 0.0007733952 4.740815e-02
+Jolie499 Parisian75          TRUE   1 0.000000e+00 0.1000000000 9.861143e-18
+Harlan808 Langosh790         TRUE   1 0.000000e+00 0.0005750431 1.082476e-03
+Georgeanna785 Schulist381    TRUE   1 0.000000e+00 0.0007757952 3.942661e-02
+Houston994 Funk324           TRUE   1 0.000000e+00 0.0147058824 1.047811e-17
+Leonie332 Wunsch504          TRUE   1 0.000000e+00 0.0147058824 1.696909e-17
+Denis399 Kohler843           TRUE   1 0.000000e+00 0.0625000000 1.339528e-17
+Vince741 Morissette863       TRUE   1 0.000000e+00 0.0625000000 1.067375e-17
+Zachary28 Gleichner915       TRUE   1 0.000000e+00 1.0000000000 1.001506e-17
+Domonique463 Satterfield305  TRUE   1 0.000000e+00 0.0400000000 1.368172e-17
+Jean712 Block661             TRUE   1 0.000000e+00 0.0400000000 1.443668e-17
+Lady554 Kovacek682           TRUE   1 0.000000e+00 0.0400000000 1.022637e-17
+January966 Roberts511        TRUE   1 0.000000e+00 0.0156250000 1.011859e-17
+Amado512 Adams676            TRUE   1 0.000000e+00 0.3333333333 1.092663e-17
+Victoria535 Delvalle807      TRUE   1 0.000000e+00 0.3333333333 1.092453e-17
+Vince741 Schmidt332          TRUE   1 0.000000e+00 0.0005934718 1.297088e-03
+Erasmo545 Crooks415          TRUE   1 0.000000e+00 0.0370370370 9.355448e-18
+Georgianne697 Howe413        TRUE   1 0.000000e+00 0.0714285714 1.111486e-17
+Otis335 Dickens475           TRUE   1 0.000000e+00 0.0714285714 1.271808e-17
+Benedict104 Barrows492       TRUE   1 0.000000e+00 0.0454545455 9.033283e-18
+Charlena802 Lockman863       TRUE   1 0.000000e+00 0.0454545455 7.327624e-18
+Shasta644 King743            TRUE   1 0.000000e+00 0.0454545455 1.282033e-17
+Octavio643 Prosacco716       TRUE   1 0.000000e+00 0.0007733952 4.967319e-02
+France571 Feil794            TRUE   1 0.000000e+00 0.3333333333 8.741517e-18
+Margaret865 Reinger292       TRUE   1 0.000000e+00 0.3333333333 1.067217e-17
+María Eugenia578 Rentería94  TRUE   1 0.000000e+00 0.0006116208 3.992779e-03
+Georgetta870 Turner526       TRUE   1 0.000000e+00 0.0370370370 8.142442e-18
+Britt177 Schmitt836          TRUE   1 0.000000e+00 0.0004741584 3.853418e-04
+Ferdinand55 Moen819          TRUE   1 0.000000e+00 0.0003923107 5.424258e-06
+Lakenya863 Hilpert278        TRUE   1 0.000000e+00 0.0003923107 5.424258e-06
+Hank686 Schneider199         TRUE   1 0.000000e+00 0.1428571429 1.652594e-17
+Kai187 Mann644               TRUE   1 0.000000e+00 0.1428571429 1.327404e-17
+Margene509 Schamberger479    TRUE   1 0.000000e+00 0.1428571429 1.299427e-17
+Tyron580 Reinger292          TRUE   1 0.000000e+00 0.1428571429 1.403733e-17
+Zachery872 Rau926            TRUE   1 0.000000e+00 0.1000000000 1.355682e-17
+Brendan864 Cremin516         TRUE   1 0.000000e+00 0.0625000000 1.104273e-17
+Lizeth852 Ernser583          TRUE   1 0.000000e+00 0.0625000000 1.341508e-17
+Phillip440 Kunze215          TRUE   1 0.000000e+00 0.0005640158 1.095560e-03
+Kandi717 Beahan375           TRUE   1 0.000000e+00 0.0006138735 3.959795e-03
+Maxima831 Fahey393           TRUE   1 0.000000e+00 0.0006138735 3.959795e-03
+Brooks264 Williamson769      TRUE   1 0.000000e+00 0.0005830904 4.651909e-03
+Cathey606 Kiehn525           TRUE   1 0.000000e+00 0.0004732608 1.207664e-04
+Sharyl439 Williamson769      TRUE   1 0.000000e+00 0.0004732608 1.207664e-04
+Margarita164 Abbott774       TRUE   1 0.000000e+00 0.0005698006 3.587683e-03
+Rosemarie149 Gutmann970      TRUE   1 0.000000e+00 0.0005698006 3.587683e-03
+Anh979 Schroeder447          TRUE   1 0.000000e+00 0.0005810575 5.151572e-03
+Jamie386 Krajcik437          TRUE   1 0.000000e+00 0.0005810575 6.243241e-03
+Lincoln623 Block661          TRUE   1 0.000000e+00 0.0007942812 3.888481e-02
+Ivonne773 Turcotte120        TRUE   1 0.000000e+00 0.0002856327 5.209013e-09
+Renato359 Kertzmann286       TRUE   1 0.000000e+00 0.0002856327 5.209013e-09
+Fernande593 Mosciski958      TRUE   1 0.000000e+00 0.0005810575 3.434417e-03
+Sunni15 Schroeder447         TRUE   1 0.000000e+00 0.0005892752 1.559220e-02
+Andy346 Dare640              TRUE   1 0.000000e+00 0.0005970149 4.146497e-03
+Carmelita854 Tromp100        TRUE   1 0.000000e+00 0.0004618938 4.220960e-05
+José María211 Carrasco324    TRUE   1 0.000000e+00 0.0008019246 3.449450e-02
+Kathlene786 Satterfield305   TRUE   1 0.000000e+00 0.0008019246 3.449450e-02
+Brian582 Cummerata161        TRUE   1 0.000000e+00 0.0400000000 1.729110e-17
+Danelle47 Ondricka197        TRUE   1 0.000000e+00 0.0400000000 1.605651e-17
+Delmer311 Nolan344           TRUE   1 0.000000e+00 0.0400000000 1.541786e-17
+Matha641 Gerhold939          TRUE   1 0.000000e+00 0.0007686395 2.962320e-02
+Elijah719 White193           TRUE   1 0.000000e+00 0.0625000000 1.169955e-17
+Gisele901 Lehner980          TRUE   1 0.000000e+00 0.0005984440 4.783131e-03
+Carolynn568 Von197           TRUE   1 0.000000e+00 0.0003314551 1.707977e-07
+Wes853 Torphy630             TRUE   1 0.000000e+00 0.0003314551 1.707977e-07
+Wilhemina814 Lesch175        TRUE   1 0.000000e+00 1.0000000000 5.345331e-18
+Carroll471 Eichmann909       TRUE   1 0.000000e+00 0.1000000000 1.643085e-17
+Elmer371 Kutch271            TRUE   1 0.000000e+00 0.1000000000 1.372897e-17</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(incidence_graph)<span class="sc">$</span>size <span class="ot">&lt;-</span> <span class="fu">degree</span>(incidence_graph)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set the seed to reproduce the plot layout</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>( <span class="dv">235</span> )</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(incidence_graph,     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>, </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Patient Provider Incidence Graph with Degree Information"</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex colors</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"pink"</span>, <span class="st">"blue"</span>),   <span class="co"># Fill colors corresponding to vertex colors</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Gender"</span>)              <span class="co"># Legend title</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex shapes</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Patient"</span>, <span class="st">"Provider"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),                      <span class="co"># Point shapes corresponding to vertex shapes</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Who"</span>)                     <span class="co"># Legend title</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, </span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="st">"Vertex Size"</span>, </span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">1</span>, </span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">5</span>), </span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Degree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>network.vertex.names(encounters.st.3) # identify the number of actors in the example N &lt;- dim(encounters.st.3 )[1]</p>
+</section>
+<section id="identify-the-number-of-events-in-the-example" class="level1">
+<h1>identify the number of events in the example</h1>
+<p>M &lt;- dim( encounters.st.3 )[2]</p>
+</section>
+<section id="set-the-actor-colors" class="level1">
+<h1>set the actor colors</h1>
+<p>actor.col &lt;- rep( “green”, N )</p>
+</section>
+<section id="set-the-event-colors" class="level1">
+<h1>set the event colors</h1>
+<p>event.col &lt;- rep( “#382ee8”, M )</p>
+</section>
+<section id="now-combine-them-into-a-single-vector-of-colors" class="level1">
+<h1>now combine them into a single vector of colors</h1>
+<p>node.col &lt;- c( actor.col, event.col )</p>
+</section>
+<section id="take-a-look" class="level1">
+<h1>take a look</h1>
+<p>node.col</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
