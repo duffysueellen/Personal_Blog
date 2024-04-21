@@ -1,6 +1,6 @@
 ---
 title: "The Patient Provider Relationship, A Synthetic Social Network"
-subtitle: "Network Analysis"
+subtitle: "Network Exploration"
 author: "Sue-Ellen Duffy"
 date: "2024-04-21"
 categories: [code, analysis]
@@ -18,6 +18,8 @@ library(sna)
 library(ggplot2)
 library(patchwork)
 ```
+
+This post will explore the Synthetic Mass network data in more detail.
 
 Read in Data
 ```{r}
