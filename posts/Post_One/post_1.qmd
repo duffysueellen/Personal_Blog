@@ -115,8 +115,6 @@ head(pro_attr)
 ggplot(pro_attr, aes(GENDER)) +geom_bar() + labs(title = "Provider Gender Breakdown")
 ```
 
-
-
 ## ENCOUNTER DATA
 
 ```{r}
@@ -193,6 +191,7 @@ pro_attr$type <- "PROVIDER"
 both_attr <- bind_rows(pat_attr, pro_attr)
 head(both_attr)
 ```
+
 ```{r}
 #create combined attribute list
 attribute_list <- do.call(list, both_attr)
@@ -290,16 +289,18 @@ There are also many patients and providers that are not linked into the larger g
 
 My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.
 
+Use to write CSV 
 
-Use to write CSV
-#write csv
-write.csv(pat_attr, "pat_attr.csv")
-write.csv(pro_attr, "pro_attr.csv")
-write.csv(encounters_cleaning, "encounters_cleaning.csv")
-write.csv(encounter_attributes, "encounter_attributes.csv")
-write.csv(attribute_list, "attribute_list.csv")
-write.csv(encounters_el, "encounters_el.csv")
+#write csv write.csv(pat_attr, "pat_attr.csv") 
+
+write.csv(pro_attr, "pro_attr.csv") 
+
+write.csv(encounters_cleaning, "encounters_cleaning.csv") 
+
+write.csv(encounter_attributes, "encounter_attributes.csv") 
+
+write.csv(attribute_list, "attribute_list.csv") 
+
+write.csv(encounters_el, "encounters_el.csv") 
+
 write.csv(encounters.st.3, "encounters.st.3.csv")
-
-
-
