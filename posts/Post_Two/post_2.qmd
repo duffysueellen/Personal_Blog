@@ -57,10 +57,9 @@ encounters.st.3 <- network(encounters_el,
                          vertex.attr = attribute_list)
 encounters.st.3
 head(network.vertex.names( encounters.st.3))
-
 ```
-
-
+# Graphs
+## Graphs with sna
 ```{r}
 # load the sna library to get the gplot() function
 library( sna )
@@ -75,7 +74,7 @@ gplot(
   usearrows = FALSE,                     # turn off the arrowheads
   vertex.cex=2,                          # size the nodes     
   label.cex=1.2,                         # size the labels
-  main="Bipartite Graph of Encounters"                 # add a title
+  main="Bipartite Graph of Encounters using SNA"                 # add a title
 )
 
 ```
@@ -90,6 +89,7 @@ incidence_graph <- graph_from_biadjacency_matrix(encounters.st.3)
 detach("package:sna")
 ```
 
+## Graphs with igraph
 ```{r}
 vertex_colors <- ifelse(attribute_list$GENDER == "F", "blue", "magenta")
 V(incidence_graph)$shape <- ifelse(V(incidence_graph)$type, "square", "circle")
@@ -108,6 +108,8 @@ if (length(edge_colors) == ecount(incidence_graph)) {
 
 E(incidence_graph)$color <- edge_colors
 
+# set the seed to reproduce the plot layout
+set.seed( 235 )
 
 plot(incidence_graph,
      layout = layout.fruchterman.reingold, 
@@ -136,7 +138,6 @@ legend("topleft",
        col = c("yellow", "lightblue", "red"),  # Line colors corresponding to edge colors
        lwd = 2,                            # Line width
        title = "Edges: # of Visits")              # Legend title
-
 ```
 
 ```{r}
@@ -149,7 +150,7 @@ clos <- closeness(incidence_graph)
 eig <- eigen_centrality(incidence_graph)$vector
 
 cent_df <- data.frame(types, deg, bet, clos, eig)
-head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
+head(cent_df[order(cent_df$bet, decreasing = FALSE),], 10)
 
 ```
 
@@ -186,10 +187,42 @@ legend("topleft",
        pt.cex = seq(0.5, 3, length.out = 5), 
        title = "Degree")
 ```
+Here we can see there is one Provider that sees the most patients, with degree centrality = 28. 
+The next largest degree centrality are in the 5 to 7 range and the majority of those nodes are patients.
 
+```{r}
+V(incidence_graph)$size <- closeness(incidence_graph)
 
+# set the seed to reproduce the plot layout
+set.seed( 235 )
 
+plot(incidence_graph, 
+     layout = layout.fruchterman.reingold, 
+     vertex.color = vertex_colors,
+     edge.color = "gray",
+     edge.label = NA,
+     vertex.label = NA,
+     main = "Patient Provider Incidence Graph with Closeness Information")
+# Define legend for vertex colors
+legend("bottomright",
+       legend = c("Female", "Male"),  # You can customize these labels
+       fill = c("magenta", "blue"),   # Fill colors corresponding to vertex colors
+       title = "Nodes: Gender")              # Legend title
 
+# Define legend for vertex shapes
+legend("topright",
+       legend = c("Patient", "Provider"),  # You can customize these labels
+       pch = c(1, 0),                      # Point shapes corresponding to vertex shapes
+       title = "Nodes: Who")                     # Legend title
+
+# Define legend for edge colors
+legend("topleft", 
+       legend = "Vertex Size", 
+       pch = 1, 
+       pt.cex = seq(0.5, 3, length.out = 5), 
+       title = "Closeness")
+```
+Here we see two of the dyads on the outer right side of this incidence graph have the largest closeness score. This is because their network is complete (they are both connected to one another).
 
 ```{r}
 triads_incidence<-igraph::triad_census(incidence_graph)
