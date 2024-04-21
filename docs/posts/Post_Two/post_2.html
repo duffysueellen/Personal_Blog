@@ -354,24 +354,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculating centrality</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>types <span class="ot">&lt;-</span> <span class="fu">V</span>(incidence_graph)<span class="sc">$</span>type</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>deg<span class="ot">&lt;-</span> <span class="fu">degree</span>(incidence_graph)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>bet <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(incidence_graph)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>clos <span class="ot">&lt;-</span> <span class="fu">closeness</span>(incidence_graph)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">eigen_centrality</span>(incidence_graph)<span class="sc">$</span>vector</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>cent_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(types, deg, bet, clos, eig)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cent_df[<span class="fu">order</span>(cent_df<span class="sc">$</span>bet, <span class="at">decreasing =</span> <span class="cn">FALSE</span>),], <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>bet <span class="ot">&lt;-</span> <span class="fu">betweenness</span>(incidence_graph)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>clos <span class="ot">&lt;-</span> <span class="fu">closeness</span>(incidence_graph)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">eigen_centrality</span>(incidence_graph)<span class="sc">$</span>vector</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>const <span class="ot">&lt;-</span> <span class="fu">constraint</span>(incidence_graph)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>cent_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(types, deg, bet, clos, eig, const)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cent_df[<span class="fu">order</span>(cent_df<span class="sc">$</span>deg, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),], <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                      types deg bet         clos          eig
-Morris740 Ullrich385  FALSE   1   0 1.0000000000 9.037256e-18
-Wilfred787 Robel940   FALSE   1   0 1.0000000000 5.600028e-18
-Emilio417 Barton704    TRUE   1   0 0.0007722008 3.179252e-02
-Jim478 Goyette777      TRUE   1   0 0.0007722008 3.179252e-02
-Althea11 Ankunding277  TRUE   1   0 0.0500000000 4.101856e-18
-Jerrell6 Rippin620     TRUE   1   0 0.0500000000 2.718083e-18
-Irene779 Garza151      TRUE   1   0 0.0007698229 3.100193e-02
-Booker670 Casper496    TRUE   1   0 0.0005672150 9.346803e-04
-Monte325 Parisian75    TRUE   1   0 0.0007782101 3.312594e-02
-Dion244 Sanford861     TRUE   1   0 0.0005977286 2.337439e-03</code></pre>
+<pre><code>                           types deg        bet         clos        eig
+Ted955 Reilly981            TRUE  28 27013.6588 0.0012239902 1.00000000
+Timmy68 Nolan344           FALSE   7   885.6299 0.0007002801 0.02480592
+Trula820 Johns824          FALSE   7  6649.9824 0.0010000000 0.20635920
+Chun678 Hirthe744          FALSE   6  1404.0134 0.0009578544 0.24432907
+Corey514 Gaylord332        FALSE   6  2402.5000 0.0009578544 0.19651997
+Dennis979 Dickens475       FALSE   6  1785.4929 0.0009652510 0.22004854
+Enola75 Tromp100           FALSE   6   758.6271 0.0009560229 0.29716393
+Jacqualine965 Aufderhar910 FALSE   6  3265.0333 0.0010080645 0.22137300
+Jed345 Muller251           FALSE   6  3019.5333 0.0010080645 0.22693121
+Mamie949 Leannon79         FALSE   6   799.1374 0.0009560229 0.28361363
+                                const
+Ted955 Reilly981           0.03571429
+Timmy68 Nolan344           0.14285714
+Trula820 Johns824          0.14285714
+Chun678 Hirthe744          0.16666667
+Corey514 Gaylord332        0.16666667
+Dennis979 Dickens475       0.16666667
+Enola75 Tromp100           0.16666667
+Jacqualine965 Aufderhar910 0.16666667
+Jed345 Muller251           0.16666667
+Mamie949 Leannon79         0.16666667</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -508,6 +520,564 @@ $null
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 249   8  18   4   6  10   3   5   3   4   5   9   6   7   2   3   5  10   7
 [20]   3   5   2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>degree.wt<span class="ot">=</span>igraph<span class="sc">::</span><span class="fu">strength</span>(incidence_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>glou <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(encounters_el[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>lou <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(glou)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lou, glou, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lou, glou, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size=</span><span class="dv">5</span>, <span class="at">mark.groups =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lou, glou, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size =</span> <span class="dv">5</span>, <span class="at">mark.border =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>glou <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(encounters_el[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>walktrap <span class="ot">&lt;-</span> <span class="fu">cluster_leading_eigen</span>(glou)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(walktrap, glou, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(walktrap, glou, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size=</span><span class="dv">5</span>, <span class="at">mark.groups =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(walktrap, glou, <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">vertex.size =</span> <span class="dv">5</span>, <span class="at">mark.border =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>projected_graph <span class="ot">&lt;-</span> <span class="fu">bipartite_projection</span>(incidence_graph)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co">#providers</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(projected_graph<span class="sc">$</span>proj2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6 x 253 sparse Matrix of class "dgCMatrix"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  [[ suppressing 253 column names 'Emilio417 Barton704', 'Frederic454 Larkin917', 'Jim478 Goyette777' ... ]]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                               
+Emilio417 Barton704   . 1 1 1 1 . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 1 . 1 2 1 . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     1 1 . 1 1 . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  1 2 1 . 1 . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      1 1 1 1 . . . . 1 2 . . 1 2 1 1 1 1 . 1 . . . . . 1 . . 3
+Althea11 Ankunding277 . . . . . . 1 1 . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      . . 2 . . . . . . 2 . . . 1 . . . 1 1 . . . . . . . . . .
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      . . . 1 1 5 1 2 1 . 1 1 1 1 . . 1 2 . 2 1 1 2 2 . 1 . . .
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      . . 1 . 1 . . . 1 1 4 2 3 . . . . . . 3 . 1 1 1 1 . . . 1
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      1 1 1 1 1 . . 1 1 1 1 1 1 1 2 2 1 . . . 1 . . . . . . . .
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . 1 . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . 1 . . . . . . . . . . . . . . . . . . . . . . 1 .
+Ted955 Reilly981      . . . 1 2 1 1 . . . . . . . . . 1 1 1 1 1 1 . . . . . . 1
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      . . . . . . . . . . . . . . . . . . . . . . . . . . 1 . .
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Ted955 Reilly981      . . . . 1 . . . . . . . . . . . . . . . . . . . . . . . .
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                               
+Emilio417 Barton704   . . . . . . . . . . . . . . . . . . . . .
+Frederic454 Larkin917 . . . . . . . . . . . . . . . 1 . . . . .
+Jim478 Goyette777     . . . . . . . . . . . . . . . . . . . . .
+Kirby843 McKenzie376  . . . . . . . . . . . . . . . 1 . . . . .
+Ted955 Reilly981      1 . . . . . . . 1 1 . . . 1 . . . . . . .
+Althea11 Ankunding277 . . . . . . . . . . . . . . . . . . . . .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>provider_communities <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(projected_graph<span class="sc">$</span>proj2)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>provider_membership <span class="ot">&lt;-</span> <span class="fu">membership</span>(provider_communities)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(provider_membership)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Emilio417 Barton704       Frederic454 Larkin917 
+                          1                           1 
+          Jim478 Goyette777        Kirby843 McKenzie376 
+                          1                           1 
+           Ted955 Reilly981       Althea11 Ankunding277 
+                          1                           2 
+         Jerrell6 Rippin620         Linette249 Runte676 
+                          2                           2 
+          Irene779 Garza151       Randy380 Bergstrom287 
+                          3                           3 
+        Booker670 Casper496       Brock407 VonRueden376 
+                          4                           4 
+          Chang901 Kutch271         Caroline183 Lang846 
+                          4                           5 
+       Lyndon118 Trantow673         Monte325 Parisian75 
+                          5                           5 
+        Rhett759 Padberg411       Cira533 Jakubowski832 
+                          5                           6 
+         Dion244 Sanford861           Kyoko885 Price929 
+                          6                           7 
+      Pamelia915 Kilback373         Laverna97 Rippin620 
+                          6                           7 
+           Lynsey2 Lemke654      Marshall526 Jenkins714 
+                          7                           7 
+         Neville893 Schoen8       Patrina117 Strosin214 
+                          7                           7 
+       Beatriz277 Monroy712         Velda682 Gutmann970 
+                          6                           6 
+    Yesenia104 Wilderman619     Bettina657 Marquardt819 
+                          6                           5 
+         Mickey576 Borer986        Hellen346 Roberts511 
+                          5                           5 
+         Ricky354 Renner328             Cira533 Hane680 
+                          5                           8 
+  Luvenia178 Breitenberg711   Precious140 Runolfsson901 
+                          8                           8 
+    Archie818 McCullough561      Elmer371 Gusikowski974 
+                          6                           6 
+     Floy720 Greenfelder433     Barbara209 Maldonado119 
+                          6                           9 
+          Silvia880 Howe413          Zackary401 Mohr916 
+                          9                           9 
+        Cristi782 Leannon79           Elvin140 Marks830 
+                          7                           7 
+        Mariano761 Pagan507        Sharilyn202 Wolff180 
+                          7                           6 
+           Karey608 Torp761          Waylon572 Lakin515 
+                          6                           6 
+             Chris95 Kub800    Winston220 McCullough561 
+                          3                           3 
+      Marisol435 Cedillo160     Merrilee429 Daugherty69 
+                          6                           6 
+         Chad48 Weissnat378         Maryann106 Hintz995 
+                         10                          10 
+        Joanna347 Abbott774            Lita714 White193 
+                         11                          11 
+     Madelaine318 Walker122          Robert854 Klein929 
+                         11                          11 
+       Julio255 Calvillo618   Kristopher775 Schiller186 
+                          2                           2 
+      Tereasa291 Mueller846        Jeromy156 Okuneva707 
+                          2                           1 
+        Jerónimo599 Alba338           Paulene52 Kihn564 
+                          1                           1 
+       Sheldon401 Hoeger474    Violette536 Halvorson124 
+                          1                           1 
+           Sam879 Rippin620       Shaquita282 Graham902 
+                         12                          12 
+        Colin861 Witting912         Freeda113 Crooks415 
+                         12                          12 
+          Landon622 Kihn564     Obdulia648 Schroeder447 
+                         12                          12 
+         Jessie665 Pagac496      Tynisha348 Bogisich202 
+                          5                           5 
+         Lamar193 Daniel959           Vito638 Barton704 
+                          6                           6 
+      Verda448 Bahringer146     Alta896 Pfannerstill264 
+                          1                           5 
+      Eustolia154 Paucek755        Jacque955 Streich926 
+                          5                           5 
+       Eliseo499 Reinger292         Michel472 Zulauf375 
+                          1                           1 
+        Greta919 Reinger292         Paris331 Ruecker817 
+                          7                           7 
+       Rutha66 Bergstrom287       Mozell819 Prohaska837 
+                          7                           3 
+        Walton167 Turner526        Boris111 Romaguera67 
+                          3                          13 
+         Tracie996 Lesch175           Burton124 Schoen8 
+                         13                          14 
+         Jean712 Koelpin146        Quentin28 Fritsch593 
+                         14                          14 
+     Irina619 Stiedemann542           Johna806 Klein929 
+                          3                           3 
+          Orpha286 Marks830           Pedro316 Ozuna605 
+                          3                           5 
+María Soledad68 González124        Pearline482 Pagac496 
+                          1                           1 
+       Refugio197 Crooks415     Rudolf736 Vandervort697 
+                          1                           1 
+          Duane703 Bosco882        Blanca837 Oquendo599 
+                          3                           8 
+        Nannie905 Mayert710        Roberto515 Macías944 
+                          8                           8 
+  Emerita401 Satterfield305           Rod343 Goyette777 
+                          8                           8 
+       Anderson154 Lemke654        Evangeline16 Howe413 
+                          3                           3 
+           Carla633 Cano735      Hermelinda327 Hyatt152 
+                          1                           1 
+  Mathilde204 Wintheiser220            Omer483 Koepp521 
+                          1                           6 
+        Kathi607 Hilpert278            Gerry91 Block661 
+                          8                          15 
+          Jack927 Rippin620     Abraham100 McDermott739 
+                         15                           4 
+         Carlton317 Koch169             Chris95 Haag279 
+                          4                           4 
+           Greg949 Hilll811          Dee580 Schuster709 
+                          4                          14 
+        Miyoko154 Paucek755        Eleni953 Franecki195 
+                         14                          16 
+    Mckinley734 Rodriguez71       Delicia67 Bernhard322 
+                         16                           3 
+     Lashanda692 Gutmann970        Robert854 Nicolas769 
+                          3                           3 
+       Terrence276 Kiehn525        Thomas756 Strosin214 
+                          1                           1 
+          Tyler508 Ferry570            Bea654 Daniel959 
+                          1                           3 
+         Damian46 Hansen121      Duncan491 Halvorson124 
+                          3                           3 
+    Shelli447 Schowalter414            Alvin56 Crona259 
+                          3                           4 
+      Elma843 McCullough561        Ilene33 Greenholt190 
+                          4                           4 
+          Ross213 Wisozk929         Shanita956 Wolff180 
+                          3                           3 
+         Caryl47 Bernier607          Ronald408 Huels583 
+                         17                          17 
+      Rosaria177 Volkman526           Amparo58 Hayes766 
+                         17                          18 
+       Blanche121 Bailey598           Lucien408 Howe413 
+                         18                          18 
+      Vella930 Ankunding277        Carson894 Krajcik437 
+                         18                           7 
+          Clora637 Pagac496         Jamal145 Stroman228 
+                          7                           7 
+       Donya787 Emmerich580           Lorie307 Grady603 
+                          1                           1 
+     Peter292 Cartwright189         Hyman89 Schmeler639 
+                          1                           1 
+         Malka46 Gerhold939           Moshe758 Stamm704 
+                          1                           1 
+      Eugenio846 Streich926         Imogene688 Braun514 
+                         19                          19 
+        Leland44 Bernier607           Abdul218 White193 
+                         19                          20 
+        Guillermo498 Fay398       Kellee902 Buckridge80 
+                         20                          20 
+       Óscar156 Zaragoza109       Olympia319 Bradtke547 
+                         20                           1 
+          Sallie654 Jast432      Valentine262 Leannon79 
+                          1                           1 
+      Antonette454 Tromp100            Leah288 Sauer652 
+                          1                           1 
+        Stella203 Hammes673         Ashlyn643 Lehner980 
+                          1                          21 
+        Jolie499 Parisian75       Reggie481 Kassulke119 
+                         21                          21 
+       Veronika907 Rogahn59           Henry768 Ebert178 
+                         21                           7 
+       Harlan808 Langosh790   Georgeanna785 Schulist381 
+                          1                           1 
+         Houston994 Funk324         Leonie332 Wunsch504 
+                          8                           8 
+       Araceli695 Willms744          Denis399 Kohler843 
+                         22                          22 
+     Vince741 Morissette863      Zachary28 Gleichner915 
+                         22                          23 
+Domonique463 Satterfield305            Jean712 Block661 
+                         11                          11 
+         Lady554 Kovacek682       January966 Roberts511 
+                         11                           8 
+          Amado512 Adams676     Victoria535 Delvalle807 
+                         24                          24 
+     Cleveland582 Kuphal363       Natividad796 Davis923 
+                         25                          25 
+         Shemeka786 Conn188         Vince741 Schmidt332 
+                         25                           7 
+        Erasmo545 Crooks415    Maricruz991 Considine820 
+                         26                          26 
+         Sharron285 Batz141          Clarence5 Hyatt152 
+                         26                          27 
+      Georgianne697 Howe413          Otis335 Dickens475 
+                         27                          27 
+        Zachery872 Pagac496      Benedict104 Barrows492 
+                         27                          20 
+     Charlena802 Lockman863           Shasta644 King743 
+                         20                          20 
+     Octavio643 Prosacco716           France571 Feil794 
+                          1                          28 
+     Margaret865 Reinger292      Majorie11 Bergstrom287 
+                         28                           3 
+María Eugenia578 Rentería94         Shella455 Reichel38 
+                          3                           3 
+     Georgetta870 Turner526           Nerissa37 Hahn503 
+                         26                           6 
+        Britt177 Schmitt836         Ferdinand55 Moen819 
+                          3                          19 
+      Lakenya863 Hilpert278        Mickey576 Gerlach374 
+                         19                          19 
+           Pablo44 Solís294        Hank686 Schneider199 
+                         19                          29 
+             Kai187 Mann644   Margene509 Schamberger479 
+                         29                          29 
+        Tyron580 Reinger292           Zachery872 Rau926 
+                         29                          15 
+       Brendan864 Cremin516         Lizeth852 Ernser583 
+                         22                          22 
+        Phillip440 Kunze215          Kandi717 Beahan375 
+                         12                           3 
+         Maxima831 Fahey393           Sulema841 Ryan260 
+                          3                           3 
+    Brooks264 Williamson769          Cathey606 Kiehn525 
+                          3                           3 
+    Sharyl439 Williamson769      Margarita164 Abbott774 
+                          3                           5 
+    Rosemarie149 Gutmann970         Anh979 Schroeder447 
+                          5                           6 
+     Leopoldo762 Keebler762         Jamie386 Krajcik437 
+                          6                           6 
+        Lincoln623 Block661       Ivonne773 Turcotte120 
+                          1                          19 
+       Nickolas58 Schumm995      Renato359 Kertzmann286 
+                         19                          19 
+    Fernande593 Mosciski958        Sunni15 Schroeder447 
+                          3                           1 
+            Andy346 Dare640       Carmelita854 Tromp100 
+                          7                           7 
+  José María211 Carrasco324  Kathlene786 Satterfield305 
+                          7                           7 
+      Brian582 Cummerata161       Danelle47 Ondricka197 
+                         26                          26 
+         Delmer311 Nolan344         Matha641 Gerhold939 
+                         26                           4 
+         Elijah719 White193         Gisele901 Lehner980 
+                         27                           1 
+         Carolynn568 Von197            Wes853 Torphy630 
+                         19                          19 
+      Wilhemina814 Lesch175      Carroll471 Eichmann909 
+                         30                          10 
+          Elmer371 Kutch271 
+                         10 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#patients</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(projected_graph<span class="sc">$</span>proj1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>6 x 121 sparse Matrix of class "dgCMatrix"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>  [[ suppressing 121 column names 'Akiko835 Larkin917', 'Anneliese170 Berge125', 'Annice210 McClure239' ... ]]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                               
+Akiko835 Larkin917      . . 1 . 1 . . . . . . . . . . 1 . . . . . 1 . 1 . 1 . 1
+Anneliese170 Berge125   . . . . . . . . . . . . . . . . . . . . 1 . . . . . . .
+Annice210 McClure239    1 . . . 1 . . . . . . . . . . 1 . . . . . 1 . 1 . 1 . 1
+Anthony633 Renner328    . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Arleen939 Kling921      1 . 1 . . . . . 2 1 . . . . . 1 . . . . . 1 . 1 1 1 . 2
+Ashlie138 Williamson769 . . . . . . . . . . . . . . . 1 . . . . . . . . . . . .
+                                                                               
+Akiko835 Larkin917      1 . . . . . 1 1 . . . . . 1 . . . 1 . 1 . 1 1 1 . 1 . .
+Anneliese170 Berge125   . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Annice210 McClure239    1 . . . . . 1 1 . . . 1 . 1 . . . 1 . 1 . 2 1 1 . 1 . .
+Anthony633 Renner328    . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Arleen939 Kling921      1 . . . . . 1 1 . . . . . 1 . . . 1 . 1 . 1 1 1 . 1 . .
+Ashlie138 Williamson769 . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                               
+Akiko835 Larkin917      . . 1 . . . . 1 1 1 . . . 1 1 . . . . . . . . . . . . .
+Anneliese170 Berge125   . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Annice210 McClure239    . . 1 . . . . 1 1 1 . . . . 1 . . . . . . . . . . . . .
+Anthony633 Renner328    . . . . . . . . . . . . 1 . . . . . . . . . . . . . . .
+Arleen939 Kling921      . . 1 . . . . 1 1 1 . . . . 1 . . . . . . . . . . . . .
+Ashlie138 Williamson769 . . . . . . . . . . . . . . . . . . . . . . . 1 . . . .
+                                                                               
+Akiko835 Larkin917      1 . . . . 1 . . . . . . . . . . . . . . . 1 . . . . . 1
+Anneliese170 Berge125   . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Annice210 McClure239    1 . . . . 1 . . . . . . . . . 1 . . . . . 1 . . . . . 1
+Anthony633 Renner328    . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Arleen939 Kling921      1 . . . . 1 . . . . . . . . . . . . . . . 1 . . . . . 1
+Ashlie138 Williamson769 . . . . . . . . . . . . . . . . . . . . . . . . . 1 . 1
+                                         
+Akiko835 Larkin917      . 1 . 2 . . . . .
+Anneliese170 Berge125   . . . . . . . . .
+Annice210 McClure239    . 1 . . . . . . .
+Anthony633 Renner328    . 1 . . . . . . .
+Arleen939 Kling921      . 1 . . 2 . . . .
+Ashlie138 Williamson769 . . . . . . . . .</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>patient_communities <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(projected_graph<span class="sc">$</span>proj1)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>patient_membership <span class="ot">&lt;-</span> <span class="fu">membership</span>(patient_communities)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(patient_membership)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Akiko835 Larkin917      Anneliese170 Berge125 
+                         1                          2 
+      Annice210 McClure239       Anthony633 Renner328 
+                         3                          1 
+        Arleen939 Kling921    Ashlie138 Williamson769 
+                         4                          5 
+         Avril120 Olson653          Basil991 Hilll811 
+                         5                          6 
+      Benjamin360 Hintz995     Brendan864 MacGyver246 
+                         4                          4 
+        Bula88 Prohaska837         Byron202 Rempel203 
+                         7                          6 
+       Carey440 Stroman228       Carin553 Kassulke119 
+                         8                          5 
+       Carol737 Watsica258      Casandra937 Grimes165 
+                         6                          6 
+        Cecille691 Mraz590         Cedrick207 King743 
+                         3                          6 
+          Chet188 Bruen238     Christeen33 Schmitt836 
+                         9                         10 
+Christiane220 Ankunding277          Chun678 Hirthe744 
+                         2                         11 
+         Clara183 Roque844        Corey514 Gaylord332 
+                        12                         12 
+   Damian46 Satterfield305         Daron260 Hudson301 
+                         4                          6 
+     Delmar187 Armstrong51       Dennis979 Dickens475 
+                        11                          4 
+         Devon268 Lakin515          Dione665 O'Kon634 
+                         1                          5 
+   Dominic463 Wilderman619       Donnetta255 Ratke343 
+                         3                         13 
+       Drucilla444 Yost751    Elliott563 Wilderman619 
+                        14                          3 
+    Emmanuel930 Effertz744           Enola75 Tromp100 
+                         4                         11 
+       Erika442 Schultz619           Evelia928 Kuhn96 
+                         3                          7 
+      Fabian647 Farrell962         Francis500 Koss676 
+                         7                          3 
+  Fredrick998 Wilkinson796          Garry927 Olson653 
+                         1                          1 
+   Garth972 Schamberger479          Gita759 Daniel959 
+                         6                          7 
+     Herlinda751 Wunsch504            Hollis7 Mraz590 
+                        15                          1 
+       Horace32 Wiegand701          Hunter736 Moen819 
+                        10                         14 
+       Isidro558 Grimes165 Jacqualine965 Aufderhar910 
+                        16                          3 
+            Jay242 Emard19           Jed345 Muller251 
+                         1                          3 
+        Jesusa437 Mayer370      Joaquin141 Roberts511 
+                         1                          3 
+    Johnetta529 Volkman526       Josiah310 Strosin214 
+                         3                         17 
+         Keira502 Hessel84        Keturah238 Doyle959 
+                        18                          5 
+        Korey682 Abbott774         Latrina689 Smith67 
+                         1                         11 
+            Leah288 Orn563      Leontine92 Schmidt332 
+                        11                         19 
+         Luanne915 Veum823     Malcolm243 Leuschke194 
+                        20                          1 
+        Malcom15 Harber290         Mamie949 Leannon79 
+                         1                         11 
+      Manuela585 Jáquez824   Margarite168 Turcotte120 
+                        21                          5 
+    Margart214 Bogisich202        Meri607 Mosciski958 
+                         1                          1 
+        Meri607 Stracke611        Merle11 Baumbach677 
+                        11                          7 
+     Milo271 Vandervort697     Mirella222 Schinner682 
+                        22                         12 
+      Morris740 Ullrich385           Nathan164 Rau926 
+                        23                         10 
+     Nerissa37 Botsford977        Nicolás801 Rosas160 
+                         7                         24 
+     Nikita578 Predovic534          Noble66 Douglas31 
+                        25                          5 
+       Norma469 Langosh790         Onita767 Kemmer137 
+                        11                         26 
+         Paul232 Walker122      Peggie783 Eichmann909 
+                        27                         20 
+       Ramona980 O'Hara248         Ranee391 O'Keefe54 
+                        11                         21 
+          Regine404 Orn563         Retha410 Beatty507 
+                        28                          3 
+      Ricardo560 Ibarra303        Rocco842 Spencer878 
+                        26                          6 
+         Ronna740 Feeney44        Roselia779 Bauch723 
+                         3                          4 
+         Roxane435 Koss676    Russell422 Cummerata161 
+                        25                         19 
+      Ruthanne627 Fahey393           Sal878 Beahan375 
+                        29                         15 
+    Salvador46 Schuster709         Sammy219 Spinka232 
+                        22                         12 
+   Shanika235 McDermott739            Shira43 Mraz590 
+                         3                          3 
+      Shirley182 Durgan499    Steven797 Morissette863 
+                         3                          4 
+       Stormy472 Carter549         Susana117 Ochoa950 
+                         6                         19 
+       Susana117 Rivera179  Tabitha433 Stoltenberg489 
+                         6                          1 
+    Tatum703 Balistreri607          Tawny381 Hills818 
+                        19                          3 
+  Theodore876 Bechtelar572           Timmy68 Nolan344 
+                        11                          5 
+         Toney527 Crona259          Trula820 Johns824 
+                         5                          5 
+     Valentin929 O'Hara248  Valentine262 Wilderman619 
+                        26                          1 
+         Velia837 Price929         Vernon254 Yundt842 
+                        27                          1 
+       Vicente970 Towne435     Waylon572 McDermott739 
+                         4                         19 
+        Werner409 Boyer713        Wilfred787 Robel940 
+                        14                         30 
+       Williams176 Mraz590 
+                         9 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(projected_graph<span class="sc">$</span>proj1, <span class="at">vertex.color =</span> <span class="fu">membership</span>(patient_communities),</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(projected_graph<span class="sc">$</span>proj2, <span class="at">vertex.color =</span> <span class="fu">membership</span>(provider_communities),</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>, <span class="at">edge.arrow.size =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_2_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 

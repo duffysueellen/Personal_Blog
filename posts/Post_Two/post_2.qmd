@@ -145,12 +145,13 @@ legend("topleft",
 #Calculating centrality
 types <- V(incidence_graph)$type
 deg<- degree(incidence_graph)
+
 bet <- betweenness(incidence_graph)
 clos <- closeness(incidence_graph)
 eig <- eigen_centrality(incidence_graph)$vector
-
-cent_df <- data.frame(types, deg, bet, clos, eig)
-head(cent_df[order(cent_df$bet, decreasing = FALSE),], 10)
+const <- constraint(incidence_graph)
+cent_df <- data.frame(types, deg, bet, clos, eig, const)
+head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
 
 ```
 
@@ -241,7 +242,63 @@ First, let's look at the network component structure. This gives a list with: me
 names(igraph::components(incidence_graph))
 igraph::components(incidence_graph)$no # number of components
 igraph::components(incidence_graph)$csize #Size of each component
+degree.wt=igraph::strength(incidence_graph)
+
 ```
+
+```{r}
+glou <- graph_from_data_frame(encounters_el[, 1:2], directed = FALSE)
+lou <- cluster_louvain(glou)
+set.seed(1)
+plot(lou, glou, vertex.label = NA, vertex.size=2)
+plot(lou, glou, vertex.label = NA, vertex.size=5, mark.groups = NULL)
+plot(lou, glou, vertex.label = NA, vertex.size = 5, mark.border = NA)
+
+```
+```{r}
+glou <- graph_from_data_frame(encounters_el[, 1:2], directed = FALSE)
+walktrap <- cluster_leading_eigen(glou)
+set.seed(1)
+plot(walktrap, glou, vertex.label = NA, vertex.size=2)
+plot(walktrap, glou, vertex.label = NA, vertex.size=5, mark.groups = NULL)
+plot(walktrap, glou, vertex.label = NA, vertex.size = 5, mark.border = NA)
+
+```
+
+
+```{r}
+projected_graph <- bipartite_projection(incidence_graph)
+#providers
+head(projected_graph$proj2)
+provider_communities <- cluster_louvain(projected_graph$proj2)
+provider_membership <- membership(provider_communities)
+print(provider_membership)
+
+```
+
+
+```{r}
+#patients
+head(projected_graph$proj1)
+patient_communities <- cluster_louvain(projected_graph$proj1)
+patient_membership <- membership(patient_communities)
+print(patient_membership)
+```
+
+```{r}
+plot(projected_graph$proj1, vertex.color = membership(patient_communities),
+     vertex.label = NA, edge.arrow.size = 0.5)
+```
+
+```{r}
+plot(projected_graph$proj2, vertex.color = membership(provider_communities),
+     vertex.label = NA, edge.arrow.size = 0.5)
+```
+
+
+
+
+
 
 
 
