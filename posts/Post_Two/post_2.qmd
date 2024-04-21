@@ -161,6 +161,7 @@ set.seed( 235 )
 plot(incidence_graph, 
      layout = layout.fruchterman.reingold, 
      vertex.color = vertex_colors,
+     edge.color = "gray",
      edge.label = NA,
      vertex.label = NA,
      main = "Patient Provider Incidence Graph with Degree Information")
@@ -188,32 +189,24 @@ legend("topleft",
 
 
 
+```{r}
+triads_incidence<-igraph::triad_census(incidence_graph)
+triads_incidence
+igraph::dyad.census(incidence_graph)
+transitivity(incidence_graph)
+transitivity(incidence_graph, type = "global")
+average.path.length(incidence_graph)
+```
 
+Component Structure and Membership
 
+First, let's look at the network component structure. This gives a list with: membership by node, size of each component, and the total number of components.
 
-
-
-network.vertex.names(encounters.st.3)
-# identify the number of actors in the example
-N <- dim(encounters.st.3 )[1]
-
-# identify the number of events in the example
-M <- dim( encounters.st.3 )[2]
-
-# set the actor colors
-actor.col <- rep( "green", N )
-
-# set the event colors
-event.col <- rep( "#382ee8", M )
-
-# now combine them into a single vector of colors
-node.col <- c( actor.col, event.col )
-
-# take a look
-node.col
-
-
-
+```{r}
+names(igraph::components(incidence_graph))
+igraph::components(incidence_graph)$no # number of components
+igraph::components(incidence_graph)$csize #Size of each component
+```
 
 
 

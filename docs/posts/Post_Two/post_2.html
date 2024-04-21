@@ -737,52 +737,96 @@ Elmer371 Kutch271            TRUE   1 0.000000e+00 0.1000000000 1.372897e-17</co
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(incidence_graph, </span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Patient Provider Incidence Graph with Degree Information"</span>)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex colors</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>),  <span class="co"># You can customize these labels</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"magenta"</span>, <span class="st">"blue"</span>),   <span class="co"># Fill colors corresponding to vertex colors</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Gender"</span>)              <span class="co"># Legend title</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex shapes</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Patient"</span>, <span class="st">"Provider"</span>),  <span class="co"># You can customize these labels</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),                      <span class="co"># Point shapes corresponding to vertex shapes</span></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Who"</span>)                     <span class="co"># Legend title</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, </span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="st">"Vertex Size"</span>, </span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">1</span>, </span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">5</span>), </span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Degree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="st">"gray"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Patient Provider Incidence Graph with Degree Information"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex colors</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"magenta"</span>, <span class="st">"blue"</span>),   <span class="co"># Fill colors corresponding to vertex colors</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Gender"</span>)              <span class="co"># Legend title</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex shapes</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Patient"</span>, <span class="st">"Provider"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),                      <span class="co"># Point shapes corresponding to vertex shapes</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Who"</span>)                     <span class="co"># Legend title</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, </span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="st">"Vertex Size"</span>, </span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">1</span>, </span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">pt.cex =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">5</span>), </span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Degree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>network.vertex.names(encounters.st.3) # identify the number of actors in the example N &lt;- dim(encounters.st.3 )[1]</p>
-</section>
-<section id="identify-the-number-of-events-in-the-example" class="level1">
-<h1>identify the number of events in the example</h1>
-<p>M &lt;- dim( encounters.st.3 )[2]</p>
-</section>
-<section id="set-the-actor-colors" class="level1">
-<h1>set the actor colors</h1>
-<p>actor.col &lt;- rep( “green”, N )</p>
-</section>
-<section id="set-the-event-colors" class="level1">
-<h1>set the event colors</h1>
-<p>event.col &lt;- rep( “#382ee8”, M )</p>
-</section>
-<section id="now-combine-them-into-a-single-vector-of-colors" class="level1">
-<h1>now combine them into a single vector of colors</h1>
-<p>node.col &lt;- c( actor.col, event.col )</p>
-</section>
-<section id="take-a-look" class="level1">
-<h1>take a look</h1>
-<p>node.col</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>triads_incidence<span class="ot">&lt;-</span>igraph<span class="sc">::</span><span class="fu">triad_census</span>(incidence_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in igraph::triad_census(incidence_graph): At
+vendor/cigraph/src/misc/motifs.c:1140 : Triad census called on an undirected
+graph. All connections will be treated as mutual.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>triads_incidence</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 8487860       0  159964       0       0       0       0       0       0
+[10]       0    1300       0       0       0       0       0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">dyad.census</span>(incidence_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `dyad.census()` was deprecated in igraph 2.0.0.
+ℹ Please use `dyad_census()` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `dyad_census()` requires a directed graph.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$mut
+[1] 437
+
+$asym
+[1] 0
+
+$null
+[1] 69314</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(incidence_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transitivity</span>(incidence_graph, <span class="at">type =</span> <span class="st">"global"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">average.path.length</span>(incidence_graph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `average.path.length()` was deprecated in igraph 2.0.0.
+ℹ Please use `mean_distance()` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.166661</code></pre>
+</div>
+</div>
+<p>Component Structure and Membership</p>
+<p>First, let’s look at the network component structure. This gives a list with: membership by node, size of each component, and the total number of components.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(igraph<span class="sc">::</span><span class="fu">components</span>(incidence_graph))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "membership" "csize"      "no"        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">components</span>(incidence_graph)<span class="sc">$</span>no <span class="co"># number of components</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>igraph<span class="sc">::</span><span class="fu">components</span>(incidence_graph)<span class="sc">$</span>csize <span class="co">#Size of each component</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 249   8  18   4   6  10   3   5   3   4   5   9   6   7   2   3   5  10   7
+[20]   3   5   2</code></pre>
+</div>
+</div>
 
 
 </section>
