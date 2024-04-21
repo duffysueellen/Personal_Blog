@@ -16,7 +16,7 @@ While a whole host of datasets are available within each download, I will focus 
 
 -   Encounters will be the relationships analyzed. Encounters are appointments, visits, and clinical encounters and include notes on the visit including the date, reason, and cost breakdown.
 
-    -   Reminder none of this data is real, it is synthetic, so to personally identifiable information I share is not data on real people and cannot be used to identify real people.
+    -   **Reminder: none of this data is real**, it is synthetic, so the personally identifiable information I share is not data on real people and cannot be used to identify real people.
 
 This post will primarily focus on data cleaning and data exploration with some exploration into social network analysis through transforming the data into an incidence matrix and plotting some attributes.
 
@@ -206,7 +206,7 @@ encounters.st.3 <- network(encounters_el,
                          bipartite = TRUE,
                          matrix.type = "edgelist",
                          vertex.attr = attribute_list)
-summary(encounters.st.3)
+encounters.st.3
 ```
 
 # Graph Section
@@ -289,18 +289,18 @@ There are also many patients and providers that are not linked into the larger g
 
 My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.
 
-Use to write CSV 
+Use to write CSV
 
-#write csv write.csv(pat_attr, "pat_attr.csv") 
+#write csv write.csv(pat_attr, "pat_attr.csv")
 
-write.csv(pro_attr, "pro_attr.csv") 
+write.csv(pro_attr, "pro_attr.csv")
 
-write.csv(encounters_cleaning, "encounters_cleaning.csv") 
+write.csv(encounters_cleaning, "encounters_cleaning.csv")
 
-write.csv(encounter_attributes, "encounter_attributes.csv") 
+write.csv(encounter_attributes, "encounter_attributes.csv")
 
-write.csv(attribute_list, "attribute_list.csv") 
+write.csv(attribute_list, "attribute_list.csv")
 
-write.csv(encounters_el, "encounters_el.csv") 
+write.csv(encounters_el, "encounters_el.csv")
 
 write.csv(encounters.st.3, "encounters.st.3.csv")

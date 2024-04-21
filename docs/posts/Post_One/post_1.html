@@ -145,7 +145,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <h1 class="title">The Patient Provider Relationship, A Synthetic Social Network</h1>
             <p class="subtitle lead">Data Cleaning, Exploration, and Network Analysis</p>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">analysis</div>
               </div>
                   </div>
   </div>
@@ -188,7 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Patients and Providers will be the actors analyzed. The patient and provider datasets contain information on the person level details, with names and some demographic information, with more detail available for patients than providers.</p></li>
 <li><p>Encounters will be the relationships analyzed. Encounters are appointments, visits, and clinical encounters and include notes on the visit including the date, reason, and cost breakdown.</p>
 <ul>
-<li>Reminder none of this data is real, it is synthetic, so to personally identifiable information I share is not data on real people and cannot be used to identify real people.</li>
+<li><strong>Reminder: none of this data is real</strong>, it is synthetic, so the personally identifiable information I share is not data on real people and cannot be used to identify real people.</li>
 </ul></li>
 </ul>
 <p>This post will primarily focus on data cleaning and data exploration with some exploration into social network analysis through transforming the data into an incidence matrix and plotting some attributes.</p>
@@ -343,8 +344,7 @@ date  (2): BIRTHDATE, DEATHDATE
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep patient name and demographics. This will be utilized as the attribute data for analysis.</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> patients<span class="sc">%&gt;%</span> </span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, GENDER, RACE, MARITAL, INCOME, AGE)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pat_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pat_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
   NAME                       GENDER RACE  MARITAL INCOME   AGE
@@ -438,31 +438,10 @@ dbl (4): LAT, LON, ENCOUNTERS, PROCEDURES
 </div>
 </div>
 </section>
-<section id="patient-and-provider" class="level2">
-<h2 class="anchored" data-anchor-id="patient-and-provider">PATIENT AND PROVIDER</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combine pro and pat attr</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PATIENT"</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PROVIDER"</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  NAME                       GENDER RACE  MARITAL INCOME   AGE type   
-  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
-1 Avril120 Olson653          F      white &lt;NA&gt;    482269    36 PATIENT
-2 Norma469 Langosh790        F      white &lt;NA&gt;    190464    25 PATIENT
-3 Peggie783 Eichmann909      F      white &lt;NA&gt;     78997    21 PATIENT
-4 Ashlie138 Williamson769    F      white M         6472    37 PATIENT
-5 Christiane220 Ankunding277 F      white &lt;NA&gt;    141475    24 PATIENT
-6 Dione665 O'Kon634          F      white M       482269    36 PATIENT</code></pre>
-</div>
-</div>
-</section>
 <section id="encounter-data" class="level2">
 <h2 class="anchored" data-anchor-id="encounter-data">ENCOUNTER DATA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>encounters <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/encounters.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>encounters <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/encounters.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 11987 Columns: 15
 ── Column specification ────────────────────────────────────────────────────────
@@ -474,7 +453,7 @@ dttm (2): START, STOP
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 15
   Id       START               STOP                PATIENT ORGANIZATION PROVIDER
@@ -491,27 +470,27 @@ dttm (2): START, STOP
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(encounters, <span class="fu">aes</span>(ENCOUNTERCLASS)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Type of Visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(encounters, <span class="fu">aes</span>(ENCOUNTERCLASS)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Type of Visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(DESCRIPTION) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> DESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Visit Description"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(DESCRIPTION) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> DESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Visit Description"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(REASONDESCRIPTION) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> REASONDESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Reason Patient Visited Provider"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(REASONDESCRIPTION) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> REASONDESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Reason Patient Visited Provider"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-11-3.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>I am noticing a lot of kidney related diseases in this dataset</p>
@@ -520,27 +499,25 @@ dttm (2): START, STOP
 <h2 class="anchored" data-anchor-id="combine-patient-provider-and-encounter-data">Combine Patient, Provider, and Encounter Data</h2>
 <p>I am taking this step here so that I have a master dataset (encounters_attributes) and so that I can create an edgelist more easily.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a left join to merge encounters with provider_attributes based on PROVIDER</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters, providers, <span class="at">by =</span> <span class="st">"PROVIDER"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the PROVIDER column with the corresponding names from the NAME column</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PROVIDER <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the NAME column if no longer needed</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for Provider</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters_cleaning, patients, <span class="at">by =</span> <span class="st">"PATIENT"</span>)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PATIENT <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME) </span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Clearly identify the Encounter ID</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ENCOUNTER_ID =</span> Id)</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ENCOUNTER_ID, PATIENT, PROVIDER, GENDER.x, GENDER.y, RACE, MARITAL, ETHNICITY, INCOME)</span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="co"># View the updated dataframe</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounter_attributes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a left join to merge encounters with provider_attributes based on PROVIDER</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters, providers, <span class="at">by =</span> <span class="st">"PROVIDER"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the PROVIDER column with the corresponding names from the NAME column</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PROVIDER <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the NAME column if no longer needed</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for Provider</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters_cleaning, patients, <span class="at">by =</span> <span class="st">"PATIENT"</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PATIENT <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME) </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Clearly identify the Encounter ID</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ENCOUNTER_ID =</span> Id)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ENCOUNTER_ID, PATIENT, PROVIDER, GENDER.x, GENDER.y, RACE, MARITAL, ETHNICITY, INCOME)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="co"># View the updated dataframe</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounter_attributes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 9
   ENCOUNTER_ID PATIENT PROVIDER GENDER.x GENDER.y RACE  MARITAL ETHNICITY INCOME
@@ -557,15 +534,15 @@ dttm (2): START, STOP
 <section id="edgelist" class="level2">
 <h2 class="anchored" data-anchor-id="edgelist">EDGELIST</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Edgelist</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>encounters_el <span class="ot">&lt;-</span> encounter_attributes <span class="sc">%&gt;%</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PATIENT, PROVIDER) <span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Edgelist</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>encounters_el <span class="ot">&lt;-</span> encounter_attributes <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PATIENT, PROVIDER) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PATIENT'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
 # Groups:   PATIENT [2]
@@ -578,7 +555,7 @@ dttm (2): START, STOP
 5 Akiko835 Larkin917    Ted955 Reilly981          1
 6 Anneliese170 Berge125 Althea11 Ankunding277     6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 437   3</code></pre>
 </div>
@@ -586,6 +563,24 @@ dttm (2): START, STOP
 </section>
 <section id="combined-attribute-list" class="level2">
 <h2 class="anchored" data-anchor-id="combined-attribute-list">COMBINED ATTRIBUTE LIST</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combine pro and pat attr</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PATIENT"</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PROVIDER"</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  NAME                       GENDER RACE  MARITAL INCOME   AGE type   
+  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
+1 Avril120 Olson653          F      white &lt;NA&gt;    482269    36 PATIENT
+2 Norma469 Langosh790        F      white &lt;NA&gt;    190464    25 PATIENT
+3 Peggie783 Eichmann909      F      white &lt;NA&gt;     78997    21 PATIENT
+4 Ashlie138 Williamson769    F      white M         6472    37 PATIENT
+5 Christiane220 Ankunding277 F      white &lt;NA&gt;    141475    24 PATIENT
+6 Dione665 O'Kon634          F      white M       482269    36 PATIENT</code></pre>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create combined attribute list</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -600,519 +595,24 @@ dttm (2): START, STOP
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">bipartite =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">matrix.type =</span> <span class="st">"edgelist"</span>,</span>
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertex.attr =</span> attribute_list)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(encounters.st<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>encounters.st<span class="fl">.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Network attributes:
-  vertices = 374
-  directed = FALSE
-  hyper = FALSE
-  loops = FALSE
-  multiple = FALSE
-  bipartite = 121
- total edges = 437 
-   missing edges = 0 
-   non-missing edges = 437 
- density = 0.006265143 
+<pre><code> Network attributes:
+  vertices = 374 
+  directed = FALSE 
+  hyper = FALSE 
+  loops = FALSE 
+  multiple = FALSE 
+  bipartite = 121 
+  total edges= 437 
+    missing edges= 0 
+    non-missing edges= 437 
 
-Vertex attributes:
+ Vertex attribute names: 
+    AGE GENDER INCOME MARITAL NAME RACE type vertex.names 
 
- AGE:
-   numeric valued attribute
-   attribute summary:
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   1.00   24.00   40.00   44.17   65.00  108.00     253 
-
- GENDER:
-   character valued attribute
-   attribute summary:
-  F   M 
-200 174 
-
- INCOME:
-   numeric valued attribute
-   attribute summary:
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   3365   32577   71082  134519  135462  931642     253 
-
- MARITAL:
-   character valued attribute
-   attribute summary:
- D  M  S  W 
-13 44 17  5 
-
- NAME:
-   character valued attribute
-   attribute summary:
-   the 10 most common values are:
-    Abdul218 White193    Akiko835 Larkin917       Alan320 West559 
-                    1                     1                     1 
-Althea11 Ankunding277      Alvin56 Crona259     Amado512 Adams676 
-                    1                     1                     1 
-    Amparo58 Hayes766       Andy346 Dare640   Anh979 Schroeder447 
-                    1                     1                     1 
-Anneliese170 Berge125 
-                    1 
-
- RACE:
-   character valued attribute
-   attribute summary:
-   asian    black hawaiian   native    other    white 
-       3       12        1        1        1      103 
-
- type:
-   character valued attribute
-   attribute summary:
- PATIENT PROVIDER 
-     121      253 
-  vertex.names:
-   character valued attribute
-   374 valid vertex names
-
-Edge attributes:
-
- COUNT:
-   integer valued attribute
-   437values
-
-Network edgelist matrix:
-       [,1] [,2]
-  [1,]    1  122
-  [2,]    1  123
-  [3,]    1  124
-  [4,]    1  125
-  [5,]    1  126
-  [6,]    2  127
-  [7,]    2  128
-  [8,]    2  129
-  [9,]    3  130
- [10,]    3  131
- [11,]    3  126
- [12,]    4  132
- [13,]    4  133
- [14,]    4  134
- [15,]    5  135
- [16,]    5  136
- [17,]    5  137
- [18,]    5  138
- [19,]    5  126
- [20,]    6  139
- [21,]    6  140
- [22,]    6  141
- [23,]    6  142
- [24,]    7  143
- [25,]    7  144
- [26,]    7  145
- [27,]    7  146
- [28,]    7  147
- [29,]    8  148
- [30,]    8  149
- [31,]    8  150
- [32,]    9  151
- [33,]    9  136
- [34,]    9  152
- [35,]    9  138
- [36,]   10  135
- [37,]   10  153
- [38,]   10  154
- [39,]   11  155
- [40,]   11  156
- [41,]   11  157
- [42,]   12  158
- [43,]   12  159
- [44,]   12  160
- [45,]   13  161
- [46,]   13  162
- [47,]   13  163
- [48,]   14  164
- [49,]   14  165
- [50,]   14  166
- [51,]   14  147
- [52,]   15  159
- [53,]   15  167
- [54,]   16  139
- [55,]   16  168
- [56,]   16  126
- [57,]   16  169
- [58,]   16  150
- [59,]   17  170
- [60,]   17  171
- [61,]   18  159
- [62,]   18  172
- [63,]   18  173
- [64,]   19  174
- [65,]   19  175
- [66,]   20  176
- [67,]   20  177
- [68,]   20  178
- [69,]   20  179
- [70,]   21  180
- [71,]   21  181
- [72,]   21  129
- [73,]   21  182
- [74,]   22  183
- [75,]   22  184
- [76,]   22  185
- [77,]   22  186
- [78,]   22  126
- [79,]   22  187
- [80,]   23  188
- [81,]   23  189
- [82,]   24  190
- [83,]   24  191
- [84,]   24  192
- [85,]   24  193
- [86,]   24  188
- [87,]   24  126
- [88,]   25  135
- [89,]   25  194
- [90,]   25  154
- [91,]   25  195
- [92,]   26  160
- [93,]   26  196
- [94,]   26  126
- [95,]   26  197
- [96,]   26  150
- [97,]   27  183
- [98,]   27  198
- [99,]   27  187
-[100,]   28  199
-[101,]   28  135
-[102,]   28  200
-[103,]   28  153
-[104,]   28  201
-[105,]   28  126
-[106,]   29  202
-[107,]   29  203
-[108,]   29  126
-[109,]   30  164
-[110,]   30  204
-[111,]   30  205
-[112,]   30  206
-[113,]   31  170
-[114,]   31  207
-[115,]   31  208
-[116,]   31  171
-[117,]   32  209
-[118,]   32  210
-[119,]   33  211
-[120,]   33  212
-[121,]   33  213
-[122,]   34  214
-[123,]   34  215
-[124,]   34  216
-[125,]   35  199
-[126,]   35  153
-[127,]   35  217
-[128,]   35  126
-[129,]   36  218
-[130,]   36  185
-[131,]   36  219
-[132,]   36  220
-[133,]   36  221
-[134,]   36  126
-[135,]   37  222
-[136,]   37  171
-[137,]   38  223
-[138,]   38  155
-[139,]   38  224
-[140,]   38  225
-[141,]   39  155
-[142,]   39  226
-[143,]   39  227
-[144,]   40  228
-[145,]   40  229
-[146,]   40  131
-[147,]   41  202
-[148,]   41  203
-[149,]   42  230
-[150,]   42  231
-[151,]   42  232
-[152,]   42  126
-[153,]   43  158
-[154,]   43  159
-[155,]   43  233
-[156,]   44  155
-[157,]   44  234
-[158,]   45  235
-[159,]   45  236
-[160,]   46  237
-[161,]   46  238
-[162,]   46  239
-[163,]   46  240
-[164,]   46  126
-[165,]   47  176
-[166,]   47  177
-[167,]   47  178
-[168,]   48  211
-[169,]   48  241
-[170,]   48  242
-[171,]   48  213
-[172,]   48  126
-[173,]   49  243
-[174,]   49  244
-[175,]   50  228
-[176,]   50  245
-[177,]   50  246
-[178,]   50  131
-[179,]   50  247
-[180,]   50  126
-[181,]   51  126
-[182,]   51  248
-[183,]   51  249
-[184,]   51  250
-[185,]   52  228
-[186,]   52  251
-[187,]   52  252
-[188,]   52  253
-[189,]   52  254
-[190,]   52  126
-[191,]   53  255
-[192,]   53  256
-[193,]   53  257
-[194,]   54  228
-[195,]   54  252
-[196,]   54  253
-[197,]   54  258
-[198,]   54  126
-[199,]   55  215
-[200,]   55  259
-[201,]   56  260
-[202,]   56  261
-[203,]   56  262
-[204,]   57  263
-[205,]   57  264
-[206,]   57  265
-[207,]   57  266
-[208,]   58  267
-[209,]   58  268
-[210,]   58  269
-[211,]   59  270
-[212,]   59  202
-[213,]   59  271
-[214,]   59  272
-[215,]   59  126
-[216,]   60  273
-[217,]   60  274
-[218,]   61  271
-[219,]   61  275
-[220,]   61  220
-[221,]   61  221
-[222,]   62  276
-[223,]   62  277
-[224,]   62  278
-[225,]   62  271
-[226,]   63  279
-[227,]   63  280
-[228,]   63  281
-[229,]   63  282
-[230,]   64  283
-[231,]   64  284
-[232,]   64  126
-[233,]   64  285
-[234,]   65  286
-[235,]   65  126
-[236,]   66  287
-[237,]   66  185
-[238,]   66  219
-[239,]   66  221
-[240,]   66  288
-[241,]   66  126
-[242,]   67  289
-[243,]   67  290
-[244,]   67  291
-[245,]   67  292
-[246,]   68  267
-[247,]   68  268
-[248,]   68  293
-[249,]   69  237
-[250,]   69  255
-[251,]   69  133
-[252,]   69  257
-[253,]   70  294
-[254,]   70  125
-[255,]   71  295
-[256,]   71  273
-[257,]   71  185
-[258,]   71  126
-[259,]   71  187
-[260,]   72  296
-[261,]   72  297
-[262,]   72  225
-[263,]   73  298
-[264,]   73  299
-[265,]   73  300
-[266,]   74  190
-[267,]   74  193
-[268,]   74  188
-[269,]   75  301
-[270,]   76  302
-[271,]   76  303
-[272,]   76  304
-[273,]   76  178
-[274,]   77  305
-[275,]   77  156
-[276,]   77  157
-[277,]   77  225
-[278,]   78  306
-[279,]   78  307
-[280,]   79  308
-[281,]   79  309
-[282,]   79  310
-[283,]   80  267
-[284,]   80  293
-[285,]   80  141
-[286,]   80  311
-[287,]   81  183
-[288,]   81  198
-[289,]   81  187
-[290,]   82  312
-[291,]   82  313
-[292,]   82  314
-[293,]   83  315
-[294,]   83  316
-[295,]   83  317
-[296,]   83  318
-[297,]   84  279
-[298,]   84  319
-[299,]   84  320
-[300,]   84  321
-[301,]   85  322
-[302,]   85  185
-[303,]   85  219
-[304,]   85  220
-[305,]   85  221
-[306,]   85  126
-[307,]   86  289
-[308,]   86  291
-[309,]   86  292
-[310,]   87  323
-[311,]   87  324
-[312,]   88  228
-[313,]   88  215
-[314,]   88  325
-[315,]   88  326
-[316,]   88  327
-[317,]   89  328
-[318,]   89  313
-[319,]   89  314
-[320,]   90  160
-[321,]   90  329
-[322,]   90  233
-[323,]   90  126
-[324,]   90  197
-[325,]   90  150
-[326,]   91  330
-[327,]   91  215
-[328,]   91  325
-[329,]   91  327
-[330,]   92  199
-[331,]   92  153
-[332,]   92  201
-[333,]   93  308
-[334,]   93  309
-[335,]   93  310
-[336,]   94  331
-[337,]   94  332
-[338,]   94  333
-[339,]   94  334
-[340,]   95  335
-[341,]   95  336
-[342,]   95  337
-[343,]   95  338
-[344,]   96  235
-[345,]   96  339
-[346,]   97  298
-[347,]   97  340
-[348,]   97  341
-[349,]   98  342
-[350,]   98  188
-[351,]   99  228
-[352,]   99  170
-[353,]   99  343
-[354,]   99  344
-[355,]   99  345
-[356,]  100  346
-[357,]  100  245
-[358,]  100  246
-[359,]  100  131
-[360,]  101  347
-[361,]  101  348
-[362,]  101  345
-[363,]  102  153
-[364,]  102  349
-[365,]  102  217
-[366,]  102  350
-[367,]  103  351
-[368,]  103  352
-[369,]  103  329
-[370,]  103  150
-[371,]  104  276
-[372,]  104  277
-[373,]  104  333
-[374,]  105  353
-[375,]  105  352
-[376,]  105  197
-[377,]  105  150
-[378,]  106  354
-[379,]  106  271
-[380,]  106  203
-[381,]  106  219
-[382,]  106  126
-[383,]  107  355
-[384,]  107  356
-[385,]  107  357
-[386,]  108  251
-[387,]  108  253
-[388,]  108  358
-[389,]  109  185
-[390,]  109  220
-[391,]  109  221
-[392,]  109  359
-[393,]  110  360
-[394,]  110  164
-[395,]  110  141
-[396,]  110  144
-[397,]  110  145
-[398,]  110  146
-[399,]  110  205
-[400,]  111  361
-[401,]  111  267
-[402,]  112  164
-[403,]  112  362
-[404,]  112  363
-[405,]  112  141
-[406,]  112  205
-[407,]  112  147
-[408,]  112  126
-[409,]  113  364
-[410,]  113  365
-[411,]  113  366
-[412,]  113  314
-[413,]  114  134
-[414,]  114  367
-[415,]  114  126
-[416,]  115  315
-[417,]  115  368
-[418,]  115  318
-[419,]  116  123
-[420,]  116  369
-[421,]  116  125
-[422,]  116  271
-[423,]  117  151
-[424,]  117  136
-[425,]  117  138
-[426,]  118  370
-[427,]  118  356
-[428,]  118  334
-[429,]  118  371
-[430,]  119  211
-[431,]  119  212
-[432,]  119  213
-[433,]  120  372
-[434,]  121  373
-[435,]  121  174
-[436,]  121  374
-[437,]  121  175</code></pre>
+ Edge attribute names: 
+    COUNT </code></pre>
 </div>
 </div>
 </section>
@@ -1201,6 +701,14 @@ Network edgelist matrix:
 <p>We see many providers close to the center that also have blue and red edges, indicating that they see 5-19 patients (blue) or more than 20 patients (red).</p>
 <p>There are also many patients and providers that are not linked into the larger group, with pairings of one patient and one provider, one patient and two providers, one patient and three providers, two patients and three providers, two patients and four providers, and so on.</p>
 <p>My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.</p>
+<p>Use to write CSV</p>
+<p>#write csv write.csv(pat_attr, “pat_attr.csv”)</p>
+<p>write.csv(pro_attr, “pro_attr.csv”)</p>
+<p>write.csv(encounters_cleaning, “encounters_cleaning.csv”)</p>
+<p>write.csv(encounter_attributes, “encounter_attributes.csv”)</p>
+<p>write.csv(attribute_list, “attribute_list.csv”)</p>
+<p>write.csv(encounters_el, “encounters_el.csv”)</p>
+<p>write.csv(encounters.st.3, “encounters.st.3.csv”)</p>
 
 
 </section>
