@@ -21,8 +21,10 @@ library(patchwork)
 
 This post will explore the Synthetic Mass network data in more detail.
 
-Read in Data
+# Read in Data
 ```{r}
+#| warning: false
+#| message: false
 pat_attr <- read_csv("post_one_data/pat_attr.csv", 
     col_types = cols(...1 = col_skip()))
 pro_attr <- read_csv("post_one_data/pro_attr.csv", 
@@ -37,8 +39,7 @@ encounters_st_3 <- read_csv("post_one_data/encounters.st.3.csv",
     col_types = cols(...1 = col_skip()))
 attribute_list <- read.csv("post_one_data/attribute_list.csv")
 ```
-# Graph Section
-
+# Prep Data for Analysis
 ```{r}
 #combine pro and pat attr
 pat_attr$type <- "PATIENT"
@@ -47,17 +48,16 @@ both_attr <- bind_rows(pat_attr, pro_attr)
 head(both_attr)
 ```
 
-
-
-
+# Create bipartite network with attributes
 ```{r}
-# create bipartite network with attributes
 encounters.st.3 <- network(encounters_el,
                          directed = FALSE,
                          bipartite = TRUE,
                          matrix.type = "edgelist",
                          vertex.attr = attribute_list)
+encounters.st.3
 head(network.vertex.names( encounters.st.3))
+
 ```
 
 
@@ -149,7 +149,7 @@ clos <- closeness(incidence_graph)
 eig <- eigen_centrality(incidence_graph)$vector
 
 cent_df <- data.frame(types, deg, bet, clos, eig)
-cent_df[order(cent_df$deg, decreasing = TRUE),]
+head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
 
 ```
 
