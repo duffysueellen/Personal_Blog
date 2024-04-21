@@ -1,0 +1,34 @@
+---
+title: "The Patient Provider Relationship, A Synthetic Social Network"
+subtitle: "Network Analysis"
+author: "Sue-Ellen Duffy"
+date: "2024-04-21"
+categories: [code, analysis]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(statnet)
+library(ggplot2)
+library(patchwork)
+```
+
+Read in Data
+```{r}
+pat_attr <- read_csv("posts/Post_One/pat_attr.csv")
+pro_attr <- read_csv("posts/Post_One/pro_attr.csv")
+encounters_cleaning <- read_csv("posts/Post_One/encounters_cleaning.csv")
+View(encounters_cleaning)
+encounter_attributes <- read_csv("posts/Post_Two/post_one_data/encounter_attributes.csv")
+encounter_el <- 
+
+```
+
+

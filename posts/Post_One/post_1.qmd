@@ -3,11 +3,8 @@ title: "The Patient Provider Relationship, A Synthetic Social Network"
 subtitle: "Data Cleaning, Exploration, and Network Analysis"
 author: "Sue-Ellen Duffy"
 date: "2024-04-20"
-categories: [news]
+categories: [code, analysis]
 ---
-
-
-
 
 Data for this project were taken from Synthetic Mass, which creates Synthetic patient data from Synthea.
 
@@ -21,8 +18,7 @@ While a whole host of datasets are available within each download, I will focus 
 
     -   Reminder none of this data is real, it is synthetic, so to personally identifiable information I share is not data on real people and cannot be used to identify real people.
 
-
-This post will primarily focus on data cleaning and data exploration with some exploration into social network analysis through transforming the data into an incidence matrix and plotting some attributes. 
+This post will primarily focus on data cleaning and data exploration with some exploration into social network analysis through transforming the data into an incidence matrix and plotting some attributes.
 
 ```{r}
 #| label: setup
@@ -71,8 +67,8 @@ patients <- patients %>%
 # Only keep patient name and demographics. This will be utilized as the attribute data for analysis.
 pat_attr <- patients%>% 
   select(NAME, GENDER, RACE, MARITAL, INCOME, AGE)
-
 head(pat_attr)
+
 ```
 
 ```{r}
@@ -95,7 +91,6 @@ pat_age <- ggplot(pat_attr,aes(AGE)) + geom_bar()
 ```
 
 Key for marital status: M (married), S (single), D (divorced), W (widowed) (There is missing data here)
-
 
 ## PROVIDER DATA
 
@@ -120,15 +115,7 @@ head(pro_attr)
 ggplot(pro_attr, aes(GENDER)) +geom_bar() + labs(title = "Provider Gender Breakdown")
 ```
 
-## PATIENT AND PROVIDER
 
-```{r}
-#combine pro and pat attr
-pat_attr$type <- "PATIENT"
-pro_attr$type <- "PROVIDER"
-both_attr <- bind_rows(pat_attr, pro_attr)
-head(both_attr)
-```
 
 ## ENCOUNTER DATA
 
@@ -160,7 +147,8 @@ ggplot(data = encounters %>%
 
 I am noticing a lot of kidney related diseases in this dataset
 
-## Combine Patient, Provider, and Encounter Data 
+## Combine Patient, Provider, and Encounter Data
+
 I am taking this step here so that I have a master dataset (encounters_attributes) and so that I can create an edgelist more easily.
 
 ```{r}
@@ -179,10 +167,8 @@ encounters_cleaning <- encounters_cleaning %>%
 #Clearly identify the Encounter ID
 encounters_cleaning <- encounters_cleaning %>%
   rename(ENCOUNTER_ID = Id)
-
 encounter_attributes <- encounters_cleaning %>%
   select(ENCOUNTER_ID, PATIENT, PROVIDER, GENDER.x, GENDER.y, RACE, MARITAL, ETHNICITY, INCOME)
-
 # View the updated dataframe
 head(encounter_attributes)
 ```
@@ -200,6 +186,13 @@ dim(encounters_el)
 
 ## COMBINED ATTRIBUTE LIST
 
+```{r}
+#combine pro and pat attr
+pat_attr$type <- "PATIENT"
+pro_attr$type <- "PROVIDER"
+both_attr <- bind_rows(pat_attr, pro_attr)
+head(both_attr)
+```
 ```{r}
 #create combined attribute list
 attribute_list <- do.call(list, both_attr)
@@ -295,5 +288,18 @@ We see many providers close to the center that also have blue and red edges, ind
 
 There are also many patients and providers that are not linked into the larger group, with pairings of one patient and one provider, one patient and two providers, one patient and three providers, two patients and three providers, two patients and four providers, and so on.
 
-
 My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.
+
+
+Use to write CSV
+#write csv
+write.csv(pat_attr, "pat_attr.csv")
+write.csv(pro_attr, "pro_attr.csv")
+write.csv(encounters_cleaning, "encounters_cleaning.csv")
+write.csv(encounter_attributes, "encounter_attributes.csv")
+write.csv(attribute_list, "attribute_list.csv")
+write.csv(encounters_el, "encounters_el.csv")
+write.csv(encounters.st.3, "encounters.st.3.csv")
+
+
+
