@@ -1,5 +1,5 @@
 ---
-title: "Network Block Modeling2"
+title: "Network Block Modeling - Providers"
 author: "Sue-Ellen Duffy"
 date: "2024-04-25"
 categories: [code, analysis, block_model]
