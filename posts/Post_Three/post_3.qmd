@@ -25,6 +25,7 @@ library(patchwork)
 This post will explore the Synthetic Mass network data in more detail.
 
 # Read in Data
+
 ```{r}
 #| warning: false
 #| message: false
@@ -42,7 +43,9 @@ encounters_st_3 <- read_csv("post_one_data/encounters.st.3.csv",
     col_types = cols(...1 = col_skip()))
 attribute_list <- read.csv("post_one_data/attribute_list.csv")
 ```
+
 # Prep Data for Analysis
+
 ```{r}
 #combine pro and pat attr
 pat_attr$type <- "PATIENT"
@@ -52,6 +55,7 @@ head(both_attr)
 ```
 
 # Create bipartite network with attributes
+
 ```{r}
 encounters.stat <- network(encounters_el,
                          directed = FALSE,
@@ -60,25 +64,15 @@ encounters.stat <- network(encounters_el,
                          vertex.attr = attribute_list)
 ```
 
-
 ```{r}
 #create igraph
 encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
 ```
 
-
 ```{r}
 encounters.stat2 <- asNetwork(encounters.ig)
 ```
-```{r}
-#encounters.se <- equiv.clust(encounters.stat,  equiv.fun = "sedist", method = "euclidean", mode = "graph", cluster.method = "complete")
-#Error:  This function is suited for one-mode networks only
-```
 
-```{r}
-library(dBlockmodeling)
-#blk<-tmklm(encounters.stat, RC=8, CC=10, TLIMIT = 6)
-```
 ```{r}
 projected_graph <- bipartite_projection(encounters.ig)
 patient_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj1))
@@ -92,19 +86,24 @@ patient.se <- equiv.clust(patient_matrix,
  cluster.method = "complete")
 
 names(patient.se)
+```
+
+```{r}
 
 plot(patient.se, main = "patient")
-rect.hclust(patient.se$cluster, k = 6)
-
-blk_model.patient.org <- blockmodel(patient_matrix,
- patient.se, k = 2)
+rect.hclust(patient.se$cluster, k = 4)
+```
+```{r}
+pat_blk_model.patient.org <- blockmodel(patient_matrix,
+ patient.se, k = 4)
 ```
 
 ```{r}
- blk_model.patient.org$block.model
+ pat_blk_model.patient.org$block.model
 ```
+
 ```{r}
-plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
+plot.block<-function(x=pat_blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
  plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
  main=main, drawlines = FALSE, cex.lab=cex.lab)
  for (j in 2:length(x$plabels)) if (x$block.membership[j] !=
@@ -112,7 +111,7 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
  abline(v = j- 0.5, h = j- 0.5, lty = 3, xpd=FALSE)
  }
  
-plot.block(blk_model.patient.org, main = "patient")
+plot.block(pat_blk_model.patient.org, main = "patient")
 ```
 
 ```{r}
@@ -126,103 +125,36 @@ g <- graph_from_adjacency_matrix(projected_graph$patient, mode = "directed", wei
 plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 100, edge.width = 1)
 ```
 
-
 ```{r}
-blks <- blockmodeling::optRandomParC(patient_matrix,
-                                     k=6,
-                                     rep=10,
-                                     approaches="ss",
-                                     blocks="com")
+#pat_blks6 <- blockmodeling::optRandomParC(patient_matrix,k=6, rep=20, approaches="ss", blocks="com")
 ```
 
+```{r}
+# Save the blks2 object to a file
+#saveRDS(pat_blks6, "pat_blks6_results.rds")
+
+# Later, when you want to use it again, you can read it back into R
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+```
 ```{r}
 # blockmodel with optimized partition
-blk_mod <- blockmodel(patient_matrix, blks$best$best1$clu,
+pat_blk_mod <- blockmodel(patient_matrix, pat_blks6$best$best1$clu,
                       plabels = rownames(patient_matrix))
 # print blockmodel object
-blk_mod$block.model
+pat_blk_mod$block.model
 ```
 
-
 ```{r}
-plot.block(blk_mod, main = "patient",
+plot.block(pat_blk_mod, main = "patient",
            cex.lab = .000001)
 ```
 
 ```{r}
 #assign block membership to vertex attribute
-patient.stat%v%"role"<-blk_mod$block.membership[match(patient.stat%v%"vertex.names",blk_mod$plabels)]
+patient.stat%v%"role"<-pat_blk_mod$block.membership[match(patient.stat%v%"vertex.names",pat_blk_mod$plabels)]
 #plot network using "role" to color nodes
 GGally::ggnet2(patient.stat,
                node.color="role", 
                node.size=sna::degree(patient.stat, gmode="graph"),
                node.alpha = .5)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Calculating centrality
-```{r}
-types <- V(encounters.ig)$type
-deg<- igraph::degree(encounters.ig)
-
-bet <- igraph::betweenness(encounters.ig)
-clos <- igraph::closeness(encounters.ig)
-eig <- eigen_centrality(encounters.ig)$vector
-const <- constraint(encounters.ig)
-cent_df <- data.frame(types, deg, bet, clos, eig, const)
-head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
-```
-
-
-# Triad Dyad Census
-```{r}
-triads_incidence<-igraph::triad_census(encounters.ig)
-triads_incidence
-igraph::dyad.census(encounters.ig)
-igraph::transitivity(encounters.ig)
-igraph::transitivity(encounters.ig, type = "global")
-mean_distance(encounters.ig)
-```
-
-# Component Structure and Membership
-```{r}
-names(igraph::components(encounters.ig))
-igraph::components(encounters.ig)$no # number of components
-igraph::components(encounters.ig)$csize #Size of each component
-degree.wt=igraph::strength(encounters.ig)
-```
-
-
-
-
-
-
-
-
-
-
-
