@@ -9,7 +9,7 @@
 <meta name="author" content="Sue-Ellen Duffy">
 <meta name="dcterms.date" content="2024-04-25">
 
-<title>Social_Networks_Blog_Space - Network Block Modeling</title>
+<title>Social_Networks_Blog_Space - Network Block Modeling - Patients</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Network Block Modeling</h1>
+      <h1 class="title">Network Block Modeling - Patients</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
@@ -366,6 +366,53 @@ Block 6 0.00000000 0.750000000 0.000000000 0.023076923 0.00000 0.66666667</code>
 </div>
 <div class="cell-output-display">
 <p><img src="post_3_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ade4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ade4' was built under R version 4.3.3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>encounters.adj.ig <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_biadjacency_matrix</span>(encounters.ig)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>patients_jaccard <span class="ot">&lt;-</span> <span class="fu">dist.binary</span>(encounters.adj.ig,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="dv">1</span>, <span class="co"># method=1 Jaccard index</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>patients_jaccard <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(patients_jaccard)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(patients_jaccard) <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#binarize</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>patients_jaccard_bi <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(patients_jaccard <span class="sc">&gt;</span> <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create igraph object</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>patients_jaccard.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(patients_jaccard_bi, <span class="at">mode =</span> <span class="st">"undirected"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>patients_jaccard.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IGRAPH cc4c8b4 UN-- 121 6723 -- 
++ attr: name (v/c)
++ edges from cc4c8b4 (vertex names):
+ [1] Akiko835 Larkin917--Anneliese170 Berge125  
+ [2] Akiko835 Larkin917--Anthony633 Renner328   
+ [3] Akiko835 Larkin917--Ashlie138 Williamson769
+ [4] Akiko835 Larkin917--Avril120 Olson653      
+ [5] Akiko835 Larkin917--Basil991 Hilll811      
+ [6] Akiko835 Larkin917--Benjamin360 Hintz995   
+ [7] Akiko835 Larkin917--Brendan864 MacGyver246 
+ [8] Akiko835 Larkin917--Bula88 Prohaska837     
++ ... omitted several edges</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(patients_jaccard.ig,  <span class="at">edge.width =</span> <span class="fl">0.0002</span>, <span class="at">edge.color =</span> <span class="st">"lightgray"</span>,  <span class="at">vertex.size =</span> <span class="dv">2</span>, <span class="at">vertex.label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_3_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 

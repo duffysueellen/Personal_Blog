@@ -1,5 +1,5 @@
 ---
-title: "Network Block Modeling"
+title: "Network Block Modeling - Patients"
 author: "Sue-Ellen Duffy"
 date: "2024-04-25"
 categories: [code, analysis, block_model]
@@ -158,4 +158,36 @@ GGally::ggnet2(patient.stat,
                node.color="role", 
                node.size=sna::degree(patient.stat, gmode="graph"),
                node.alpha = .5)
+```
+```{r}
+library(ade4)
+```
+
+
+```{r}
+encounters.adj.ig <- igraph::as_biadjacency_matrix(encounters.ig)
+
+patients_jaccard <- dist.binary(encounters.adj.ig,
+            method = 1, # method=1 Jaccard index
+            upper = TRUE,
+            diag = FALSE)
+
+
+patients_jaccard <- as.matrix(patients_jaccard)
+diag(patients_jaccard) <- 0
+
+```
+
+```{r}
+#binarize
+patients_jaccard_bi <- ifelse(patients_jaccard > 0.99, 1, 0)
+```
+
+```{r}
+#create igraph object
+patients_jaccard.ig <- graph_from_adjacency_matrix(patients_jaccard_bi, mode = "undirected")
+patients_jaccard.ig
+```
+```{r}
+plot(patients_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vertex.size = 2, vertex.label = NA)
 ```

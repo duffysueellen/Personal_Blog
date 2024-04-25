@@ -200,33 +200,29 @@ library(ade4)
 ```{r}
 encounters.adj.ig <- igraph::as_biadjacency_matrix(encounters.ig)
 
-patients_jaccard <- dist.binary(encounters.adj.ig,
+providers_jaccard <- dist.binary(t(encounters.adj.ig),
             method = 1, # method=1 Jaccard index
             upper = TRUE,
             diag = FALSE)
 
-providers_jaccard <- dist.binary(t(encounters.adj.ig), #transpose matrix
-            method = 1,
-            upper = TRUE,
-            diag = FALSE)
 
-patients_jaccard <- as.matrix(patients_jaccard)
-diag(patients_jaccard) <- 0
+providers_jaccard <- as.matrix(providers_jaccard)
+diag(providers_jaccard) <- 0
 
 ```
 
 ```{r}
 #binarize
-patients_jaccard_bi <- ifelse(patients_jaccard > 0.99, 1, 0)
+providers_jaccard_bi <- ifelse(providers_jaccard > 0.99, 1, 0)
 ```
 
 ```{r}
 #create igraph object
-patients_jaccard.ig <- graph_from_adjacency_matrix(patients_jaccard_bi, mode = "undirected")
-patients_jaccard.ig
+providers_jaccard.ig <- graph_from_adjacency_matrix(providers_jaccard_bi, mode = "undirected")
+providers_jaccard.ig
 ```
 ```{r}
-plot(patients_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vertex.size = 2, vertex.label = NA)
+plot(providers_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vertex.size = 2, vertex.label = NA)
 ```
 
 
