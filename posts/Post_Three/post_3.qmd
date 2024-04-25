@@ -1,0 +1,228 @@
+---
+title: "The Patient Provider Relationship, A Synthetic Social Network"
+subtitle: "Network Block Modeling"
+author: "Sue-Ellen Duffy"
+date: "2024-04-25"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+
+
+library(ggplot2)
+library(patchwork)
+```
+
+This post will explore the Synthetic Mass network data in more detail.
+
+# Read in Data
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post_one_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post_one_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post_one_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post_one_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post_one_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post_one_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post_one_data/attribute_list.csv")
+```
+# Prep Data for Analysis
+```{r}
+#combine pro and pat attr
+pat_attr$type <- "PATIENT"
+pro_attr$type <- "PROVIDER"
+both_attr <- bind_rows(pat_attr, pro_attr)
+head(both_attr)
+```
+
+# Create bipartite network with attributes
+```{r}
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+```
+
+
+```{r}
+#create igraph
+encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
+```
+
+
+```{r}
+encounters.stat2 <- asNetwork(encounters.ig)
+```
+```{r}
+#encounters.se <- equiv.clust(encounters.stat,  equiv.fun = "sedist", method = "euclidean", mode = "graph", cluster.method = "complete")
+#Error:  This function is suited for one-mode networks only
+```
+
+```{r}
+library(dBlockmodeling)
+#blk<-tmklm(encounters.stat, RC=8, CC=10, TLIMIT = 6)
+```
+```{r}
+projected_graph <- bipartite_projection(encounters.ig)
+adj_matrix1 <- as.matrix(as_adjacency_matrix(projected_graph$proj1))
+
+proj1.stat <- asNetwork(projected_graph$proj1)
+
+proj1.se <- equiv.clust(adj_matrix1,
+ equiv.fun = "sedist",
+ method = "hamming",
+ mode = "graph",
+ cluster.method = "complete")
+
+names(proj1.se)
+
+plot(proj1.se, main = "Proj1")
+rect.hclust(proj1.se$cluster, k = 6)
+
+blk_model.proj1.org <- blockmodel(adj_matrix1,
+ proj1.se, k = 2)
+```
+
+```{r}
+ blk_model.proj1.org$block.model
+```
+```{r}
+plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
+ plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
+ main=main, drawlines = FALSE, cex.lab=cex.lab)
+ for (j in 2:length(x$plabels)) if (x$block.membership[j] !=
+ x$block.membership[j-1])
+ abline(v = j- 0.5, h = j- 0.5, lty = 3, xpd=FALSE)
+ }
+ 
+plot.block(blk_model.proj1.org, main = "proj1")
+```
+
+```{r}
+# Load the igraph package
+library(igraph)
+
+# Create an igraph object from the blockmodel
+g <- graph_from_adjacency_matrix(projected_graph$proj1, mode = "directed", weighted = FALSE)
+
+# Plot the graph without labels
+plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 100, edge.width = 1)
+```
+
+
+```{r}
+blks <- blockmodeling::optRandomParC(adj_matrix1,
+                                     k=6,
+                                     rep=10,
+                                     approaches="ss",
+                                     blocks="com")
+```
+
+```{r}
+# blockmodel with optimized partition
+blk_mod <- blockmodel(adj_matrix1, blks$best$best1$clu,
+                      plabels = rownames(adj_matrix1))
+# print blockmodel object
+blk_mod$block.model
+```
+
+
+```{r}
+plot.block(blk_mod, main = "proj1",
+           cex.lab = .000001)
+```
+
+```{r}
+#assign block membership to vertex attribute
+proj1.stat%v%"role"<-blk_mod$block.membership[match(proj1.stat%v%"vertex.names",blk_mod$plabels)]
+#plot network using "role" to color nodes
+GGally::ggnet2(proj1.stat,
+               node.color="role", 
+               node.size=sna::degree(proj1.stat, gmode="graph"),
+               node.alpha = .5)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Calculating centrality
+```{r}
+types <- V(encounters.ig)$type
+deg<- igraph::degree(encounters.ig)
+
+bet <- igraph::betweenness(encounters.ig)
+clos <- igraph::closeness(encounters.ig)
+eig <- eigen_centrality(encounters.ig)$vector
+const <- constraint(encounters.ig)
+cent_df <- data.frame(types, deg, bet, clos, eig, const)
+head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
+```
+
+
+# Triad Dyad Census
+```{r}
+triads_incidence<-igraph::triad_census(encounters.ig)
+triads_incidence
+igraph::dyad.census(encounters.ig)
+igraph::transitivity(encounters.ig)
+igraph::transitivity(encounters.ig, type = "global")
+mean_distance(encounters.ig)
+```
+
+# Component Structure and Membership
+```{r}
+names(igraph::components(encounters.ig))
+igraph::components(encounters.ig)$no # number of components
+igraph::components(encounters.ig)$csize #Size of each component
+degree.wt=igraph::strength(encounters.ig)
+```
+
+
+
+
+
+
+
+
+
+
+

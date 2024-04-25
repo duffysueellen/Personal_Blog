@@ -22,6 +22,7 @@ library(patchwork)
 This post will explore the Synthetic Mass network data in more detail.
 
 # Read in Data
+
 ```{r}
 #| warning: false
 #| message: false
@@ -39,7 +40,9 @@ encounters_st_3 <- read_csv("post_one_data/encounters.st.3.csv",
     col_types = cols(...1 = col_skip()))
 attribute_list <- read.csv("post_one_data/attribute_list.csv")
 ```
+
 # Prep Data for Analysis
+
 ```{r}
 #combine pro and pat attr
 pat_attr$type <- "PATIENT"
@@ -49,6 +52,7 @@ head(both_attr)
 ```
 
 # Create bipartite network with attributes
+
 ```{r}
 encounters.st.3 <- network(encounters_el,
                          directed = FALSE,
@@ -58,8 +62,11 @@ encounters.st.3 <- network(encounters_el,
 encounters.st.3
 head(network.vertex.names( encounters.st.3))
 ```
+
 # Graphs
+
 ## Graphs with sna
+
 ```{r}
 # load the sna library to get the gplot() function
 library( sna )
@@ -79,17 +86,16 @@ gplot(
 
 ```
 
-
 ```{r}
 incidence_graph <- graph_from_biadjacency_matrix(encounters.st.3)
 ```
-
 
 ```{r}
 detach("package:sna")
 ```
 
 ## Graphs with igraph
+
 ```{r}
 vertex_colors <- ifelse(attribute_list$GENDER == "F", "blue", "magenta")
 V(incidence_graph)$shape <- ifelse(V(incidence_graph)$type, "square", "circle")
@@ -154,7 +160,6 @@ head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
 
 ```
 
-
 ```{r}
 V(incidence_graph)$size <- degree(incidence_graph)
 
@@ -187,8 +192,8 @@ legend("topleft",
        pt.cex = seq(0.5, 3, length.out = 5), 
        title = "Degree")
 ```
-Here we can see there is one Provider that sees the most patients, with degree centrality = 28. 
-The next largest degree centrality are in the 5 to 7 range and the majority of those nodes are patients.
+
+Here we can see there is one Provider that sees the most patients, with degree centrality = 28. The next largest degree centrality are in the 5 to 7 range and the majority of those nodes are patients.
 
 ```{r}
 V(incidence_graph)$size <- closeness(incidence_graph)
@@ -222,9 +227,11 @@ legend("topleft",
        pt.cex = seq(0.5, 3, length.out = 5), 
        title = "Closeness")
 ```
+
 Here we see two of the dyads on the outer right side of this incidence graph have the largest closeness score. This is because their network is complete (they are both connected to one another).
 
 # Triad Dyad Census
+
 ```{r}
 triads_incidence<-igraph::triad_census(incidence_graph)
 triads_incidence
@@ -244,7 +251,9 @@ components(incidence_graph)$no # number of components
 components(incidence_graph)$csize #Size of each component
 degree.wt=strength(incidence_graph)
 ```
+
 # Graph Cluster
+
 ```{r}
 glou <- graph_from_data_frame(encounters_el[, 1:2], directed = FALSE)
 lou <- cluster_louvain(glou)
@@ -255,6 +264,7 @@ plot(lou, glou, vertex.label = NA, vertex.size=5, mark.groups = NULL)
 set.seed(1)
 plot(lou, glou, vertex.label = NA, vertex.size = 5, mark.border = NA)
 ```
+
 ```{r}
 glou <- graph_from_data_frame(encounters_el[, 1:2], directed = FALSE)
 walktrap <- cluster_leading_eigen(glou)
@@ -267,6 +277,7 @@ plot(walktrap, glou, vertex.label = NA, vertex.size = 5, mark.border = NA)
 ```
 
 # Graph Providers and Patients Separately
+
 ```{r}
 projected_graph <- bipartite_projection(incidence_graph)
 #providers
@@ -293,13 +304,3 @@ plot(projected_graph$proj1, vertex.color = membership(patient_communities),
 plot(projected_graph$proj2, vertex.color = membership(provider_communities),
      vertex.label = NA, edge.arrow.size = 0.5)
 ```
-
-
-
-
-
-
-
-
-
-
