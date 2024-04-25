@@ -140,7 +140,7 @@ blk_mod$block.model
 
 
 ```{r}
-plot.block(blk_mod, main = "provider",
+plot.block(blk_mod, main = "Provider 6 Block Model",
            cex.lab = .000001)
 ```
 
@@ -151,7 +151,7 @@ provider.stat%v%"role"<-blk_mod$block.membership[match(provider.stat%v%"vertex.n
 GGally::ggnet2(provider.stat,
                node.color="role", 
                node.size=sna::degree(provider.stat, gmode="graph"),
-               node.alpha = .5)
+               node.alpha = .5)  + ggtitle("Provider 6 Block Model Network")
 ```
 
 
@@ -176,7 +176,7 @@ blks2_mod$block.model
 
 
 ```{r}
-plot.block(blks2_mod, main = "provider2",
+plot.block(blks2_mod, main = "Provider 12 Block Model",
            cex.lab = .000001)
 ```
 
@@ -187,7 +187,48 @@ provider.stat%v%"role2"<-blks2_mod$block.membership[match(provider.stat%v%"verte
 GGally::ggnet2(provider.stat,
                node.color="role2", 
                node.size=sna::degree(provider.stat, gmode="graph"),
-               node.alpha = .5)
+               node.alpha = .5) + ggtitle("Provider 12 Block Model Network")
 ```
+With 12 distinct blocks, I start to loose definition of the exterior and interior. Notice the green color mixed in close to the center and tied with gray nodes in the outer ring. This is too many blocks, 6 defines more visually appealing divisions. Additional analysis will need to be done to understand if these blocks can actually be defined by anything other than ties. Onto deeper exploration of blocks...
+
+
+#Next Steps Jaccard similarity
+```{r}
+library(ade4)
+```
+
+```{r}
+encounters.adj.ig <- igraph::as_biadjacency_matrix(encounters.ig)
+
+patients_jaccard <- dist.binary(encounters.adj.ig,
+            method = 1, # method=1 Jaccard index
+            upper = TRUE,
+            diag = FALSE)
+
+providers_jaccard <- dist.binary(t(encounters.adj.ig), #transpose matrix
+            method = 1,
+            upper = TRUE,
+            diag = FALSE)
+
+patients_jaccard <- as.matrix(patients_jaccard)
+diag(patients_jaccard) <- 0
+
+```
+
+```{r}
+#binarize
+patients_jaccard_bi <- ifelse(patients_jaccard > 0.99, 1, 0)
+```
+
+```{r}
+#create igraph object
+patients_jaccard.ig <- graph_from_adjacency_matrix(patients_jaccard_bi, mode = "undirected")
+patients_jaccard.ig
+```
+```{r}
+plot(patients_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vertex.size = 2, vertex.label = NA)
+```
+
+
 
 

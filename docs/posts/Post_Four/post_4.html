@@ -347,7 +347,7 @@ Block 6 0.001388889 0.0000000     1.0 0.004658385 0.006944444 0.053208138</code>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blk_mod, <span class="at">main =</span> <span class="st">"provider"</span>,</span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blk_mod, <span class="at">main =</span> <span class="st">"Provider 6 Block Model"</span>,</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cex.lab =</span> .<span class="dv">000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_4_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
@@ -360,7 +360,7 @@ Block 6 0.001388889 0.0000000     1.0 0.004658385 0.006944444 0.053208138</code>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role"</span>, </span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>)  <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'GGally':
   method from   
@@ -416,7 +416,7 @@ Block 12 0.000000000 0.00000000 0.03750000 0.000000000 0.000000000 0.86666667</c
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blks2_mod, <span class="at">main =</span> <span class="st">"provider2"</span>,</span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blks2_mod, <span class="at">main =</span> <span class="st">"Provider 12 Block Model"</span>,</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cex.lab =</span> .<span class="dv">000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_4_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
@@ -429,9 +429,62 @@ Block 12 0.000000000 0.00000000 0.03750000 0.000000000 0.000000000 0.86666667</c
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role2"</span>, </span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 12 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_4_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>With 12 distinct blocks, I start to loose definition of the exterior and interior. Notice the green color mixed in close to the center and tied with gray nodes in the outer ring. This is too many blocks, 6 defines more visually appealing divisions. Additional analysis will need to be done to understand if these blocks can actually be defined by anything other than ties. Onto deeper exploration of blocks…</p>
+<p>#Next Steps Jaccard similarity</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ade4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ade4' was built under R version 4.3.3</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>encounters.adj.ig <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_biadjacency_matrix</span>(encounters.ig)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>patients_jaccard <span class="ot">&lt;-</span> <span class="fu">dist.binary</span>(encounters.adj.ig,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="dv">1</span>, <span class="co"># method=1 Jaccard index</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>providers_jaccard <span class="ot">&lt;-</span> <span class="fu">dist.binary</span>(<span class="fu">t</span>(encounters.adj.ig), <span class="co">#transpose matrix</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="dv">1</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>patients_jaccard <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(patients_jaccard)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(patients_jaccard) <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#binarize</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>patients_jaccard_bi <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(patients_jaccard <span class="sc">&gt;</span> <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create igraph object</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>patients_jaccard.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(patients_jaccard_bi, <span class="at">mode =</span> <span class="st">"undirected"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>patients_jaccard.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IGRAPH ce31844 UN-- 121 6723 -- 
++ attr: name (v/c)
++ edges from ce31844 (vertex names):
+ [1] Akiko835 Larkin917--Anneliese170 Berge125  
+ [2] Akiko835 Larkin917--Anthony633 Renner328   
+ [3] Akiko835 Larkin917--Ashlie138 Williamson769
+ [4] Akiko835 Larkin917--Avril120 Olson653      
+ [5] Akiko835 Larkin917--Basil991 Hilll811      
+ [6] Akiko835 Larkin917--Benjamin360 Hintz995   
+ [7] Akiko835 Larkin917--Brendan864 MacGyver246 
+ [8] Akiko835 Larkin917--Bula88 Prohaska837     
++ ... omitted several edges</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(patients_jaccard.ig,  <span class="at">edge.width =</span> <span class="fl">0.0002</span>, <span class="at">edge.color =</span> <span class="st">"lightgray"</span>,  <span class="at">vertex.size =</span> <span class="dv">2</span>, <span class="at">vertex.label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_4_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
