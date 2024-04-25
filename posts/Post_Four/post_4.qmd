@@ -1,6 +1,5 @@
 ---
-title: "The Patient Provider Relationship, A Synthetic Social Network"
-subtitle: "Network Block Modeling2"
+title: "Network Block Modeling2"
 author: "Sue-Ellen Duffy"
 date: "2024-04-25"
 categories: [code, analysis, block_model]

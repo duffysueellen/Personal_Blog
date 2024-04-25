@@ -1,5 +1,5 @@
 ---
-title: "Social_Networks_Blog"
+title:  "The Patient Provider Relationship, A Synthetic Social Network"
 listing:
   contents: posts
   sort: "date desc"

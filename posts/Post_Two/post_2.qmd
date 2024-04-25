@@ -1,6 +1,5 @@
 ---
-title: "The Patient Provider Relationship, A Synthetic Social Network"
-subtitle: "Network Exploration"
+title: "Network Exploration"
 author: "Sue-Ellen Duffy"
 date: "2024-04-21"
 categories: [code, analysis]
