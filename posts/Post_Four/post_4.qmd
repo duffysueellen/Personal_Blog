@@ -82,10 +82,13 @@ provider.se <- equiv.clust(provider_matrix,
  cluster.method = "complete")
 
 names(provider.se)
-
+```
+```{r}
 plot(provider.se, main = "provider")
-rect.hclust(provider.se$cluster, k = 6)
+rect.hclust(provider.se$cluster, k = 12)
+```
 
+```{r}
 blk_model.provider.org <- blockmodel(provider_matrix,
  provider.se, k = 6)
 ```
@@ -121,7 +124,6 @@ plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 1
 #blks <- blockmodeling::optRandomParC(provider_matrix, k=6, rep=10, approaches="ss", blocks="com")
 ```
 
-
 ```{r}
 # Save the blks object to a file
 #saveRDS(blks, "blks_results.rds")
@@ -154,5 +156,39 @@ GGally::ggnet2(provider.stat,
 ```
 
 
+```{r}
+#blks2 <- blockmodeling::optRandomParC(provider_matrix, k=12, rep=10, approaches="ss", blocks="com")
+```
+```{r}
+# Save the blks2 object to a file
+#saveRDS(blks2, "blks2_results.rds")
+
+# Later, when you want to use it again, you can read it back into R
+blks2 <- readRDS("blks2_results.rds")
+```
+
+```{r}
+# blockmodel with optimized partition
+blks2_mod <- blockmodel(provider_matrix, blks2$best$best1$clu,
+                      plabels = rownames(provider_matrix))
+# print blockmodel object
+blks2_mod$block.model
+```
+
+
+```{r}
+plot.block(blks2_mod, main = "provider2",
+           cex.lab = .000001)
+```
+
+```{r}
+#assign block membership to vertex attribute
+provider.stat%v%"role2"<-blks2_mod$block.membership[match(provider.stat%v%"vertex.names",blks2_mod$plabels)]
+#plot network using "role" to color nodes
+GGally::ggnet2(provider.stat,
+               node.color="role2", 
+               node.size=sna::degree(provider.stat, gmode="graph"),
+               node.alpha = .5)
+```
 
 
