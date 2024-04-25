@@ -81,27 +81,27 @@ library(dBlockmodeling)
 ```
 ```{r}
 projected_graph <- bipartite_projection(encounters.ig)
-adj_matrix1 <- as.matrix(as_adjacency_matrix(projected_graph$proj1))
+patient_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj1))
 
-proj1.stat <- asNetwork(projected_graph$proj1)
+patient.stat <- asNetwork(projected_graph$proj1)
 
-proj1.se <- equiv.clust(adj_matrix1,
+patient.se <- equiv.clust(patient_matrix,
  equiv.fun = "sedist",
  method = "hamming",
  mode = "graph",
  cluster.method = "complete")
 
-names(proj1.se)
+names(patient.se)
 
-plot(proj1.se, main = "Proj1")
-rect.hclust(proj1.se$cluster, k = 6)
+plot(patient.se, main = "patient")
+rect.hclust(patient.se$cluster, k = 6)
 
-blk_model.proj1.org <- blockmodel(adj_matrix1,
- proj1.se, k = 2)
+blk_model.patient.org <- blockmodel(patient_matrix,
+ patient.se, k = 2)
 ```
 
 ```{r}
- blk_model.proj1.org$block.model
+ blk_model.patient.org$block.model
 ```
 ```{r}
 plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
@@ -112,7 +112,7 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
  abline(v = j- 0.5, h = j- 0.5, lty = 3, xpd=FALSE)
  }
  
-plot.block(blk_model.proj1.org, main = "proj1")
+plot.block(blk_model.patient.org, main = "patient")
 ```
 
 ```{r}
@@ -120,7 +120,7 @@ plot.block(blk_model.proj1.org, main = "proj1")
 library(igraph)
 
 # Create an igraph object from the blockmodel
-g <- graph_from_adjacency_matrix(projected_graph$proj1, mode = "directed", weighted = FALSE)
+g <- graph_from_adjacency_matrix(projected_graph$patient, mode = "directed", weighted = FALSE)
 
 # Plot the graph without labels
 plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 100, edge.width = 1)
@@ -128,7 +128,7 @@ plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 1
 
 
 ```{r}
-blks <- blockmodeling::optRandomParC(adj_matrix1,
+blks <- blockmodeling::optRandomParC(patient_matrix,
                                      k=6,
                                      rep=10,
                                      approaches="ss",
@@ -137,25 +137,25 @@ blks <- blockmodeling::optRandomParC(adj_matrix1,
 
 ```{r}
 # blockmodel with optimized partition
-blk_mod <- blockmodel(adj_matrix1, blks$best$best1$clu,
-                      plabels = rownames(adj_matrix1))
+blk_mod <- blockmodel(patient_matrix, blks$best$best1$clu,
+                      plabels = rownames(patient_matrix))
 # print blockmodel object
 blk_mod$block.model
 ```
 
 
 ```{r}
-plot.block(blk_mod, main = "proj1",
+plot.block(blk_mod, main = "patient",
            cex.lab = .000001)
 ```
 
 ```{r}
 #assign block membership to vertex attribute
-proj1.stat%v%"role"<-blk_mod$block.membership[match(proj1.stat%v%"vertex.names",blk_mod$plabels)]
+patient.stat%v%"role"<-blk_mod$block.membership[match(patient.stat%v%"vertex.names",blk_mod$plabels)]
 #plot network using "role" to color nodes
-GGally::ggnet2(proj1.stat,
+GGally::ggnet2(patient.stat,
                node.color="role", 
-               node.size=sna::degree(proj1.stat, gmode="graph"),
+               node.size=sna::degree(patient.stat, gmode="graph"),
                node.alpha = .5)
 ```
 
