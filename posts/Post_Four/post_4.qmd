@@ -15,10 +15,7 @@ library(readr)
 library(igraph)
 library(sna)
 library(intergraph)
-
-
 library(ggplot2)
-library(patchwork)
 ```
 
 This post will explore the Synthetic Mass network data in more detail.
@@ -107,16 +104,6 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
 plot.block(blk_model.provider.org, main = "provider")
 ```
 
-```{r}
-# Load the igraph package
-library(igraph)
-
-# Create an igraph object from the blockmodel
-g <- graph_from_adjacency_matrix(projected_graph$provider, mode = "directed", weighted = FALSE)
-
-# Plot the graph without labels
-plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 100, edge.width = 1)
-```
 
 
 ```{r}
@@ -227,4 +214,20 @@ plot(providers_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vert
 
 
 
+```{r}
+# Load the igraph package
+library(igraph)
+
+# Create an igraph object from the blockmodel
+g <- graph_from_adjacency_matrix(provider_matrix, mode = "undirected", weighted = FALSE)
+
+# Plot the graph without labels
+plot(g,      layout = layout.fruchterman.reingold, 
+     vertex.label.dist = 2, 
+     vertex.size = 2, 
+     edge.label = NA,
+     vertex.label = NA,
+     vertex.label.cex = 0.2, 
+     main = "Provider Network")
+```
 

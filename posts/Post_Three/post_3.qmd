@@ -114,16 +114,6 @@ plot.block<-function(x=pat_blk_mod, main=NULL, cex.lab=.00001,show_labels = FALS
 plot.block(pat_blk_model.patient.org, main = "patient")
 ```
 
-```{r}
-# Load the igraph package
-library(igraph)
-
-# Create an igraph object from the blockmodel
-g <- graph_from_adjacency_matrix(projected_graph$patient, mode = "directed", weighted = FALSE)
-
-# Plot the graph without labels
-plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 100, edge.width = 1)
-```
 
 ```{r}
 #pat_blks6 <- blockmodeling::optRandomParC(patient_matrix,k=6, rep=20, approaches="ss", blocks="com")
@@ -159,10 +149,10 @@ GGally::ggnet2(patient.stat,
                node.size=sna::degree(patient.stat, gmode="graph"),
                node.alpha = .5)
 ```
+
 ```{r}
 library(ade4)
 ```
-
 
 ```{r}
 encounters.adj.ig <- igraph::as_biadjacency_matrix(encounters.ig)
@@ -188,6 +178,27 @@ patients_jaccard_bi <- ifelse(patients_jaccard > 0.99, 1, 0)
 patients_jaccard.ig <- graph_from_adjacency_matrix(patients_jaccard_bi, mode = "undirected")
 patients_jaccard.ig
 ```
+
 ```{r}
 plot(patients_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vertex.size = 2, vertex.label = NA)
+```
+
+
+
+```{r}
+# Load the igraph package
+library(igraph)
+
+# Create an igraph object from the blockmodel
+g <- graph_from_adjacency_matrix(patient_matrix, mode = "undirected", weighted = FALSE)
+
+# Plot the graph without labels
+plot(g,      
+     layout = layout.fruchterman.reingold, 
+     vertex.label.dist = 2, 
+     vertex.size = 2, 
+     edge.label = NA,
+     vertex.label = NA,
+     vertex.label.cex = 0.2, 
+     main = "Patient Network")
 ```
