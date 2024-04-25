@@ -141,7 +141,6 @@ legend("topleft",
 ```
 
 ```{r}
-
 #Calculating centrality
 types <- V(incidence_graph)$type
 deg<- degree(incidence_graph)
@@ -225,64 +224,64 @@ legend("topleft",
 ```
 Here we see two of the dyads on the outer right side of this incidence graph have the largest closeness score. This is because their network is complete (they are both connected to one another).
 
+# Triad Dyad Census
 ```{r}
 triads_incidence<-igraph::triad_census(incidence_graph)
 triads_incidence
-igraph::dyad.census(incidence_graph)
+dyad.census(incidence_graph)
 transitivity(incidence_graph)
 transitivity(incidence_graph, type = "global")
-average.path.length(incidence_graph)
+mean_distance(incidence_graph)
 ```
 
-Component Structure and Membership
+# Component Structure and Membership
 
 First, let's look at the network component structure. This gives a list with: membership by node, size of each component, and the total number of components.
 
 ```{r}
-names(igraph::components(incidence_graph))
-igraph::components(incidence_graph)$no # number of components
-igraph::components(incidence_graph)$csize #Size of each component
-degree.wt=igraph::strength(incidence_graph)
-
+names(components(incidence_graph))
+components(incidence_graph)$no # number of components
+components(incidence_graph)$csize #Size of each component
+degree.wt=strength(incidence_graph)
 ```
-
+# Graph Cluster
 ```{r}
 glou <- graph_from_data_frame(encounters_el[, 1:2], directed = FALSE)
 lou <- cluster_louvain(glou)
 set.seed(1)
 plot(lou, glou, vertex.label = NA, vertex.size=2)
+set.seed(1)
 plot(lou, glou, vertex.label = NA, vertex.size=5, mark.groups = NULL)
+set.seed(1)
 plot(lou, glou, vertex.label = NA, vertex.size = 5, mark.border = NA)
-
 ```
 ```{r}
 glou <- graph_from_data_frame(encounters_el[, 1:2], directed = FALSE)
 walktrap <- cluster_leading_eigen(glou)
 set.seed(1)
 plot(walktrap, glou, vertex.label = NA, vertex.size=2)
+set.seed(1)
 plot(walktrap, glou, vertex.label = NA, vertex.size=5, mark.groups = NULL)
+set.seed(1)
 plot(walktrap, glou, vertex.label = NA, vertex.size = 5, mark.border = NA)
-
 ```
 
-
+# Graph Providers and Patients Separately
 ```{r}
 projected_graph <- bipartite_projection(incidence_graph)
 #providers
 head(projected_graph$proj2)
 provider_communities <- cluster_louvain(projected_graph$proj2)
 provider_membership <- membership(provider_communities)
-print(provider_membership)
-
+head(provider_membership,10)
 ```
-
 
 ```{r}
 #patients
 head(projected_graph$proj1)
 patient_communities <- cluster_louvain(projected_graph$proj1)
 patient_membership <- membership(patient_communities)
-print(patient_membership)
+head(patient_membership, 10)
 ```
 
 ```{r}
