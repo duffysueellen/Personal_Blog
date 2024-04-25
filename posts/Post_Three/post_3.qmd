@@ -92,6 +92,7 @@ names(patient.se)
 plot(patient.se, main = "patient")
 rect.hclust(patient.se$cluster, k = 4)
 ```
+
 ```{r}
 pat_blk_model.patient.org <- blockmodel(patient_matrix,
  patient.se, k = 4)
@@ -135,6 +136,7 @@ plot(g, layout = layout.fruchterman.reingold, vertex.label = NA, vertex.size = 1
 # Later, when you want to use it again, you can read it back into R
 pat_blks6 <- readRDS("pat_blks6_results.rds")
 ```
+
 ```{r}
 # blockmodel with optimized partition
 pat_blk_mod <- blockmodel(patient_matrix, pat_blks6$best$best1$clu,
