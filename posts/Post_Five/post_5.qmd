@@ -303,6 +303,7 @@ plot(provider_graph,
 ```{r}
 block1 <- pro_attr %>%
   filter(block == 1)
+block1
 ```
 
 

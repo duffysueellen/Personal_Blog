@@ -548,18 +548,34 @@ WEST BRIDGEWATER     West Roxbury     WEST ROXBURY      WESTBOROUGH
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>block1 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>block1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   NAME                      GENDER CITY         type     block
+   &lt;chr&gt;                     &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;int&gt;
+ 1 Ted955 Reilly981          M      fitchburg    PROVIDER     1
+ 2 Barbara209 Maldonado119   F      leominster   PROVIDER     1
+ 3 Gisele901 Lehner980       F      west roxbury PROVIDER     1
+ 4 Vella930 Ankunding277     F      fall river   PROVIDER     1
+ 5 Precious140 Runolfsson901 F      norwell      PROVIDER     1
+ 6 Fernande593 Mosciski958   F      e falmouth   PROVIDER     1
+ 7 Jolie499 Parisian75       F      worcester    PROVIDER     1
+ 8 Archie818 McCullough561   M      medford      PROVIDER     1
+ 9 Maxima831 Fahey393        F      plymouth     PROVIDER     1
+10 Mickey576 Borer986        F      worcester    PROVIDER     1</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Ted955 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Ted955 Reilly981"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Ted955 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Ted955 Reilly981"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Ted955</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Ted955</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 11 × 4
 # Groups:   PROVIDER, CITY.x [1]
