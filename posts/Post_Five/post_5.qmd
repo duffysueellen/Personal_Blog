@@ -201,18 +201,21 @@ plot(provider_graph,
 What other cities are on the provider list. Boston is not being properly represented, I have a feeling
 ```{r}
 table(pro_attr$CITY)
+pro_attr <- pro_attr %>%
+  mutate(
+    CITY =tolower(CITY)
+  )
+pro_attr_list <- do.call(list, pro_attr)
 ```
 Should have cleaned that earlier, but here we go!
 ```{r}
 Boston_Neighborhoods <- c(
   "ALLSTON",
   "BRIGHTON",
-  "Boston",
   "BOSTON",
   "CHARLESTOWN",
   "DORCHESTER",
   "HYDE PARK",
-  "Jamaica Plain",
   "JAMAICA PLAIN",
   "MATTAPAN",
   "ROSLINDALE",
@@ -220,6 +223,8 @@ Boston_Neighborhoods <- c(
   "West Roxbury",
   "WEST ROXBURY"
 )
+Boston_Neighborhoods <- tolower(Boston_Neighborhoods)
+
 ```
 
 ```{r}
@@ -240,6 +245,72 @@ plot(provider_graph,
      edge.label = NA,
      vertex.label = NA,
      vertex.label.cex = 0.2, 
-     main = "SN Graph")
+     main = "Providers - RED = BOSTON")
 ```
 So... it's not Boston related. 
+
+How about Highest populations
+
+```{r}
+largest_pop <- c(
+"Boston",
+"Worcester",
+"Springfield",
+"Cambridge",
+"Lowell",
+"Brockton",
+"Quincy",
+"Lynn",
+"New Bedford",
+"Fall River",
+"Lawrence",
+"Newton",
+"Somerville",
+"Framingham",
+"Haverhill")
+largest_pop <- tolower(largest_pop)
+```
+
+```{r}
+#assign colors
+#colors <-  c("yellow", "blue", "green", "orange", "red", "purple")
+#vertex_colors <- colors[pro_attr_list$block]
+vertex_colors <- ifelse(pro_attr_list$CITY %in% largest_pop, "red", "white")
+vertex_shape <- ifelse(pro_attr_list$block == "1", "circle", "square")
+#vertex_shape <- ifelse(pro_attr_list$CITY == "BOSTON", "circle", "square")
+```
+```{r}
+plot(provider_graph, 
+     layout = layout.fruchterman.reingold, 
+     vertex.label.dist = 2, 
+     vertex.size = 4, 
+     vertex.color = vertex_colors,
+     vertex.shape = vertex_shape,
+     edge.label = NA,
+     vertex.label = NA,
+     vertex.label.cex = 0.2, 
+     main = "Providers - RED = Largest Cities")
+```
+
+
+
+
+
+
+
+
+
+```{r}
+block1 <- pro_attr %>%
+  filter(block == 1)
+```
+
+
+```{r}
+Ted955 <- encounters_cleaned %>% 
+    filter(PROVIDER == "Ted955 Reilly981") %>% 
+    group_by(PROVIDER, CITY.x, REASONDESCRIPTION)%>%
+  summarize(COUNT = n()) 
+Ted955
+```
+Gonna go ahead and say Ted's a Cardiologist
