@@ -1,0 +1,169 @@
+---
+title: "Network Block Modeling - Geographical Comparisson"
+author: "Sue-Ellen Duffy"
+date: "2024-04-25"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+library(ggplot2)
+```
+
+This post will explore the Synthetic Mass network data in more detail.
+
+# Read in Data
+
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post1_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post1_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post1_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaned <- read_csv("post1_data//encounters_cleaned.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post1_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post1_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post1_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post1_data/attribute_list.csv")
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+# Create bipartite network with attributes
+
+```{r}
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+```
+
+```{r}
+#create igraph
+encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
+```
+
+```{r}
+encounters.stat2 <- asNetwork(encounters.ig)
+```
+
+```{r}
+projected_graph <- bipartite_projection(encounters.ig)
+```
+
+## PATIENT
+```{r}
+patient_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj1))
+
+patient.stat <- asNetwork(projected_graph$proj1)
+
+patient.se <- equiv.clust(patient_matrix,
+ equiv.fun = "sedist",
+ method = "hamming",
+ mode = "graph",
+ cluster.method = "complete")
+```
+
+```{r}
+pat_blk_model.patient.org <- blockmodel(patient_matrix,
+ patient.se, k = 4)
+```
+
+```{r}
+plot.block<-function(x=pat_blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
+ plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
+ main=main, drawlines = FALSE, cex.lab=cex.lab)
+ for (j in 2:length(x$plabels)) if (x$block.membership[j] !=
+ x$block.membership[j-1])
+ abline(v = j- 0.5, h = j- 0.5, lty = 3, xpd=FALSE)
+ }
+ 
+plot.block(pat_blk_model.patient.org, main = "patient")
+```
+
+```{r}
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+```
+
+```{r}
+# blockmodel with optimized partition
+pat_blk_mod <- blockmodel(patient_matrix, pat_blks6$best$best1$clu,
+                      plabels = rownames(patient_matrix))
+```
+
+```{r}
+#assign block membership to vertex attribute
+patient.stat%v%"role"<-pat_blk_mod$block.membership[match(patient.stat%v%"vertex.names",pat_blk_mod$plabels)]
+#plot network using "role" to color nodes
+GGally::ggnet2(patient.stat,
+               node.color="role", 
+               node.size=sna::degree(patient.stat, gmode="graph"),
+               node.alpha = .5)
+```
+
+## PROVIDER
+
+
+```{r}
+provider_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj2))
+
+provider.stat <- asNetwork(projected_graph$proj2)
+
+provider.se <- equiv.clust(provider_matrix,
+ equiv.fun = "sedist",
+ method = "hamming",
+ mode = "graph",
+ cluster.method = "complete")
+```
+
+```{r}
+blk_model.provider.org <- blockmodel(provider_matrix,
+ provider.se, k = 6)
+```
+
+
+```{r}
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+
+```{r}
+# blockmodel with optimized partition
+prov_blk_mod <- blockmodel(provider_matrix, prov_blks6$best$best1$clu,
+                      plabels = rownames(provider_matrix))
+```
+
+
+```{r}
+#assign block membership to vertex attribute
+provider.stat%v%"role"<-prov_blk_mod$block.membership[match(provider.stat%v%"vertex.names",prov_blk_mod$plabels)]
+#plot network using "role" to color nodes
+GGally::ggnet2(provider.stat,
+               node.color="role", 
+               node.size=sna::degree(provider.stat, gmode="graph"),
+               node.alpha = .5)  + ggtitle("Provider 6 Block Model Network")
+```
+
+
+```{r}
+pat_attr$block <- pat_blk_mod$block.membership
+pro_attr$block <- prov_blk_mod$block.membership
+both_attr <- bind_rows(pat_attr, pro_attr)
+attribute_list <- do.call(list, both_attr)
+```
