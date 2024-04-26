@@ -571,9 +571,9 @@ dttm (2): START, STOP
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ENCOUNTER_ID =</span> Id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-</section>
-<section id="check-dimensions-of-providers-in-later-analysis-i-noticed-that-while-there-are-279-providers-in-the-provider.csv-there-are-only-253-providers-listed-in-the-encounters-df.-i-need-to-find-out-who-is-in-the-encounters-list-and-only-keep-them-for-analysis" class="level1">
-<h1>check dimensions of Providers… In later analysis I noticed that while there are 279 providers in the provider.csv, there are only 253 providers listed in the encounters df. I need to find out who is in the encounters list and only keep them for analysis</h1>
+<section id="check-dimensions-of-providers" class="level2">
+<h2 class="anchored" data-anchor-id="check-dimensions-of-providers">check dimensions of Providers…</h2>
+<p>In later analysis I noticed that while there are 279 providers in the provider.csv, there are only 253 providers listed in the encounters df. I need to find out who is in the encounters list and only keep them for analysis</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>check_prov <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PROVIDER, ORGANIZATION.x) <span class="sc">%&gt;%</span></span>
@@ -692,6 +692,7 @@ dttm (2): START, STOP
 # ℹ 2 more variables: CITY.x &lt;chr&gt;, CITY.y &lt;chr&gt;</code></pre>
 </div>
 </div>
+</section>
 <section id="edgelist" class="level2">
 <h2 class="anchored" data-anchor-id="edgelist">EDGELIST</h2>
 <div class="cell">
@@ -869,6 +870,7 @@ dttm (2): START, STOP
 <p>write.csv(pat_attr, “pat_attr.csv”)</p>
 <p>write.csv(pro_attr, “pro_attr.csv”)</p>
 <p>write.csv(encounters_cleaning, “encounters_cleaning.csv”)</p>
+<p>write.csv(encounters_cleaned, “encounters_cleaned.csv”)</p>
 <p>write.csv(encounter_attributes, “encounter_attributes.csv”)</p>
 <p>write.csv(attribute_list, “attribute_list.csv”)</p>
 <p>write.csv(encounters_el, “encounters_el.csv”)</p>

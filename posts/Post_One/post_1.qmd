@@ -197,8 +197,10 @@ encounters_cleaning <- encounters_cleaning %>%
   rename(ENCOUNTER_ID = Id)
 ```
 
+## check dimensions of Providers... 
 
-# check dimensions of Providers... In later analysis I noticed that while there are 279 providers in the provider.csv, there are only 253 providers listed in the encounters df. I need to find out who is in the encounters list and only keep them for analysis
+In later analysis I noticed that while there are 279 providers in the provider.csv, there are only 253 providers listed in the encounters df. I need to find out who is in the encounters list and only keep them for analysis
+
 ```{r}
 check_prov <- encounters_cleaning %>%
   group_by(PROVIDER, ORGANIZATION.x) %>%
@@ -206,6 +208,7 @@ check_prov <- encounters_cleaning %>%
 check_prov2 <- providers %>% 
   group_by(NAME, PROVIDER)
 ```
+
 ```{r}
 dim(check_prov)
 dim(check_prov2)
@@ -237,6 +240,7 @@ check_pat <- encounters_cleaning %>%
 check_pat2 <- patients %>%
   group_by(NAME,PATIENT)
 ```
+
 ```{r}
 dim(check_pat)
 dim(check_pat2)
@@ -268,6 +272,7 @@ head(encounter_attributes)
 ```
 
 ## EDGELIST
+
 ```{r}
 # Create Edgelist
 encounters_el <- encounter_attributes %>%
@@ -395,6 +400,8 @@ write.csv(pat_attr, "pat_attr.csv")
 write.csv(pro_attr, "pro_attr.csv")
 
 write.csv(encounters_cleaning, "encounters_cleaning.csv")
+
+write.csv(encounters_cleaned, "encounters_cleaned.csv")
 
 write.csv(encounter_attributes, "encounter_attributes.csv")
 
