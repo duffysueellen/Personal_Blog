@@ -25,19 +25,21 @@ This post will explore the Synthetic Mass network data in more detail.
 ```{r}
 #| warning: false
 #| message: false
-pat_attr <- read_csv("post_one_data/pat_attr.csv", 
+pat_attr <- read_csv("post1_data/pat_attr.csv", 
     col_types = cols(...1 = col_skip()))
-pro_attr <- read_csv("post_one_data/pro_attr.csv", 
+pro_attr <- read_csv("post1_data/pro_attr.csv", 
     col_types = cols(...1 = col_skip()))
-encounters_cleaning <- read_csv("post_one_data//encounters_cleaning.csv", 
+encounters_cleaning <- read_csv("post1_data//encounters_cleaning.csv", 
     col_types = cols(...1 = col_skip()))
-encounter_attributes <- read_csv("post_one_data/encounter_attributes.csv", 
+encounters_cleaned <- read_csv("post1_data//encounters_cleaned.csv", 
     col_types = cols(...1 = col_skip()))
-encounters_el  <- read_csv("post_one_data/encounters_el.csv", 
+encounter_attributes <- read_csv("post1_data/encounter_attributes.csv", 
     col_types = cols(...1 = col_skip()))
-encounters_st_3 <- read_csv("post_one_data/encounters.st.3.csv", 
+encounters_el  <- read_csv("post1_data/encounters_el.csv", 
     col_types = cols(...1 = col_skip()))
-attribute_list <- read.csv("post_one_data/attribute_list.csv")
+encounters_st_3 <- read_csv("post1_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post1_data/attribute_list.csv")
 ```
 
 # Prep Data for Analysis
@@ -89,9 +91,9 @@ gplot(
 incidence_graph <- graph_from_biadjacency_matrix(encounters.st.3)
 ```
 
-```{r}
+
 detach("package:sna")
-```
+
 
 ## Graphs with igraph
 
@@ -148,10 +150,9 @@ legend("topleft",
 ```{r}
 #Calculating centrality
 types <- V(incidence_graph)$type
-deg<- degree(incidence_graph)
-
-bet <- betweenness(incidence_graph)
-clos <- closeness(incidence_graph)
+deg<- igraph::degree(incidence_graph)
+bet <- igraph::betweenness(incidence_graph)
+clos <- igraph::closeness(incidence_graph)
 eig <- eigen_centrality(incidence_graph)$vector
 const <- constraint(incidence_graph)
 cent_df <- data.frame(types, deg, bet, clos, eig, const)
@@ -160,7 +161,7 @@ head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
 ```
 
 ```{r}
-V(incidence_graph)$size <- degree(incidence_graph)
+V(incidence_graph)$size <- igraph::degree(incidence_graph)
 
 # set the seed to reproduce the plot layout
 set.seed( 235 )
@@ -195,7 +196,7 @@ legend("topleft",
 Here we can see there is one Provider that sees the most patients, with degree centrality = 28. The next largest degree centrality are in the 5 to 7 range and the majority of those nodes are patients.
 
 ```{r}
-V(incidence_graph)$size <- closeness(incidence_graph)
+V(incidence_graph)$size <- igraph::closeness(incidence_graph)
 
 # set the seed to reproduce the plot layout
 set.seed( 235 )
@@ -234,7 +235,7 @@ Here we see two of the dyads on the outer right side of this incidence graph hav
 ```{r}
 triads_incidence<-igraph::triad_census(incidence_graph)
 triads_incidence
-dyad.census(incidence_graph)
+igraph::dyad_census(incidence_graph)
 transitivity(incidence_graph)
 transitivity(incidence_graph, type = "global")
 mean_distance(incidence_graph)
@@ -245,9 +246,9 @@ mean_distance(incidence_graph)
 First, let's look at the network component structure. This gives a list with: membership by node, size of each component, and the total number of components.
 
 ```{r}
-names(components(incidence_graph))
-components(incidence_graph)$no # number of components
-components(incidence_graph)$csize #Size of each component
+names(igraph::components(incidence_graph))
+igraph::components(incidence_graph)$no # number of components
+igraph::components(incidence_graph)$csize #Size of each component
 degree.wt=strength(incidence_graph)
 ```
 
