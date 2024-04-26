@@ -194,89 +194,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="read-in-data" class="level1">
 <h1>Read in Data</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/pat_attr.csv"</span>, </span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data/pat_attr.csv"</span>, </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pro_attr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/pro_attr.csv"</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pro_attr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data/pro_attr.csv"</span>, </span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data//encounters_cleaning.csv"</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data//encounters_cleaning.csv"</span>, </span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/encounter_attributes.csv"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>encounters_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data//encounters_cleaned.csv"</span>, </span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>encounters_el  <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/encounters_el.csv"</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data/encounter_attributes.csv"</span>, </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>encounters_st_3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post_one_data/encounters.st.3.csv"</span>, </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>encounters_el  <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data/encounters_el.csv"</span>, </span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"post_one_data/attribute_list.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="prep-data-for-analysis" class="level1">
-<h1>Prep Data for Analysis</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combine pro and pat attr</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PATIENT"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PROVIDER"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  NAME                       GENDER RACE  MARITAL INCOME   AGE type   
-  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
-1 Avril120 Olson653          F      white &lt;NA&gt;    482269    36 PATIENT
-2 Norma469 Langosh790        F      white &lt;NA&gt;    190464    25 PATIENT
-3 Peggie783 Eichmann909      F      white &lt;NA&gt;     78997    21 PATIENT
-4 Ashlie138 Williamson769    F      white M         6472    37 PATIENT
-5 Christiane220 Ankunding277 F      white &lt;NA&gt;    141475    24 PATIENT
-6 Dione665 O'Kon634          F      white M       482269    36 PATIENT</code></pre>
-</div>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>encounters_st_3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"post1_data/encounters.st.3.csv"</span>, </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">...1 =</span> <span class="fu">col_skip</span>()))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"post1_data/attribute_list.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="create-bipartite-network-with-attributes" class="level1">
 <h1>Create bipartite network with attributes</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>encounters.stat <span class="ot">&lt;-</span> <span class="fu">network</span>(encounters_el,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">bipartite =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">matrix.type =</span> <span class="st">"edgelist"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertex.attr =</span> attribute_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>encounters.stat <span class="ot">&lt;-</span> <span class="fu">network</span>(encounters_el,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">bipartite =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">matrix.type =</span> <span class="st">"edgelist"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertex.attr =</span> attribute_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create igraph</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>encounters.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(encounters.stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create igraph</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>encounters.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(encounters.stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>encounters.stat2 <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(encounters.ig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>encounters.stat2 <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(encounters.ig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>projected_graph <span class="ot">&lt;-</span> <span class="fu">bipartite_projection</span>(encounters.ig)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>provider_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">as_adjacency_matrix</span>(projected_graph<span class="sc">$</span>proj2))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>provider.stat <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(projected_graph<span class="sc">$</span>proj2)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>provider.se <span class="ot">&lt;-</span> <span class="fu">equiv.clust</span>(provider_matrix,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a> <span class="at">equiv.fun =</span> <span class="st">"sedist"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a> <span class="at">method =</span> <span class="st">"hamming"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a> <span class="at">mode =</span> <span class="st">"graph"</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a> <span class="at">cluster.method =</span> <span class="st">"complete"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(provider.se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>projected_graph <span class="ot">&lt;-</span> <span class="fu">bipartite_projection</span>(encounters.ig)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>provider_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">as_adjacency_matrix</span>(projected_graph<span class="sc">$</span>proj2))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>provider.stat <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(projected_graph<span class="sc">$</span>proj2)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>provider.se <span class="ot">&lt;-</span> <span class="fu">equiv.clust</span>(provider_matrix,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a> <span class="at">equiv.fun =</span> <span class="st">"sedist"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a> <span class="at">method =</span> <span class="st">"hamming"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a> <span class="at">mode =</span> <span class="st">"graph"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a> <span class="at">cluster.method =</span> <span class="st">"complete"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(provider.se)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "cluster"        "metric"         "equiv.fun"      "cluster.method"
 [5] "glabels"        "plabels"       </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider.se, <span class="at">main =</span> <span class="st">"provider"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(provider.se<span class="sc">$</span>cluster, <span class="at">k =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider.se, <span class="at">main =</span> <span class="st">"provider"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(provider.se<span class="sc">$</span>cluster, <span class="at">k =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>blk_model.provider.org <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a> provider.se, <span class="at">k =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>blk_model.provider.org <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> provider.se, <span class="at">k =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> blk_model.provider.org<span class="sc">$</span>block.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a> blk_model.provider.org<span class="sc">$</span>block.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Block 1   Block 2     Block 3    Block 4    Block 5    Block 6
 Block 1 0.013527738 0.2995595 0.001762115 0.00715859 0.07929515 0.05286344
@@ -288,85 +269,126 @@ Block 6 0.052863436 1.0000000 0.000000000 0.37500000 0.00000000        NaN</code
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot.block<span class="ot">&lt;-</span><span class="cf">function</span>(<span class="at">x=</span>blk_mod, <span class="at">main=</span><span class="cn">NULL</span>, <span class="at">cex.lab=</span>.<span class="dv">00001</span>,<span class="at">show_labels =</span> <span class="cn">FALSE</span>){</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">plot.sociomatrix</span>(x<span class="sc">$</span>blocked.data, <span class="at">labels=</span><span class="fu">list</span>(x<span class="sc">$</span>plabels,x<span class="sc">$</span>plabels),</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a> <span class="at">main=</span>main, <span class="at">drawlines =</span> <span class="cn">FALSE</span>, <span class="at">cex.lab=</span>cex.lab)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(x<span class="sc">$</span>plabels)) <span class="cf">if</span> (x<span class="sc">$</span>block.membership[j] <span class="sc">!=</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> x<span class="sc">$</span>block.membership[j<span class="dv">-1</span>])</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">abline</span>(<span class="at">v =</span> j<span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">h =</span> j<span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">xpd=</span><span class="cn">FALSE</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> }</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blk_model.provider.org, <span class="at">main =</span> <span class="st">"provider"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot.block<span class="ot">&lt;-</span><span class="cf">function</span>(<span class="at">x=</span>blk_mod, <span class="at">main=</span><span class="cn">NULL</span>, <span class="at">cex.lab=</span>.<span class="dv">00001</span>,<span class="at">show_labels =</span> <span class="cn">FALSE</span>){</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">plot.sociomatrix</span>(x<span class="sc">$</span>blocked.data, <span class="at">labels=</span><span class="fu">list</span>(x<span class="sc">$</span>plabels,x<span class="sc">$</span>plabels),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a> <span class="at">main=</span>main, <span class="at">drawlines =</span> <span class="cn">FALSE</span>, <span class="at">cex.lab=</span>cex.lab)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(x<span class="sc">$</span>plabels)) <span class="cf">if</span> (x<span class="sc">$</span>block.membership[j] <span class="sc">!=</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a> x<span class="sc">$</span>block.membership[j<span class="dv">-1</span>])</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">abline</span>(<span class="at">v =</span> j<span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">h =</span> j<span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">xpd=</span><span class="cn">FALSE</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blk_model.provider.org, <span class="at">main =</span> <span class="st">"provider"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#blks &lt;- blockmodeling::optRandomParC(provider_matrix, k=6, rep=10, approaches="ss", blocks="com")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#prov_blks6 &lt;- blockmodeling::optRandomParC(provider_matrix, k=6, rep=10, approaches="ss", blocks="com")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the blks object to a file</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(blks, "blks_results.rds")</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Later, when you want to use it again, you can read it back into R</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>blks <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"blks_results.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the prov_blks6 object to a file</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(prov_blks6, "prov_blks6_results.rds")</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Later, when you want to use it again, you can read it back into R</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>prov_blks6 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"prov_blks6_results.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blockmodel with optimized partition</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>blk_mod <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix, blks<span class="sc">$</span>best<span class="sc">$</span>best1<span class="sc">$</span>clu,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plabels =</span> <span class="fu">rownames</span>(provider_matrix))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print blockmodel object</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>blk_mod<span class="sc">$</span>block.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blockmodel with optimized partition</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>prov_blk_mod <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix, prov_blks6<span class="sc">$</span>best<span class="sc">$</span>best1<span class="sc">$</span>clu,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plabels =</span> <span class="fu">rownames</span>(provider_matrix))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print blockmodel object</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>prov_blk_mod<span class="sc">$</span>block.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>            Block 1   Block 2 Block 3     Block 4     Block 5     Block 6
-Block 1 0.800000000 0.0000000     0.6 0.010559006 0.000000000 0.001388889
-Block 2 0.000000000 0.6666667     0.0 0.000000000 0.388888889 0.000000000
-Block 3 0.600000000 0.0000000     NaN 0.000000000 1.000000000 1.000000000
-Block 4 0.010559006 0.0000000     0.0 0.015139752 0.006211180 0.004658385
-Block 5 0.000000000 0.3888889     1.0 0.006211180 0.866666667 0.006944444
-Block 6 0.001388889 0.0000000     1.0 0.004658385 0.006944444 0.053208138</code></pre>
+<pre><code>            Block 1     Block 2 Block 3     Block 4     Block 5     Block 6
+Block 1 1.000000000 0.000000000   1.000 0.008333333 0.400000000 0.000000000
+Block 2 0.000000000 0.800000000   0.600 0.001388889 0.000000000 0.010828025
+Block 3 1.000000000 0.600000000     NaN 1.000000000 0.125000000 0.000000000
+Block 4 0.008333333 0.001388889   1.000 0.053208138 0.000000000 0.004777070
+Block 5 0.400000000 0.000000000   0.125 0.000000000 0.142857143 0.002388535
+Block 6 0.000000000 0.010828025   0.000 0.004777070 0.002388535 0.015515270</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blk_mod, <span class="at">main =</span> <span class="st">"Provider 6 Block Model"</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cex.lab =</span> .<span class="dv">000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(prov_blk_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 11
+ $ block.membership: int [1:253] 1 1 1 1 1 2 2 2 2 2 ...
+ $ order.vector    : int [1:253] 29 39 76 112 208 20 23 24 25 26 ...
+ $ block.content   : chr "density"
+ $ blocked.data    : num [1:253, 1:253] 0 1 1 1 1 0 0 0 0 0 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:253] "Yesenia104 Wilderman619" "Floy720 Greenfelder433" "Vito638 Barton704" "Omer483 Koepp521" ...
+  .. ..$ : chr [1:253] "Yesenia104 Wilderman619" "Floy720 Greenfelder433" "Vito638 Barton704" "Omer483 Koepp521" ...
+ $ block.model     : num [1:6, 1:6] 1 0 1 0.00833 0.4 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:6] "Block 1" "Block 2" "Block 3" "Block 4" ...
+  .. ..$ : chr [1:6] "Block 1" "Block 2" "Block 3" "Block 4" ...
+ $ plabels         : chr [1:253] "Yesenia104 Wilderman619" "Floy720 Greenfelder433" "Vito638 Barton704" "Omer483 Koepp521" ...
+ $ glabels         : int [1:253] 1 2 3 4 5 6 7 8 9 10 ...
+ $ rlabels         : chr [1:6] "Block 1" "Block 2" "Block 3" "Block 4" ...
+ $ cluster.method  : chr "Prespecified"
+ $ equiv.fun       : chr "None"
+ $ equiv.metric    : chr "None"
+ - attr(*, "class")= chr "blockmodel"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>block <span class="ot">&lt;-</span> prov_blk_mod<span class="sc">$</span>block.membership </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pro_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  NAME                      GENDER CITY         type     block
+  &lt;chr&gt;                     &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;    &lt;int&gt;
+1 Ted955 Reilly981          M      Fitchburg    PROVIDER     1
+2 Barbara209 Maldonado119   F      LEOMINSTER   PROVIDER     1
+3 Gisele901 Lehner980       F      West Roxbury PROVIDER     1
+4 Vella930 Ankunding277     F      FALL RIVER   PROVIDER     1
+5 Precious140 Runolfsson901 F      NORWELL      PROVIDER     1
+6 Fernande593 Mosciski958   F      E FALMOUTH   PROVIDER     2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(pro_attr, <span class="st">"pro_attr.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(prov_blk_mod, <span class="at">main =</span> <span class="st">"Provider 6 Block Model"</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cex.lab =</span> .<span class="dv">000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign block membership to vertex attribute</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>provider.stat<span class="sc">%v%</span><span class="st">"role"</span><span class="ot">&lt;-</span>blk_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(provider.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,blk_mod<span class="sc">$</span>plabels)]</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plot network using "role" to color nodes</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role"</span>, </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>)  <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign block membership to vertex attribute</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>provider.stat<span class="sc">%v%</span><span class="st">"role"</span><span class="ot">&lt;-</span>prov_blk_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(provider.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,prov_blk_mod<span class="sc">$</span>plabels)]</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plot network using "role" to color nodes</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role"</span>, </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>)  <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'GGally':
   method from   
   +.gg   ggplot2</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#blks2 &lt;- blockmodeling::optRandomParC(provider_matrix, k=12, rep=10, approaches="ss", blocks="com")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#blks2 &lt;- blockmodeling::optRandomParC(provider_matrix, k=12, rep=10, approaches="ss", blocks="com")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the blks2 object to a file</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(blks2, "blks2_results.rds")</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Later, when you want to use it again, you can read it back into R</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>blks2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"blks2_results.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the blks2 object to a file</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#saveRDS(blks2, "blks2_results.rds")</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Later, when you want to use it again, you can read it back into R</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>blks2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"blks2_results.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blockmodel with optimized partition</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>blks2_mod <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix, blks2<span class="sc">$</span>best<span class="sc">$</span>best1<span class="sc">$</span>clu,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plabels =</span> <span class="fu">rownames</span>(provider_matrix))</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print blockmodel object</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>blks2_mod<span class="sc">$</span>block.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blockmodel with optimized partition</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>blks2_mod <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix, blks2<span class="sc">$</span>best<span class="sc">$</span>best1<span class="sc">$</span>clu,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plabels =</span> <span class="fu">rownames</span>(provider_matrix))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print blockmodel object</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>blks2_mod<span class="sc">$</span>block.model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Block 1 Block 2     Block 3    Block 4     Block 5     Block 6
 Block 1        NaN    0.00 1.000000000 1.00000000 0.000000000 0.600000000
@@ -397,56 +419,56 @@ Block 12 0.000000000 0.00000000 0.03750000 0.000000000 0.000000000 0.86666667</c
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blks2_mod, <span class="at">main =</span> <span class="st">"Provider 12 Block Model"</span>,</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cex.lab =</span> .<span class="dv">000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(blks2_mod, <span class="at">main =</span> <span class="st">"Provider 12 Block Model"</span>,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">cex.lab =</span> .<span class="dv">000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign block membership to vertex attribute</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>provider.stat<span class="sc">%v%</span><span class="st">"role2"</span><span class="ot">&lt;-</span>blks2_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(provider.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,blks2_mod<span class="sc">$</span>plabels)]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plot network using "role" to color nodes</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role2"</span>, </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 12 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign block membership to vertex attribute</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>provider.stat<span class="sc">%v%</span><span class="st">"role2"</span><span class="ot">&lt;-</span>blks2_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(provider.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,blks2_mod<span class="sc">$</span>plabels)]</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#plot network using "role" to color nodes</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role2"</span>, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 12 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>With 12 distinct blocks, I start to loose definition of the exterior and interior. Notice the green color mixed in close to the center and tied with gray nodes in the outer ring. This is too many blocks, 6 defines more visually appealing divisions. Additional analysis will need to be done to understand if these blocks can actually be defined by anything other than ties. Onto deeper exploration of blocks…</p>
 <p>#Next Steps Jaccard similarity</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ade4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ade4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'ade4' was built under R version 4.3.3</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>encounters.adj.ig <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_biadjacency_matrix</span>(encounters.ig)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>providers_jaccard <span class="ot">&lt;-</span> <span class="fu">dist.binary</span>(<span class="fu">t</span>(encounters.adj.ig),</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="dv">1</span>, <span class="co"># method=1 Jaccard index</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>providers_jaccard <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(providers_jaccard)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(providers_jaccard) <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>encounters.adj.ig <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">as_biadjacency_matrix</span>(encounters.ig)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>providers_jaccard <span class="ot">&lt;-</span> <span class="fu">dist.binary</span>(<span class="fu">t</span>(encounters.adj.ig),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="dv">1</span>, <span class="co"># method=1 Jaccard index</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">upper =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>providers_jaccard <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(providers_jaccard)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(providers_jaccard) <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#binarize</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>providers_jaccard_bi <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(providers_jaccard <span class="sc">&gt;</span> <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#binarize</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>providers_jaccard_bi <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(providers_jaccard <span class="sc">&gt;</span> <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create igraph object</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>providers_jaccard.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(providers_jaccard_bi, <span class="at">mode =</span> <span class="st">"undirected"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>providers_jaccard.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create igraph object</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>providers_jaccard.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(providers_jaccard_bi, <span class="at">mode =</span> <span class="st">"undirected"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>providers_jaccard.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 03283ea UN-- 253 31324 -- 
+<pre><code>IGRAPH 5606312 UN-- 253 31324 -- 
 + attr: name (v/c)
-+ edges from 03283ea (vertex names):
++ edges from 5606312 (vertex names):
  [1] Emilio417 Barton704--Althea11 Ankunding277
  [2] Emilio417 Barton704--Jerrell6 Rippin620   
  [3] Emilio417 Barton704--Linette249 Runte676  
@@ -459,28 +481,28 @@ Block 12 0.000000000 0.00000000 0.03750000 0.000000000 0.000000000 0.86666667</c
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(providers_jaccard.ig,  <span class="at">edge.width =</span> <span class="fl">0.0002</span>, <span class="at">edge.color =</span> <span class="st">"lightgray"</span>,  <span class="at">vertex.size =</span> <span class="dv">2</span>, <span class="at">vertex.label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(providers_jaccard.ig,  <span class="at">edge.width =</span> <span class="fl">0.0002</span>, <span class="at">edge.color =</span> <span class="st">"lightgray"</span>,  <span class="at">vertex.size =</span> <span class="dv">2</span>, <span class="at">vertex.label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the igraph package</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an igraph object from the blockmodel</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(provider_matrix, <span class="at">mode =</span> <span class="st">"undirected"</span>, <span class="at">weighted =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph without labels</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g,      <span class="at">layout =</span> layout.fruchterman.reingold, </span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">2</span>, </span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Provider Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the igraph package</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an igraph object from the blockmodel</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(provider_matrix, <span class="at">mode =</span> <span class="st">"undirected"</span>, <span class="at">weighted =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph without labels</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g,      <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">2</span>, </span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Provider Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_4_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_4_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
