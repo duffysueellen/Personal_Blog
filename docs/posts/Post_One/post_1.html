@@ -207,9 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="patient-data">PATIENT DATA</h2>
 <p>The following table is the data available in the patient dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/patients.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PATIENT =</span> Id) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(NAME, FIRST, LAST, <span class="at">sep =</span> <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/patients.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 121 Columns: 27
 ── Column specification ────────────────────────────────────────────────────────
@@ -221,17 +219,19 @@ date  (2): BIRTHDATE, DEATHDATE
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(patients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 26
-  PATIENT       BIRTHDATE  DEATHDATE  SSN   DRIVERS PASSPORT PREFIX NAME  SUFFIX
-  &lt;chr&gt;         &lt;date&gt;     &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; 
-1 b573d409-cfa… 1988-02-12 2004-12-30 999-… S99986… &lt;NA&gt;     &lt;NA&gt;   Avri… &lt;NA&gt;  
-2 2703570e-f63… 1999-03-13 NA         999-… S99998… X640979… Ms.    Norm… &lt;NA&gt;  
-3 35589a76-2a9… 2003-02-05 NA         999-… S99996… X735788… Ms.    Pegg… &lt;NA&gt;  
-4 d46186a3-507… 1986-11-07 NA         999-… S99939… X782935… Mrs.   Ashl… &lt;NA&gt;  
-5 983105f7-6f2… 1999-05-21 NA         999-… S99973… X519829… Ms.    Chri… &lt;NA&gt;  
-6 54ac079a-90a… 1988-02-12 NA         999-… S99995… X507824… Mrs.   Dion… &lt;NA&gt;  
+<pre><code># A tibble: 6 × 27
+  Id      BIRTHDATE  DEATHDATE  SSN   DRIVERS PASSPORT PREFIX FIRST LAST  SUFFIX
+  &lt;chr&gt;   &lt;date&gt;     &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; 
+1 b573d4… 1988-02-12 2004-12-30 999-… S99986… &lt;NA&gt;     &lt;NA&gt;   Avri… Olso… &lt;NA&gt;  
+2 270357… 1999-03-13 NA         999-… S99998… X640979… Ms.    Norm… Lang… &lt;NA&gt;  
+3 35589a… 2003-02-05 NA         999-… S99996… X735788… Ms.    Pegg… Eich… &lt;NA&gt;  
+4 d46186… 1986-11-07 NA         999-… S99939… X782935… Mrs.   Ashl… Will… &lt;NA&gt;  
+5 983105… 1999-05-21 NA         999-… S99973… X519829… Ms.    Chri… Anku… &lt;NA&gt;  
+6 54ac07… 1988-02-12 NA         999-… S99995… X507824… Mrs.   Dion… O'Ko… &lt;NA&gt;  
 # ℹ 17 more variables: MAIDEN &lt;chr&gt;, MARITAL &lt;chr&gt;, RACE &lt;chr&gt;,
 #   ETHNICITY &lt;chr&gt;, GENDER &lt;chr&gt;, BIRTHPLACE &lt;chr&gt;, ADDRESS &lt;chr&gt;, CITY &lt;chr&gt;,
 #   STATE &lt;chr&gt;, COUNTY &lt;chr&gt;, FIPS &lt;dbl&gt;, ZIP &lt;chr&gt;, LAT &lt;dbl&gt;, LON &lt;dbl&gt;,
@@ -241,15 +241,16 @@ date  (2): BIRTHDATE, DEATHDATE
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(patients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [121 × 26] (S3: tbl_df/tbl/data.frame)
- $ PATIENT            : chr [1:121] "b573d409-cfaf-c585-a25b-e9d4cf510bd3" "2703570e-f634-d4cc-13db-2ae14e19ae59" "35589a76-2a97-0a89-8c2d-56defc8627af" "d46186a3-507c-0b22-1bfc-1f88bd7cbd7d" ...
+<pre><code>spc_tbl_ [121 × 27] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Id                 : chr [1:121] "b573d409-cfaf-c585-a25b-e9d4cf510bd3" "2703570e-f634-d4cc-13db-2ae14e19ae59" "35589a76-2a97-0a89-8c2d-56defc8627af" "d46186a3-507c-0b22-1bfc-1f88bd7cbd7d" ...
  $ BIRTHDATE          : Date[1:121], format: "1988-02-12" "1999-03-13" ...
  $ DEATHDATE          : Date[1:121], format: "2004-12-30" NA ...
  $ SSN                : chr [1:121] "999-97-2089" "999-76-8207" "999-64-2625" "999-67-4853" ...
  $ DRIVERS            : chr [1:121] "S99986968" "S99998444" "S99996738" "S99939817" ...
  $ PASSPORT           : chr [1:121] NA "X64097979X" "X7357887X" "X78293510X" ...
  $ PREFIX             : chr [1:121] NA "Ms." "Ms." "Mrs." ...
- $ NAME               : chr [1:121] "Avril120 Olson653" "Norma469 Langosh790" "Peggie783 Eichmann909" "Ashlie138 Williamson769" ...
+ $ FIRST              : chr [1:121] "Avril120" "Norma469" "Peggie783" "Ashlie138" ...
+ $ LAST               : chr [1:121] "Olson653" "Langosh790" "Eichmann909" "Williamson769" ...
  $ SUFFIX             : chr [1:121] NA NA NA NA ...
  $ MAIDEN             : chr [1:121] NA NA NA "Cummerata161" ...
  $ MARITAL            : chr [1:121] NA NA NA "M" ...
@@ -267,11 +268,42 @@ date  (2): BIRTHDATE, DEATHDATE
  $ LON                : num [1:121] -71.2 -71 -71.2 -71.2 -71.5 ...
  $ HEALTHCARE_EXPENSES: num [1:121] 31150 50725 65580 162538 141345 ...
  $ HEALTHCARE_COVERAGE: num [1:121] 129135 100008 32578 809077 282706 ...
- $ INCOME             : num [1:121] 482269 190464 78997 6472 141475 ...</code></pre>
+ $ INCOME             : num [1:121] 482269 190464 78997 6472 141475 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   Id = col_character(),
+  ..   BIRTHDATE = col_date(format = ""),
+  ..   DEATHDATE = col_date(format = ""),
+  ..   SSN = col_character(),
+  ..   DRIVERS = col_character(),
+  ..   PASSPORT = col_character(),
+  ..   PREFIX = col_character(),
+  ..   FIRST = col_character(),
+  ..   LAST = col_character(),
+  ..   SUFFIX = col_character(),
+  ..   MAIDEN = col_character(),
+  ..   MARITAL = col_character(),
+  ..   RACE = col_character(),
+  ..   ETHNICITY = col_character(),
+  ..   GENDER = col_character(),
+  ..   BIRTHPLACE = col_character(),
+  ..   ADDRESS = col_character(),
+  ..   CITY = col_character(),
+  ..   STATE = col_character(),
+  ..   COUNTY = col_character(),
+  ..   FIPS = col_double(),
+  ..   ZIP = col_character(),
+  ..   LAT = col_double(),
+  ..   LON = col_double(),
+  ..   HEALTHCARE_EXPENSES = col_double(),
+  ..   HEALTHCARE_COVERAGE = col_double(),
+  ..   INCOME = col_double()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(patients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   PATIENT            BIRTHDATE            DEATHDATE         
+<pre><code>      Id              BIRTHDATE            DEATHDATE         
  Length:121         Min.   :1915-06-30   Min.   :1974-12-14  
  Class :character   1st Qu.:1959-04-12   1st Qu.:2004-04-13  
  Mode  :character   Median :1983-05-26   Median :2010-05-15  
@@ -287,7 +319,7 @@ date  (2): BIRTHDATE, DEATHDATE
                                                                             
                                                                             
                                                                             
-     NAME              SUFFIX             MAIDEN            MARITAL         
+    FIRST               LAST              SUFFIX             MAIDEN         
  Length:121         Length:121         Length:121         Length:121        
  Class :character   Class :character   Class :character   Class :character  
  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
@@ -295,7 +327,7 @@ date  (2): BIRTHDATE, DEATHDATE
                                                                             
                                                                             
                                                                             
-     RACE            ETHNICITY            GENDER           BIRTHPLACE       
+   MARITAL              RACE            ETHNICITY            GENDER         
  Length:121         Length:121         Length:121         Length:121        
  Class :character   Class :character   Class :character   Class :character  
  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
@@ -303,7 +335,7 @@ date  (2): BIRTHDATE, DEATHDATE
                                                                             
                                                                             
                                                                             
-   ADDRESS              CITY              STATE              COUNTY         
+  BIRTHPLACE          ADDRESS              CITY              STATE          
  Length:121         Length:121         Length:121         Length:121        
  Class :character   Class :character   Class :character   Class :character  
  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
@@ -311,83 +343,120 @@ date  (2): BIRTHDATE, DEATHDATE
                                                                             
                                                                             
                                                                             
-      FIPS           ZIP                 LAT             LON        
- Min.   :25001   Length:121         Min.   :41.56   Min.   :-73.26  
- 1st Qu.:25014   Class :character   1st Qu.:42.15   1st Qu.:-71.51  
- Median :25017   Mode  :character   Median :42.28   Median :-71.13  
- Mean   :25018                      Mean   :42.24   Mean   :-71.27  
- 3rd Qu.:25025                      3rd Qu.:42.40   3rd Qu.:-71.01  
- Max.   :25027                      Max.   :42.77   Max.   :-70.12  
- NA's   :19                                                         
- HEALTHCARE_EXPENSES HEALTHCARE_COVERAGE     INCOME      
- Min.   :    500     Min.   :      0     Min.   :  3365  
- 1st Qu.:  21279     1st Qu.:  23029     1st Qu.: 32577  
- Median :  65580     Median : 165466     Median : 71082  
- Mean   : 166163     Mean   : 409297     Mean   :134519  
- 3rd Qu.: 221068     3rd Qu.: 679128     3rd Qu.:135462  
- Max.   :1547205     Max.   :1955909     Max.   :931642  
-                                                         </code></pre>
+    COUNTY               FIPS           ZIP                 LAT       
+ Length:121         Min.   :25001   Length:121         Min.   :41.56  
+ Class :character   1st Qu.:25014   Class :character   1st Qu.:42.15  
+ Mode  :character   Median :25017   Mode  :character   Median :42.28  
+                    Mean   :25018                      Mean   :42.24  
+                    3rd Qu.:25025                      3rd Qu.:42.40  
+                    Max.   :25027                      Max.   :42.77  
+                    NA's   :19                                        
+      LON         HEALTHCARE_EXPENSES HEALTHCARE_COVERAGE     INCOME      
+ Min.   :-73.26   Min.   :    500     Min.   :      0     Min.   :  3365  
+ 1st Qu.:-71.51   1st Qu.:  21279     1st Qu.:  23029     1st Qu.: 32577  
+ Median :-71.13   Median :  65580     Median : 165466     Median : 71082  
+ Mean   :-71.27   Mean   : 166163     Mean   : 409297     Mean   :134519  
+ 3rd Qu.:-71.01   3rd Qu.: 221068     3rd Qu.: 679128     3rd Qu.:135462  
+ Max.   :-70.12   Max.   :1547205     Max.   :1955909     Max.   :931642  
+                                                                          </code></pre>
 </div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create NAME column combining FIRST and LAST names</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> patients <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PATIENT =</span> Id) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(NAME, FIRST, LAST, <span class="at">sep =</span> <span class="st">" "</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#trim whitespace NAME</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>patients<span class="sc">$</span>NAME <span class="ot">&lt;-</span> <span class="fu">trimws</span>(patients<span class="sc">$</span>NAME)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#trim whitespace COUNTY</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>patients<span class="sc">$</span>COUNTY <span class="ot">&lt;-</span> <span class="fu">trimws</span>(patients<span class="sc">$</span>COUNTY)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#clean up GENDER, RACE, ETHNICITY, and INCOME sections</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> patients <span class="sc">%&gt;%</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">GENDER =</span> <span class="fu">tolower</span>(GENDER),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">GENDER =</span> <span class="fu">case_when</span>(</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>      GENDER <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"m"</span>, <span class="st">"man"</span>) <span class="sc">~</span> <span class="st">"Male"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>      GENDER <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"female"</span>, <span class="st">"f"</span>, <span class="st">"woman"</span>) <span class="sc">~</span> <span class="st">"Female"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span>  <span class="co"># assign NA to any non-standard values</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># race (patient)</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">RACE =</span> <span class="fu">tolower</span>(RACE),  <span class="co"># convert race to lower case for consistency</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ethnicity (patient)</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">ETHNICITY =</span> <span class="fu">tolower</span>(ETHNICITY),  <span class="co"># convert ethnicity to lower case for consistency</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co"># marital (patient)</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">MARITAL =</span> <span class="fu">ifelse</span>(MARITAL <span class="sc">==</span> <span class="st">"M"</span>, <span class="st">"Married"</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">ifelse</span>(MARITAL <span class="sc">==</span> <span class="st">"D"</span>, <span class="st">"Divorced"</span>,</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">ifelse</span>(MARITAL <span class="sc">==</span> <span class="st">"W"</span>, <span class="st">"Widowed"</span>,</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">ifelse</span>(MARITAL <span class="sc">==</span> <span class="st">"S"</span>, <span class="st">"Single"</span>, MARITAL)))),</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co"># income (patient)</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">INCOME =</span> <span class="fu">as.numeric</span>(INCOME)  <span class="co"># convert income to numeric if necessary</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(GENDER, RACE) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>I am only keeping the demographic data below (gender, race, marital status, income, and age) which will be used as an attribute for each patient.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create AGE from BIRTHDATE</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> patients <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">BIRTHDATE =</span> <span class="fu">as.Date</span>(BIRTHDATE),  <span class="co"># Ensure 'dob' is in Date format</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">AGE =</span> <span class="fu">interval</span>(BIRTHDATE, <span class="fu">today</span>()) <span class="sc">/</span> <span class="fu">years</span>(<span class="dv">1</span>)  <span class="co"># Calculate age in years</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">AGE =</span> <span class="fu">floor</span>(AGE)  <span class="co"># complete years only, removing decimal</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep patient name and demographics. This will be utilized as the attribute data for analysis.</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> patients<span class="sc">%&gt;%</span> </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, GENDER, RACE, MARITAL, INCOME, AGE)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pat_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create AGE from BIRTHDATE</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> patients <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">BIRTHDATE =</span> <span class="fu">as.Date</span>(BIRTHDATE),  <span class="co"># Ensure 'dob' is in Date format</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">AGE =</span> <span class="fu">interval</span>(BIRTHDATE, <span class="fu">today</span>()) <span class="sc">/</span> <span class="fu">years</span>(<span class="dv">1</span>)  <span class="co"># Calculate age in years</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">AGE =</span> <span class="fu">floor</span>(AGE)  <span class="co"># complete years only, removing decimal</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep patient name and demographics. This will be utilized as the attribute data for analysis.</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> patients<span class="sc">%&gt;%</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, GENDER, RACE, MARITAL, COUNTY, INCOME, AGE)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pat_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 6
-  NAME                       GENDER RACE  MARITAL INCOME   AGE
-  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;
-1 Avril120 Olson653          F      white &lt;NA&gt;    482269    36
-2 Norma469 Langosh790        F      white &lt;NA&gt;    190464    25
-3 Peggie783 Eichmann909      F      white &lt;NA&gt;     78997    21
-4 Ashlie138 Williamson769    F      white M         6472    37
-5 Christiane220 Ankunding277 F      white &lt;NA&gt;    141475    24
-6 Dione665 O'Kon634          F      white M       482269    36</code></pre>
+<pre><code># A tibble: 6 × 7
+  NAME                       GENDER RACE  MARITAL COUNTY           INCOME   AGE
+  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;
+1 Avril120 Olson653          Female white &lt;NA&gt;    Middlesex County 482269    36
+2 Norma469 Langosh790        Female white &lt;NA&gt;    Plymouth County  190464    25
+3 Peggie783 Eichmann909      Female white &lt;NA&gt;    Norfolk County    78997    21
+4 Ashlie138 Williamson769    Female white Married Middlesex County   6472    37
+5 Christiane220 Ankunding277 Female white &lt;NA&gt;    Middlesex County 141475    24
+6 Dione665 O'Kon634          Female white Married Middlesex County 482269    36</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pat_race <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(RACE)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pat_gender <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(GENDER)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pat_race <span class="sc">+</span> pat_gender <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Patient Race and Gender Breakdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pat_race <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(RACE)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pat_gender <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(GENDER)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>pat_race <span class="sc">+</span> pat_gender <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Patient Race and Gender Breakdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(MARITAL)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Patient Marital Status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(MARITAL)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Patient Marital Status"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pat_income <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> INCOME)) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Income"</span>) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Patient Income"</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pat_attr<span class="sc">$</span>INCOME)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pat_income <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr, <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> INCOME)) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Income"</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Patient Income"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pat_attr<span class="sc">$</span>INCOME)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
    3365   32577   71082  134519  135462  931642 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pat_age <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(AGE)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pat_age <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(pat_attr,<span class="fu">aes</span>(AGE)) <span class="sc">+</span> <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Key for marital status: M (married), S (single), D (divorced), W (widowed) (There is missing data here)</p>
 </section>
 <section id="provider-data" class="level2">
 <h2 class="anchored" data-anchor-id="provider-data">PROVIDER DATA</h2>
 <p>The following table is the data available in the provider dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>providers <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/providers.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PROVIDER =</span> Id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>providers <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/providers.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">PROVIDER =</span> Id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 279 Columns: 13
 ── Column specification ────────────────────────────────────────────────────────
@@ -398,7 +467,7 @@ dbl (4): LAT, LON, ENCOUNTERS, PROCEDURES
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(providers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(providers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 13
   PROVIDER  ORGANIZATION NAME  GENDER SPECIALITY ADDRESS CITY  STATE ZIP     LAT
@@ -414,10 +483,15 @@ dbl (4): LAT, LON, ENCOUNTERS, PROCEDURES
 </div>
 <p>I am only keeping the demographic data below (gender) which will be used as an attribute for each provider.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep provider name and demographics. This will be utilized as the attribute data for analysis. The only demographic data available for Providers is gender.</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pro_attr <span class="ot">&lt;-</span> providers <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, GENDER)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pro_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#trim whitespace NAME</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>providers<span class="sc">$</span>NAME <span class="ot">&lt;-</span> <span class="fu">trimws</span>(providers<span class="sc">$</span>NAME)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Only keep provider name and demographics. This will be utilized as the attribute data for analysis. The only demographic data available for Providers is gender.</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>pro_attr <span class="ot">&lt;-</span> providers <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(NAME, GENDER)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pro_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   NAME                      GENDER
@@ -431,16 +505,16 @@ dbl (4): LAT, LON, ENCOUNTERS, PROCEDURES
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pro_attr, <span class="fu">aes</span>(GENDER)) <span class="sc">+</span><span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Provider Gender Breakdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(pro_attr, <span class="fu">aes</span>(GENDER)) <span class="sc">+</span><span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Provider Gender Breakdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 <section id="encounter-data" class="level2">
 <h2 class="anchored" data-anchor-id="encounter-data">ENCOUNTER DATA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>encounters <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/encounters.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>encounters <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"synthea_sample_data_csv_latest/encounters.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 11987 Columns: 15
 ── Column specification ────────────────────────────────────────────────────────
@@ -452,7 +526,7 @@ dttm (2): START, STOP
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 15
   Id       START               STOP                PATIENT ORGANIZATION PROVIDER
@@ -469,27 +543,27 @@ dttm (2): START, STOP
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(encounters, <span class="fu">aes</span>(ENCOUNTERCLASS)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Type of Visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(encounters, <span class="fu">aes</span>(ENCOUNTERCLASS)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>()<span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Type of Visit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(DESCRIPTION) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> DESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Visit Description"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(REASONDESCRIPTION) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(DESCRIPTION) <span class="sc">%&gt;%</span> </span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> REASONDESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> DESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Reason Patient Visited Provider"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Visit Description"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-10-3.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> encounters <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">count</span>(REASONDESCRIPTION) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">50</span>),  <span class="co"># Filter for counts higher than 10</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> REASONDESCRIPTION, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Reason Patient Visited Provider"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">*filtered to show &gt;50 visits"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_1_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>I am noticing a lot of kidney related diseases in this dataset</p>
@@ -498,50 +572,50 @@ dttm (2): START, STOP
 <h2 class="anchored" data-anchor-id="combine-patient-provider-and-encounter-data">Combine Patient, Provider, and Encounter Data</h2>
 <p>I am taking this step here so that I have a master dataset (encounters_attributes) and so that I can create an edgelist more easily.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a left join to merge encounters with provider_attributes based on PROVIDER</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters, providers, <span class="at">by =</span> <span class="st">"PROVIDER"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the PROVIDER column with the corresponding names from the NAME column</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PROVIDER <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the NAME column if no longer needed</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for Provider</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters_cleaning, patients, <span class="at">by =</span> <span class="st">"PATIENT"</span>)</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PATIENT <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME) </span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Clearly identify the Encounter ID</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ENCOUNTER_ID =</span> Id)</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ENCOUNTER_ID, PATIENT, PROVIDER, GENDER.x, GENDER.y, RACE, MARITAL, ETHNICITY, INCOME)</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="co"># View the updated dataframe</span></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounter_attributes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a left join to merge encounters with provider_attributes based on PROVIDER</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters, providers, <span class="at">by =</span> <span class="st">"PROVIDER"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the PROVIDER column with the corresponding names from the NAME column</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PROVIDER <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the NAME column if no longer needed</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Repeat for Provider</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> <span class="fu">left_join</span>(encounters_cleaning, patients, <span class="at">by =</span> <span class="st">"PATIENT"</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>encounters_cleaning<span class="sc">$</span>PATIENT <span class="ot">&lt;-</span> encounters_cleaning<span class="sc">$</span>NAME</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>NAME) </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Clearly identify the Encounter ID</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>encounters_cleaning <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ENCOUNTER_ID =</span> Id)</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>encounter_attributes <span class="ot">&lt;-</span> encounters_cleaning <span class="sc">%&gt;%</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ENCOUNTER_ID, PATIENT, PROVIDER, GENDER.x, GENDER.y, RACE, MARITAL, ETHNICITY, INCOME)</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="co"># View the updated dataframe</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounter_attributes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 9
   ENCOUNTER_ID PATIENT PROVIDER GENDER.x GENDER.y RACE  MARITAL ETHNICITY INCOME
   &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;
-1 4afc6abc-ab… Norma4… Jeromy1… M        F        white &lt;NA&gt;    nonhispa… 190464
-2 c502ee2d-1d… Peggie… Abdul21… M        F        white &lt;NA&gt;    nonhispa…  78997
-3 6f3ad103-a2… Avril1… Marshal… M        F        white &lt;NA&gt;    nonhispa… 482269
-4 0d9b475b-5e… Peggie… Benedic… M        F        white &lt;NA&gt;    nonhispa…  78997
-5 ec0d6c63-84… Norma4… Jeromy1… M        F        white &lt;NA&gt;    nonhispa… 190464
-6 ec41ff94-ed… Norma4… Jeromy1… M        F        white &lt;NA&gt;    nonhispa… 190464</code></pre>
+1 4afc6abc-ab… Norma4… Jeromy1… M        Female   white &lt;NA&gt;    nonhispa… 190464
+2 c502ee2d-1d… Peggie… Abdul21… M        Female   white &lt;NA&gt;    nonhispa…  78997
+3 6f3ad103-a2… Avril1… Marshal… M        Female   white &lt;NA&gt;    nonhispa… 482269
+4 0d9b475b-5e… Peggie… Benedic… M        Female   white &lt;NA&gt;    nonhispa…  78997
+5 ec0d6c63-84… Norma4… Jeromy1… M        Female   white &lt;NA&gt;    nonhispa… 190464
+6 ec41ff94-ed… Norma4… Jeromy1… M        Female   white &lt;NA&gt;    nonhispa… 190464</code></pre>
 </div>
 </div>
 </section>
 <section id="edgelist" class="level2">
 <h2 class="anchored" data-anchor-id="edgelist">EDGELIST</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Edgelist</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>encounters_el <span class="ot">&lt;-</span> encounter_attributes <span class="sc">%&gt;%</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PATIENT, PROVIDER) <span class="sc">%&gt;%</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Edgelist</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>encounters_el <span class="ot">&lt;-</span> encounter_attributes <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PATIENT, PROVIDER) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PATIENT'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
 # Groups:   PATIENT [2]
@@ -554,7 +628,7 @@ dttm (2): START, STOP
 5 Akiko835 Larkin917    Ted955 Reilly981          1
 6 Anneliese170 Berge125 Althea11 Ankunding277     6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(encounters_el)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 437   3</code></pre>
 </div>
@@ -563,38 +637,38 @@ dttm (2): START, STOP
 <section id="combined-attribute-list" class="level2">
 <h2 class="anchored" data-anchor-id="combined-attribute-list">COMBINED ATTRIBUTE LIST</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combine pro and pat attr</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PATIENT"</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PROVIDER"</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combine pro and pat attr</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PATIENT"</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"PROVIDER"</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  NAME                       GENDER RACE  MARITAL INCOME   AGE type   
-  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
-1 Avril120 Olson653          F      white &lt;NA&gt;    482269    36 PATIENT
-2 Norma469 Langosh790        F      white &lt;NA&gt;    190464    25 PATIENT
-3 Peggie783 Eichmann909      F      white &lt;NA&gt;     78997    21 PATIENT
-4 Ashlie138 Williamson769    F      white M         6472    37 PATIENT
-5 Christiane220 Ankunding277 F      white &lt;NA&gt;    141475    24 PATIENT
-6 Dione665 O'Kon634          F      white M       482269    36 PATIENT</code></pre>
+<pre><code># A tibble: 6 × 8
+  NAME                       GENDER RACE  MARITAL COUNTY      INCOME   AGE type 
+  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1 Avril120 Olson653          Female white &lt;NA&gt;    Middlesex … 482269    36 PATI…
+2 Norma469 Langosh790        Female white &lt;NA&gt;    Plymouth C… 190464    25 PATI…
+3 Peggie783 Eichmann909      Female white &lt;NA&gt;    Norfolk Co…  78997    21 PATI…
+4 Ashlie138 Williamson769    Female white Married Middlesex …   6472    37 PATI…
+5 Christiane220 Ankunding277 Female white &lt;NA&gt;    Middlesex … 141475    24 PATI…
+6 Dione665 O'Kon634          Female white Married Middlesex … 482269    36 PATI…</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create combined attribute list</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create combined attribute list</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="network" class="level2">
 <h2 class="anchored" data-anchor-id="network">NETWORK</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create bipartite network with attributes</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>encounters.st<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">network</span>(encounters_el,</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">bipartite =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">matrix.type =</span> <span class="st">"edgelist"</span>,</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertex.attr =</span> attribute_list)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>encounters.st<span class="fl">.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create bipartite network with attributes</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>encounters.st<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">network</span>(encounters_el,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">bipartite =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">matrix.type =</span> <span class="st">"edgelist"</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">vertex.attr =</span> attribute_list)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>encounters.st<span class="fl">.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Network attributes:
   vertices = 374 
@@ -608,7 +682,7 @@ dttm (2): START, STOP
     non-missing edges= 437 
 
  Vertex attribute names: 
-    AGE GENDER INCOME MARITAL NAME RACE type vertex.names 
+    AGE COUNTY GENDER INCOME MARITAL NAME RACE type vertex.names 
 
  Edge attribute names: 
     COUNT </code></pre>
@@ -619,18 +693,18 @@ dttm (2): START, STOP
 <section id="graph-section" class="level1">
 <h1>Graph Section</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>incidence_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(encounters.st<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>incidence_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(encounters.st<span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a graph from the edgelist</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(encounters_el, </span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>map_g <span class="ot">&lt;-</span> <span class="fu">bipartite_mapping</span>(g)</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a graph from the edgelist</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">graph_from_data_frame</span>(encounters_el, </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">directed =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>map_g <span class="ot">&lt;-</span> <span class="fu">bipartite_mapping</span>(g)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(map_g<span class="sc">$</span>type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Akiko835 Larkin917   Anneliese170 Berge125    Annice210 McClure239 
                   FALSE                   FALSE                   FALSE 
@@ -639,61 +713,61 @@ dttm (2): START, STOP
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign overall Graph Color Scheme for Consistency</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign vertex attributes</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g)<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"PATIENT"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PATIENT)), </span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">rep</span>(<span class="st">"PROVIDER"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PROVIDER)))</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(attribute_list<span class="sc">$</span>GENDER <span class="sc">==</span> <span class="st">"F"</span>, <span class="st">"green"</span>, <span class="st">"yellow"</span>)</span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g)<span class="sc">$</span>type <span class="sc">==</span> <span class="st">"PATIENT"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the range of counts in the graph</span></span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>count_range <span class="ot">&lt;-</span> <span class="fu">range</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT)</span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the edge widths based on the counts</span></span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="dv">1</span>,</span>
-<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">50</span>,</span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">3</span> <span class="sc">*</span> (<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">-</span> count_range[<span class="dv">1</span>]) <span class="sc">/</span> (count_range[<span class="dv">2</span>] <span class="sc">-</span> count_range[<span class="dv">1</span>])))</span>
-<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> edge_widths <span class="sc">*</span><span class="dv">300</span></span>
-<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>edge_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="st">"yellow"</span>, </span>
-<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign overall Graph Color Scheme for Consistency</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign vertex attributes</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g)<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"PATIENT"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PATIENT)), </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">rep</span>(<span class="st">"PROVIDER"</span>, <span class="fu">n_distinct</span>(encounters_el<span class="sc">$</span>PROVIDER)))</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(attribute_list<span class="sc">$</span>GENDER <span class="sc">==</span> <span class="st">"F"</span>, <span class="st">"green"</span>, <span class="st">"yellow"</span>)</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g)<span class="sc">$</span>type <span class="sc">==</span> <span class="st">"PATIENT"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the range of counts in the graph</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>count_range <span class="ot">&lt;-</span> <span class="fu">range</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT)</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the edge widths based on the counts</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="dv">1</span>,</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">50</span>,</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>                             <span class="dv">3</span> <span class="sc">*</span> (<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">-</span> count_range[<span class="dv">1</span>]) <span class="sc">/</span> (count_range[<span class="dv">2</span>] <span class="sc">-</span> count_range[<span class="dv">1</span>])))</span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> edge_widths <span class="sc">*</span><span class="dv">300</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>edge_widths <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="fl">0.5</span>, <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">20</span>, <span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>edge_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;</span> <span class="dv">5</span>, <span class="st">"yellow"</span>, </span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(<span class="fu">E</span>(g)<span class="sc">$</span>COUNT <span class="sc">&lt;=</span> <span class="dv">20</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g, </span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">2</span>, </span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> edge_widths,</span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> edge_colors,</span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex colors</span></span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>),  <span class="co"># You can customize these labels</span></span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"yellow"</span>),   <span class="co"># Fill colors corresponding to vertex colors</span></span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Gender"</span>)              <span class="co"># Legend title</span></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex shapes</span></span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Patient"</span>, <span class="st">"Provider"</span>),  <span class="co"># You can customize these labels</span></span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),                      <span class="co"># Point shapes corresponding to vertex shapes</span></span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Who"</span>)                     <span class="co"># Legend title</span></span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,</span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"1-4"</span>, <span class="st">"5-19"</span>, <span class="st">"20+"</span>),  <span class="co"># You can customize these labels</span></span>
-<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>),  <span class="co"># Line colors corresponding to edge colors</span></span>
-<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,                            <span class="co"># Line width</span></span>
-<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Edges: # of Visits"</span>)              <span class="co"># Legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g, </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">2</span>, </span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.width =</span> edge_widths,</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> edge_colors,</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex colors</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"yellow"</span>),   <span class="co"># Fill colors corresponding to vertex colors</span></span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Gender"</span>)              <span class="co"># Legend title</span></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for vertex shapes</span></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Patient"</span>, <span class="st">"Provider"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>),                      <span class="co"># Point shapes corresponding to vertex shapes</span></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Nodes: Who"</span>)                     <span class="co"># Legend title</span></span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Define legend for edge colors</span></span>
+<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,</span>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"1-4"</span>, <span class="st">"5-19"</span>, <span class="st">"20+"</span>),  <span class="co"># You can customize these labels</span></span>
+<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>),  <span class="co"># Line colors corresponding to edge colors</span></span>
+<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>,                            <span class="co"># Line width</span></span>
+<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Edges: # of Visits"</span>)              <span class="co"># Legend title</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="post_1_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="post_1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This graph shows a myriad of patient, provider relationships. One provider seems to be at the center of the graph, having the most edges reaching out to different patients. This central provider sees many patients only 1-4 times (indicated in yellow).</p>
@@ -701,7 +775,8 @@ dttm (2): START, STOP
 <p>There are also many patients and providers that are not linked into the larger group, with pairings of one patient and one provider, one patient and two providers, one patient and three providers, two patients and three providers, two patients and four providers, and so on.</p>
 <p>My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.</p>
 <p>Use to write CSV</p>
-<p>#write csv write.csv(pat_attr, “pat_attr.csv”)</p>
+<p>#write csv</p>
+<p>write.csv(pat_attr, “pat_attr.csv”)</p>
 <p>write.csv(pro_attr, “pro_attr.csv”)</p>
 <p>write.csv(encounters_cleaning, “encounters_cleaning.csv”)</p>
 <p>write.csv(encounter_attributes, “encounter_attributes.csv”)</p>

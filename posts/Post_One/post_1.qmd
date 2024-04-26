@@ -40,9 +40,10 @@ library(patchwork)
 The following table is the data available in the patient dataset.
 
 ```{r}
-patients <- read_csv("synthea_sample_data_csv_latest/patients.csv") %>%
-    rename(PATIENT = Id) %>%
-  unite(NAME, FIRST, LAST, sep = " ")
+patients <- read_csv("synthea_sample_data_csv_latest/patients.csv")
+```
+
+```{r}
 head(patients)
 ```
 
@@ -50,6 +51,45 @@ head(patients)
 str(patients)
 summary(patients)
 ```
+```{r}
+#create NAME column combining FIRST and LAST names
+patients <- patients %>%
+    rename(PATIENT = Id) %>%
+  unite(NAME, FIRST, LAST, sep = " ")
+
+#trim whitespace NAME
+patients$NAME <- trimws(patients$NAME)
+
+#trim whitespace COUNTY
+patients$COUNTY <- trimws(patients$COUNTY)
+
+#clean up GENDER, RACE, ETHNICITY, and INCOME sections
+patients <- patients %>%
+  mutate(
+    GENDER = tolower(GENDER),
+    GENDER = case_when(
+      GENDER %in% c("male", "m", "man") ~ "Male",
+      GENDER %in% c("female", "f", "woman") ~ "Female",
+      TRUE ~ NA_character_  # assign NA to any non-standard values
+    ),
+# race (patient)
+    RACE = tolower(RACE),  # convert race to lower case for consistency
+
+# ethnicity (patient)
+    ETHNICITY = tolower(ETHNICITY),  # convert ethnicity to lower case for consistency
+
+# marital (patient)
+    MARITAL = ifelse(MARITAL == "M", "Married",
+                    ifelse(MARITAL == "D", "Divorced",
+                    ifelse(MARITAL == "W", "Widowed",
+                    ifelse(MARITAL == "S", "Single", MARITAL)))),
+
+# income (patient)
+    INCOME = as.numeric(INCOME)  # convert income to numeric if necessary
+  ) %>%
+  drop_na(GENDER, RACE) 
+```
+
 
 I am only keeping the demographic data below (gender, race, marital status, income, and age) which will be used as an attribute for each patient.
 
@@ -65,9 +105,8 @@ patients <- patients %>%
   )
 # Only keep patient name and demographics. This will be utilized as the attribute data for analysis.
 pat_attr <- patients%>% 
-  select(NAME, GENDER, RACE, MARITAL, INCOME, AGE)
+  select(NAME, GENDER, RACE, MARITAL, COUNTY, INCOME, AGE)
 head(pat_attr)
-
 ```
 
 ```{r}
@@ -88,9 +127,6 @@ summary(pat_attr$INCOME)
 pat_age <- ggplot(pat_attr,aes(AGE)) + geom_bar()
 
 ```
-
-Key for marital status: M (married), S (single), D (divorced), W (widowed) (There is missing data here)
-
 ## PROVIDER DATA
 
 The following table is the data available in the provider dataset.
@@ -104,9 +140,14 @@ head(providers)
 I am only keeping the demographic data below (gender) which will be used as an attribute for each provider.
 
 ```{r}
+#trim whitespace NAME
+providers$NAME <- trimws(providers$NAME)
 # Only keep provider name and demographics. This will be utilized as the attribute data for analysis. The only demographic data available for Providers is gender.
 pro_attr <- providers %>%
   select(NAME, GENDER)
+
+
+
 head(pro_attr)
 ```
 
@@ -290,7 +331,9 @@ My next steps will include looking more deeply at these relationships through bl
 
 Use to write CSV
 
-#write csv write.csv(pat_attr, "pat_attr.csv")
+#write csv 
+
+write.csv(pat_attr, "pat_attr.csv")
 
 write.csv(pro_attr, "pro_attr.csv")
 
