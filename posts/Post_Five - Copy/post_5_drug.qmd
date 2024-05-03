@@ -48,9 +48,11 @@ prov_blks6 <- readRDS("prov_blks6_results.rds")
 both_attr <- bind_rows(pat_attr, pro_attr)
 head(both_attr)
 ```
+
 ```{r}
 #create combined attribute list
 attribute_list <- do.call(list, both_attr)
+#write.csv(attribute_list, "attribute_list.csv")
 ```
 
 # Create bipartite network with attributes
