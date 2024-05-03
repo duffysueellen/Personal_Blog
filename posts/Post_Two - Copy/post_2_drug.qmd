@@ -1,7 +1,7 @@
 ---
 title: "Network Exploration"
 author: "Sue-Ellen Duffy"
-date: "2024-04-21"
+date: "2024-05-02"
 categories: [code, analysis]
 ---
 
