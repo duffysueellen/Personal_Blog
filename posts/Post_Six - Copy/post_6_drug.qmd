@@ -215,12 +215,6 @@ plot(provider_graph,
 
 What other cities are on the provider list. Boston is not being properly represented, I have a feeling
 
-```{r}
-table(pro_attr$CITY)
-pro_attr_list <- do.call(list, pro_attr)
-```
-
-Should have cleaned that earlier, but here we go!
 
 ```{r}
 Boston_Neighborhoods <- c(
