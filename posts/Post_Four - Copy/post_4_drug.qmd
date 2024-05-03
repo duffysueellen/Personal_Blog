@@ -1,0 +1,202 @@
+---
+title: "Network Block Modeling - Providers"
+author: "Sue-Ellen Duffy"
+date: "2024-04-25"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+library(ggplot2)
+```
+
+This post will explore the Synthetic Mass network data in more detail.
+
+# Read in Data
+
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post1drug_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post1drug_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post1drug_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaned <- read_csv("post1drug_data//encounters_cleaned.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post1drug_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post1drug_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post1drug_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post1drug_data/attribute_list.csv")
+```
+
+# Create bipartite network with attributes
+
+```{r}
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+```
+
+```{r}
+#create igraph
+encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
+```
+
+```{r}
+encounters.stat2 <- asNetwork(encounters.ig)
+```
+
+```{r}
+projected_graph <- bipartite_projection(encounters.ig)
+provider_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj2))
+
+provider.stat <- asNetwork(projected_graph$proj2)
+
+provider.se <- equiv.clust(provider_matrix,
+ equiv.fun = "sedist",
+ method = "hamming",
+ mode = "graph",
+ cluster.method = "complete")
+
+names(provider.se)
+```
+
+```{r}
+plot(provider.se, main = "provider")
+rect.hclust(provider.se$cluster, k = 12)
+```
+
+```{r}
+blk_model.provider.org <- blockmodel(provider_matrix,
+ provider.se, k = 6)
+```
+
+```{r}
+ blk_model.provider.org$block.model
+```
+
+```{r}
+plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
+ plot.sociomatrix(x$blocked.data, labels=list(x$plabels,x$plabels),
+ main=main, drawlines = FALSE, cex.lab=cex.lab)
+ for (j in 2:length(x$plabels)) if (x$block.membership[j] !=
+ x$block.membership[j-1])
+ abline(v = j- 0.5, h = j- 0.5, lty = 3, xpd=FALSE)
+ }
+ 
+plot.block(blk_model.provider.org, main = "provider")
+```
+
+```{r}
+#prov_blks6 <- blockmodeling::optRandomParC(provider_matrix, k=6, rep=10, approaches="ss", blocks="com")
+```
+
+```{r}
+# Save the prov_blks6 object to a file
+#saveRDS(prov_blks6, "prov_blks6_results.rds")
+
+# Later, when you want to use it again, you can read it back into R
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+```{r}
+# blockmodel with optimized partition
+prov_blk_mod <- blockmodel(provider_matrix, prov_blks6$best$best1$clu,
+                      plabels = rownames(provider_matrix))
+# print blockmodel object
+prov_blk_mod$block.model
+```
+
+```{r}
+glimpse(prov_blk_mod)
+```
+
+```{r}
+pro_attr$block <- prov_blk_mod$block.membership 
+
+head(pro_attr)
+#write.csv(pro_attr, "pro_attr.csv")
+```
+
+```{r}
+plot.block(prov_blk_mod, main = "Provider 6 Block Model",
+           cex.lab = .000001)
+```
+
+```{r}
+#assign block membership to vertex attribute
+provider.stat%v%"role"<-prov_blk_mod$block.membership[match(provider.stat%v%"vertex.names",prov_blk_mod$plabels)]
+#plot network using "role" to color nodes
+GGally::ggnet2(provider.stat,
+               node.color="role", 
+               node.size=sna::degree(provider.stat, gmode="graph"),
+               node.alpha = .5)  + ggtitle("Provider 6 Block Model Network")
+```
+
+
+#Next Steps Jaccard similarity
+
+```{r}
+library(ade4)
+```
+
+```{r}
+encounters.adj.ig <- igraph::as_biadjacency_matrix(encounters.ig)
+
+providers_jaccard <- dist.binary(t(encounters.adj.ig),
+            method = 1, # method=1 Jaccard index
+            upper = TRUE,
+            diag = FALSE)
+
+
+providers_jaccard <- as.matrix(providers_jaccard)
+diag(providers_jaccard) <- 0
+
+```
+
+```{r}
+#binarize
+providers_jaccard_bi <- ifelse(providers_jaccard > 0.99, 1, 0)
+```
+
+```{r}
+#create igraph object
+providers_jaccard.ig <- graph_from_adjacency_matrix(providers_jaccard_bi, mode = "undirected")
+providers_jaccard.ig
+```
+
+```{r}
+plot(providers_jaccard.ig,  edge.width = 0.0002, edge.color = "lightgray",  vertex.size = 2, vertex.label = NA)
+```
+
+```{r}
+# Load the igraph package
+library(igraph)
+
+# Create an igraph object from the blockmodel
+g <- graph_from_adjacency_matrix(provider_matrix, mode = "undirected", weighted = FALSE)
+
+# Plot the graph without labels
+plot(g,      layout = layout.fruchterman.reingold, 
+     vertex.label.dist = 2, 
+     vertex.size = 2, 
+     edge.label = NA,
+     vertex.label = NA,
+     vertex.label.cex = 0.2, 
+     main = "Provider Network")
+```
