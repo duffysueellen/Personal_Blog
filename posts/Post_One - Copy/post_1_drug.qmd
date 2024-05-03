@@ -1,5 +1,6 @@
 ---
-title: "Data Cleaning, Exploration, and Network Analysis"
+title: "POST 1"
+subtitle: "Data Cleaning, Exploration, and Network Analysis"
 author: "Sue-Ellen Duffy"
 date: "2024-04-29"
 categories: [code, analysis]
@@ -11,15 +12,15 @@ Does the demographic profile, including factors such as marital status, gender, 
 
 *Hypothesis*
 
-1. Demographic Disparities in Healthcare Utilization: PWUD from marginalized demographics, such as lower-income groups or minority populations, may have reduced access to healthcare services compared to PWUD from more privileged demographics.
+1.  Demographic Disparities in Healthcare Utilization: PWUD from marginalized demographics, such as lower-income groups or minority populations, may have reduced access to healthcare services compared to PWUD from more privileged demographics.
 
-2. Gender Differences in Healthcare Utilization: Gender may influence the type and frequency of healthcare services utilized by PWUD, with potential differences between male and female PWUD in accessing preventive care, substance abuse treatment, or mental health services. Additionally, the gender of  providers may impact the type and frequency of healthcare service utilization among PWUD, with preferences or comfort levels potentially differing between male and female PWUD in seeking care from providers of the same or opposite gender.
+2.  Gender Differences in Healthcare Utilization: Gender may influence the type and frequency of healthcare services utilized by PWUD, with potential differences between male and female PWUD in accessing preventive care, substance abuse treatment, or mental health services. Additionally, the gender of providers may impact the type and frequency of healthcare service utilization among PWUD, with preferences or comfort levels potentially differing between male and female PWUD in seeking care from providers of the same or opposite gender.
 
-3. Marital status may not only affect the size of social networks but also the type and frequency available within these networks, influencing healthcare-seeking behavior among PWUD. 
+3.  Marital status may not only affect the size of social networks but also the type and frequency available within these networks, influencing healthcare-seeking behavior among PWUD.
 
-4. Geographic Accessibility and Healthcare Utilization: Demographic factors may interact with geographic location, with PWUD in rural or underserved areas facing distinct challenges in accessing healthcare services compared to those in urban or well-served regions. 
+4.  Geographic Accessibility and Healthcare Utilization: Demographic factors may interact with geographic location, with PWUD in rural or underserved areas facing distinct challenges in accessing healthcare services compared to those in urban or well-served regions.
 
-5. Healthcare Service Utilization as a Proxy for Overdose Risk: The utilization of a greater number of healthcare services among PWUD may serve as an indicator of increased risk of experiencing an overdose. This hypothesis suggests that PWUD who engage more frequently with healthcare services may be more likely to have experienced or be at higher risk of experiencing an overdose event, potentially due to underlying health issues, higher substance use severity, or other related factors. 
+5.  Healthcare Service Utilization as a Proxy for Overdose Risk: The utilization of a greater number of healthcare services among PWUD may serve as an indicator of increased risk of experiencing an overdose. This hypothesis suggests that PWUD who engage more frequently with healthcare services may be more likely to have experienced or be at higher risk of experiencing an overdose event, potentially due to underlying health issues, higher substance use severity, or other related factors.
 
 *Data Collection*
 
@@ -27,7 +28,7 @@ Data for this project were taken from Synthetic Mass, which creates Synthetic pa
 
 ![](SyntheticMassLogo.png)
 
-Criteria for patient download will be set to include patients that have experienced overdose, substance use treatment, and have other indicators in their health records that could be considered substance use. 
+Criteria for patient download will be set to include patients that have experienced overdose, substance use treatment, and have other indicators in their health records that could be considered substance use.
 
 While a whole host of datasets are available within each download, I will focus this project on three datasets: patients.csv, providers.csv, and encounters.csv.
 
@@ -37,16 +38,13 @@ While a whole host of datasets are available within each download, I will focus 
 
     -   **Reminder: none of this data is real**, it is synthetic, so the personally identifiable information I share is not data on real people and cannot be used to identify real people.
 
-
 *Data Cleaning*
 
 Data for this project will be read in, reduced to only necessary data, cleaned (trim ws, recode variables, match across datasets, and other data cleaning processes)
 
 *Data Analysis*
 
-Analysis will primarily be of a two-mode network, developing an analysis of the patient-provider relationship. Weights will be assigned to the number of visits between patients and providers. 
-Block Modeling analysis will be performed in one-mode networks of patient or providers to understand the structure of the networks. Blocks will be assigned to patients and providers as an attribute for analysis.
-
+Analysis will primarily be of a two-mode network, developing an analysis of the patient-provider relationship. Weights will be assigned to the number of visits between patients and providers. Block Modeling analysis will be performed in one-mode networks of patient or providers to understand the structure of the networks. Blocks will be assigned to patients and providers as an attribute for analysis.
 
 *Cleaning*
 
@@ -196,7 +194,8 @@ providers <- providers %>%
   )
 ```
 
-# DEEP CLEAN BREAK 
+# DEEP CLEAN BREAK
+
 There is an incompatibility issue with PROVIDER and ENCOUNTER data found later in the process, so I will clean it now to provide the best picture of demographics of the actual dataset.
 
 ## ENCOUNTER DATA
@@ -263,6 +262,7 @@ providers_filtered <- providers %>%
 # Print the dimensions of the resulting dataset
 print(dim(providers_filtered))
 ```
+
 Result is 223, though it should be 222.
 
 ```{r}
@@ -272,6 +272,7 @@ duplicate_rows <- providers_filtered[duplicated(providers_filtered$NAME) | dupli
 # Print the duplicate rows
 print(duplicate_rows %>% select(PROVIDER, CITY))
 ```
+
 Ah Maynard.
 
 ```{r}
@@ -290,6 +291,7 @@ providers_filtered <- providers_filtered %>%
 # Print the dimensions of the resulting dataset
 print(dim(providers_filtered))
 ```
+
 ```{r}
 check_pat <- encounters_cleaning %>%
   group_by(PATIENT, GENDER.y) %>%
@@ -302,9 +304,11 @@ check_pat_enc <- patients %>%
 dim(check_pat)
 dim(check_pat_enc)
 ```
+
 Patients have the same dimensions.
 
 # Back to the Regularly Scheduled Data Cleaning
+
 ## PATIENT DATA 2
 
 ```{r}
@@ -335,7 +339,8 @@ ggplot(data = encounters %>%
   geom_bar(stat = "identity") +
   coord_flip() + labs(title = paste("Reason Patient Visited Provider", "\n*filtered to show >50 visits"))
 ```
-Aside from NA (which does not stand for Narcotics Anonymous) the most frequent reason a patient visits a provider is for "Dependent drug abuse (disorder)". This is exactly what I would have anticipated seeing in this dataset, considering I called for only patients with a high likelyhood of being drug dependent. 
+
+Aside from NA (which does not stand for Narcotics Anonymous) the most frequent reason a patient visits a provider is for "Dependent drug abuse (disorder)". This is exactly what I would have anticipated seeing in this dataset, considering I called for only patients with a high likelyhood of being drug dependent.
 
 The second most frequent reason for visiting a provider is "Chronic kidney disease stage 4 (disorder)". One insight I have been given is that kidney disease may involve a lot of trips to the doctors for dialysis. I may look into this dataset to see if I'm right, but this is more a side tangent.
 
@@ -488,18 +493,9 @@ There are also many patients and providers that are not linked into the larger g
 
 My next steps will include looking more deeply at these relationships through blocking, filtering, and density analysis.
 
-
 Note To Self
 
-TO DO:
-- consider ego centric network
-- clean up any other aspect for analysis
-- analysis across Marital status
-- can X reason for hospital visit predict where you go to your next visit?
-- analyze the block structure and look for attributes
-- sort by block x and look for matrixes there
-- also centrality
-
+TO DO: - consider ego centric network - clean up any other aspect for analysis - analysis across Marital status - can X reason for hospital visit predict where you go to your next visit? - analyze the block structure and look for attributes - sort by block x and look for matrixes there - also centrality
 
 ```{r}
 OVERDOSE <- encounters_cleaned %>%

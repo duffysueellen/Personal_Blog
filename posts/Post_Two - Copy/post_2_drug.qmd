@@ -1,5 +1,6 @@
 ---
-title: "Network Exploration"
+title: "POST 2"
+subtitle: "Network Exploration"
 author: "Sue-Ellen Duffy"
 date: "2024-05-02"
 categories: [code, analysis]
@@ -171,7 +172,6 @@ head(pat_cent_df[order(pat_cent_df$deg, decreasing = TRUE),], 10)
 summary(pat_cent_df)
 
 ```
-
 
 ```{r}
 V(incidence_graph)$size <- igraph::degree(incidence_graph)

@@ -1,5 +1,6 @@
 ---
-title: "Network Block Modeling - Patients"
+title: "POST 3"
+subtitle: "Network Block Modeling - Patients"
 author: "Sue-Ellen Duffy"
 date: "2024-05-03"
 categories: [code, analysis, block_model]
