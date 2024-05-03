@@ -1,5 +1,6 @@
 ---
-title: "Network Block Modeling - Geographical Comparisson"
+title: "POST 6"
+subtitle: "Network Block Modeling - Geographical Comparisson"
 author: "Sue-Ellen Duffy"
 date: "2024-04-26"
 categories: [code, analysis, block_model]
