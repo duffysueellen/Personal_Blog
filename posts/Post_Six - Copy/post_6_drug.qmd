@@ -188,12 +188,12 @@ vertex_names <- attributes$vertex$vertex.names
 role_vertex_df <- data.frame(vertex.names = vertex_names, role = roles)
 
 # Displaying the first few rows of the dataframe
-head(role_vertex_df)
-role_vertex_df %>%
-  arrange(desc(vertex.names))
 
-pro_attr %>%
-  arrange(desc(NAME))
+head(role_vertex_df %>%
+  arrange(desc(vertex.names)))
+
+head(pro_attr %>%
+  arrange(desc(NAME)))
 ```
 
 ```{r}
@@ -371,18 +371,42 @@ block1 <- pro_attr %>%
   filter(block == 1)
 block1
 ```
-
+Block 1 is right outside of Boston
 ```{r}
 block2 <- pro_attr %>%
   filter(block == 2)
 block2
 ```
+Block 2, only one provider, Fitchburg.
 
 ```{r}
 block3 <- pro_attr %>%
   filter(block == 3)
 block3
 ```
+Block 3 is everywhere.
+
+
+```{r}
+block4 <- pro_attr %>%
+  filter(block == 4)
+block4
+```
+Block 4 is Heavy Waltham representation
+```{r}
+block5 <- pro_attr %>%
+  filter(block == 5)
+block5
+```
+Block 5 is a bit of everyone
+
+
+```{r}
+block6 <- pro_attr %>%
+  filter(block == 6)
+block6
+```
+Block 6 is Northshore.
 
 ```{r}
 Ted955 <- encounters_cleaned %>% 
