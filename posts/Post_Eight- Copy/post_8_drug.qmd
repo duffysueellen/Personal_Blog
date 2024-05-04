@@ -1,6 +1,6 @@
 ---
-title: "POST 7"
-subtitle: "Network Block Modeling - Geographical Comparisson"
+title: "POST 8"
+subtitle: "CUG"
 author: "Sue-Ellen Duffy"
 date: "2024-05-03"
 categories: [code, analysis, block_model]
