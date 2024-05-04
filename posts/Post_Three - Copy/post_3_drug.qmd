@@ -131,8 +131,12 @@ glimpse(pat_blk_mod)
 ```
 
 ```{r}
-pat_attr$block <- pat_blk_mod$block.membership
-head(pat_attr)
+
+block_df <- data.frame(pat_blk_mod$plabels, pat_blk_mod$block.membership)
+
+pat_attr <- pat_attr %>%
+left_join(block_df, by = c("NAME" = "pat_blk_mod.plabels" ))
+
 #write.csv(pat_attr, "pat_attr.csv")
 
 ```

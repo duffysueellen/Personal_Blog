@@ -1,49 +1,49 @@
 "","NAME","GENDER","RACE","MARITAL","CITY","INCOME","AGE","type","block"
-"1","Annice210 Gleason633","Female","white","Married","brookline",1565,37,"PATIENT",1
-"2","Julianne852 Barrows492","Female","white","Widowed","hamilton",39537,65,"PATIENT",1
-"3","Alesha810 Heaney114","Female","white","Divorced","framingham",114339,46,"PATIENT",2
-"4","Sandee884 Rice937","Female","white",NA,"taunton",96256,26,"PATIENT",2
-"5","Mia349 Runte676","Female","white","Divorced","chelmsford",71238,44,"PATIENT",2
-"6","Damian46 Dach178","Male","white",NA,"swansea",74155,26,"PATIENT",2
-"7","Nelida367 Emard19","Female","white","Single","brookline",501039,30,"PATIENT",2
-"8","Anthony633 Kutch271","Male","asian",NA,"framingham",671128,26,"PATIENT",3
-"9","Mose244 Cummerata161","Male","black","Single","saugus",125860,46,"PATIENT",3
-"10","Shila857 Heller342","Female","white",NA,"marion",134195,22,"PATIENT",3
-"11","Esther279 Schroeder447","Female","white","Divorced","shelburne",55633,55,"PATIENT",3
-"12","Lawerence6 Grimes165","Male","white","Married","brockton",96909,39,"PATIENT",3
-"13","Benedict104 Hintz995","Male","white","Single","winchester",837001,32,"PATIENT",3
-"14","Spencer878 Bailey598","Male","white","Married","springfield",26587,38,"PATIENT",3
-"15","Rolland302 Kassulke119","Male","white","Married","leominster",45110,74,"PATIENT",3
-"16","Lan153 Schmidt332","Female","white","Widowed","norfolk",186222,76,"PATIENT",4
-"17","Gordon377 Marquardt819","Male","white","Single","leominster",45110,74,"PATIENT",4
-"18","Jeanelle736 Simonis280","Female","white","Married","hamilton",693931,65,"PATIENT",4
-"19","Sabine292 Feil794","Female","white","Married","norfolk",186222,76,"PATIENT",4
-"20","Cindi877 Hane680","Female","white","Married","lynn",14479,57,"PATIENT",4
-"21","Leland44 Huels583","Male","white","Divorced","rockland",129853,46,"PATIENT",4
-"22","Tomika243 Walker122","Female","asian","Married","newton",28174,61,"PATIENT",5
-"23","Cruz300 Wilderman619","Male","asian","Married","foxborough",42761,49,"PATIENT",5
-"24","Rod343 Prosacco716","Male","white","Married","east sandwich",178001,36,"PATIENT",5
-"25","Stephan15 Auer97","Male","white","Married","fall river",22085,42,"PATIENT",5
-"26","Ryann170 Spencer878","Female","white","Married","hamilton",693931,65,"PATIENT",5
-"27","Kandis954 Koepp521","Female","asian","Single","newton",28174,61,"PATIENT",5
-"28","Ouida808 Carroll471","Female","asian","Single","groton",764127,67,"PATIENT",5
-"29","Diana207 Stamm704","Female","white","Married","sandwich",81516,32,"PATIENT",5
+"1","Annice210 Gleason633","Female","white","Married","brookline",1565,37,"PATIENT",6
+"2","Julianne852 Barrows492","Female","white","Widowed","hamilton",39537,65,"PATIENT",6
+"3","Alesha810 Heaney114","Female","white","Divorced","framingham",114339,46,"PATIENT",6
+"4","Sandee884 Rice937","Female","white",NA,"taunton",96256,26,"PATIENT",6
+"5","Mia349 Runte676","Female","white","Divorced","chelmsford",71238,44,"PATIENT",6
+"6","Damian46 Dach178","Male","white",NA,"swansea",74155,26,"PATIENT",6
+"7","Nelida367 Emard19","Female","white","Single","brookline",501039,30,"PATIENT",4
+"8","Anthony633 Kutch271","Male","asian",NA,"framingham",671128,26,"PATIENT",6
+"9","Mose244 Cummerata161","Male","black","Single","saugus",125860,46,"PATIENT",6
+"10","Shila857 Heller342","Female","white",NA,"marion",134195,22,"PATIENT",2
+"11","Esther279 Schroeder447","Female","white","Divorced","shelburne",55633,55,"PATIENT",5
+"12","Lawerence6 Grimes165","Male","white","Married","brockton",96909,39,"PATIENT",6
+"13","Benedict104 Hintz995","Male","white","Single","winchester",837001,32,"PATIENT",6
+"14","Spencer878 Bailey598","Male","white","Married","springfield",26587,38,"PATIENT",6
+"15","Rolland302 Kassulke119","Male","white","Married","leominster",45110,74,"PATIENT",5
+"16","Lan153 Schmidt332","Female","white","Widowed","norfolk",186222,76,"PATIENT",6
+"17","Gordon377 Marquardt819","Male","white","Single","leominster",45110,74,"PATIENT",5
+"18","Jeanelle736 Simonis280","Female","white","Married","hamilton",693931,65,"PATIENT",6
+"19","Sabine292 Feil794","Female","white","Married","norfolk",186222,76,"PATIENT",5
+"20","Cindi877 Hane680","Female","white","Married","lynn",14479,57,"PATIENT",6
+"21","Leland44 Huels583","Male","white","Divorced","rockland",129853,46,"PATIENT",6
+"22","Tomika243 Walker122","Female","asian","Married","newton",28174,61,"PATIENT",4
+"23","Cruz300 Wilderman619","Male","asian","Married","foxborough",42761,49,"PATIENT",3
+"24","Rod343 Prosacco716","Male","white","Married","east sandwich",178001,36,"PATIENT",6
+"25","Stephan15 Auer97","Male","white","Married","fall river",22085,42,"PATIENT",6
+"26","Ryann170 Spencer878","Female","white","Married","hamilton",693931,65,"PATIENT",6
+"27","Kandis954 Koepp521","Female","asian","Single","newton",28174,61,"PATIENT",6
+"28","Ouida808 Carroll471","Female","asian","Single","groton",764127,67,"PATIENT",6
+"29","Diana207 Stamm704","Female","white","Married","sandwich",81516,32,"PATIENT",6
 "30","Madelyn308 Schumm995","Female","white","Widowed","brockton",52442,65,"PATIENT",5
 "31","Maryellen651 Conn188","Female","asian","Divorced","groton",764127,67,"PATIENT",5
-"32","Odilia72 Upton904","Female","white","Single","brockton",52442,65,"PATIENT",5
-"33","Margarito178 Schulist381","Male","black","Married","medford",86930,32,"PATIENT",5
-"34","Lou594 Krajcik437","Male","black","Married","boston",3549,49,"PATIENT",5
+"32","Odilia72 Upton904","Female","white","Single","brockton",52442,65,"PATIENT",6
+"33","Margarito178 Schulist381","Male","black","Married","medford",86930,32,"PATIENT",6
+"34","Lou594 Krajcik437","Male","black","Married","boston",3549,49,"PATIENT",6
 "35","Leonel449 Witting912","Male","white","Married","lynn",57263,80,"PATIENT",5
-"36","Regan713 Kertzmann286","Female","white","Divorced","dennis port",29974,76,"PATIENT",5
-"37","Theodore876 Thiel172","Male","white","Married","swansea",82653,44,"PATIENT",6
+"36","Regan713 Kertzmann286","Female","white","Divorced","dennis port",29974,76,"PATIENT",2
+"37","Theodore876 Thiel172","Male","white","Married","swansea",82653,44,"PATIENT",3
 "38","Dusti191 Maggio310","Female","white",NA,"northampton",14829,24,"PATIENT",6
-"39","Dortha70 Rutherford999","Female","white","Divorced","rochester",13312,57,"PATIENT",6
-"40","Stanley702 Cremin516","Male","white","Single","waltham",10884,66,"PATIENT",6
-"41","Rupert654 Jenkins714","Male","white","Married","dennis",62793,59,"PATIENT",6
-"42","Mario764 Glover433","Male","white","Married","danvers",80254,68,"PATIENT",6
-"43","Carl856 Rempel203","Male","black","Married","dartmouth",78741,34,"PATIENT",6
-"44","Johnnie679 Hand679","Male","white","Divorced","dennis",62793,59,"PATIENT",6
-"45","Dorothea248 Fritsch593","Female","white","Single","taunton",55347,59,"PATIENT",6
+"39","Dortha70 Rutherford999","Female","white","Divorced","rochester",13312,57,"PATIENT",2
+"40","Stanley702 Cremin516","Male","white","Single","waltham",10884,66,"PATIENT",4
+"41","Rupert654 Jenkins714","Male","white","Married","dennis",62793,59,"PATIENT",5
+"42","Mario764 Glover433","Male","white","Married","danvers",80254,68,"PATIENT",5
+"43","Carl856 Rempel203","Male","black","Married","dartmouth",78741,34,"PATIENT",3
+"44","Johnnie679 Hand679","Male","white","Divorced","dennis",62793,59,"PATIENT",1
+"45","Dorothea248 Fritsch593","Female","white","Single","taunton",55347,59,"PATIENT",3
 "46","Mozelle144 Zboncak558","Female","white",NA,"milton",115409,22,"PATIENT",6
 "47","Ola364 Kreiger457","Female","white","Single","randolph",9582,59,"PATIENT",6
 "48","Wilfred787 Nienow652","Male","white",NA,"salisbury",174409,19,"PATIENT",6
@@ -51,23 +51,23 @@
 "50","Gino587 Vandervort697","Male","asian","Married","middleborough",84850,71,"PATIENT",6
 "51","Tera136 Swift555","Female","black","Married","holden",116813,33,"PATIENT",6
 "52","Monroe732 Fritsch593","Male","black","Married","springfield",34768,38,"PATIENT",6
-"53","Cherise743 Prosacco716","Female","white","Widowed","newton",111451,72,"PATIENT",6
-"54","Alissa315 Altenwerth646","Female","white","Married","wakefield",144070,45,"PATIENT",6
+"53","Cherise743 Prosacco716","Female","white","Widowed","newton",111451,72,"PATIENT",4
+"54","Alissa315 Altenwerth646","Female","white","Married","wakefield",144070,45,"PATIENT",5
 "55","Kathlyn335 Wisozk929","Female","white","Married","milford",25234,28,"PATIENT",6
 "56","Donald774 Krajcik437","Male","white","Married","north adams",30896,41,"PATIENT",6
 "57","Analisa263 Kohler843","Female","white","Single","boston",13963,37,"PATIENT",6
-"58","Rudy520 Hettinger594","Male","white","Divorced","yarmouth port",68609,74,"PATIENT",6
+"58","Rudy520 Hettinger594","Male","white","Divorced","yarmouth port",68609,74,"PATIENT",1
 "59","Russell422 Stracke611","Male","white","Married","worcester",100420,32,"PATIENT",6
-"60","Serena400 Powlowski563","Female","white","Married","freetown",840567,78,"PATIENT",6
+"60","Serena400 Powlowski563","Female","white","Married","freetown",840567,78,"PATIENT",3
 "61","Adam631 Hoppe518","Male","white","Divorced","cambridge",37059,45,"PATIENT",6
-"62","Chanell45 Morissette863","Female","white","Single","attleboro",2338,68,"PATIENT",6
-"63","Chaya236 Sporer811","Female","asian","Married","fall river",7536,55,"PATIENT",6
-"64","Dinorah501 Bechtelar572","Female","white","Married","newton",111451,72,"PATIENT",6
+"62","Chanell45 Morissette863","Female","white","Single","attleboro",2338,68,"PATIENT",3
+"63","Chaya236 Sporer811","Female","asian","Married","fall river",7536,55,"PATIENT",3
+"64","Dinorah501 Bechtelar572","Female","white","Married","newton",111451,72,"PATIENT",4
 "65","Tyler508 Ankunding277","Male","white","Single","natick",25378,51,"PATIENT",6
-"66","Ivan258 Hills818","Male","white",NA,"new bedford",66323,27,"PATIENT",6
-"67","Guadalupe206 Wuckert783","Female","white","Married","newton",111451,72,"PATIENT",6
-"68","Wilburn655 Sipes176","Male","white","Married","yarmouth",89071,28,"PATIENT",6
-"69","Rosamaria757 Orn563","Female","white","Married","natick",8124,46,"PATIENT",6
+"66","Ivan258 Hills818","Male","white",NA,"new bedford",66323,27,"PATIENT",2
+"67","Guadalupe206 Wuckert783","Female","white","Married","newton",111451,72,"PATIENT",5
+"68","Wilburn655 Sipes176","Male","white","Married","yarmouth",89071,28,"PATIENT",2
+"69","Rosamaria757 Orn563","Female","white","Married","natick",8124,46,"PATIENT",4
 "70","Oliva247 Braun514","Female","white","Single","amherst",22046,31,"PATIENT",6
 "71","Elease461 Boehm581","Female","white","Married","southbridge",29869,53,"PATIENT",6
 "72","Shara355 Bruen238","Female","black","Single","leominster",199591,49,"PATIENT",6
@@ -75,13 +75,13 @@
 "74","Lorina403 Cronin387","Female","white","Married","foxborough",199314,66,"PATIENT",6
 "75","Gwen761 Keeling57","Female","white","Married","gardner",34695,48,"PATIENT",6
 "76","Jeanette800 Schinner682","Female","native","Single","west brookfield",17271,71,"PATIENT",6
-"77","Ramon749 Kozey370","Male","white","Married","somerset",41222,83,"PATIENT",6
-"78","Lemuel304 Mante251","Male","white","Divorced","wakefield",734792,83,"PATIENT",6
+"77","Ramon749 Kozey370","Male","white","Married","somerset",41222,83,"PATIENT",5
+"78","Lemuel304 Mante251","Male","white","Divorced","wakefield",734792,83,"PATIENT",5
 "79","Troy560 Kohler843","Female","white","Single","westfield",47288,31,"PATIENT",6
 "80","Kathrine376 Bosco882","Female","white","Married","westminster",124310,31,"PATIENT",6
-"81","Lani848 Cole117","Female","white","Married","west dennis",5334,105,"PATIENT",6
+"81","Lani848 Cole117","Female","white","Married","west dennis",5334,105,"PATIENT",5
 "82","Krystina167 Muller251","Female","white","Single","boston",42977,37,"PATIENT",6
 "83","Johnny786 Smith67","Male","white","Divorced","wakefield",734792,83,"PATIENT",6
 "84","Everette494 O'Hara248","Male","white","Widowed","worcester",72251,48,"PATIENT",6
-"85","Lorretta561 Metz686","Female","white","Married","foxborough",199314,66,"PATIENT",6
-"86","Jorge203 Ferry570","Male","white","Married","wakefield",734792,83,"PATIENT",6
+"85","Lorretta561 Metz686","Female","white","Married","foxborough",199314,66,"PATIENT",3
+"86","Jorge203 Ferry570","Male","white","Married","wakefield",734792,83,"PATIENT",5

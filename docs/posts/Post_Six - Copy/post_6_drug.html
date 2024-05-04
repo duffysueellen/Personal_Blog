@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sue-Ellen Duffy">
-<meta name="dcterms.date" content="2024-04-26">
+<meta name="dcterms.date" content="2024-05-03">
 
-<title>Social_Networks_Blog_Space - Network Block Modeling - Geographical Comparisson</title>
+<title>Social_Networks_Blog_Space - POST 6</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -142,7 +142,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Network Block Modeling - Geographical Comparisson</h1>
+      <h1 class="title">POST 6</h1>
+            <p class="subtitle lead">Network Block Modeling - Geographical Comparisson</p>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
@@ -164,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 26, 2024</p>
+        <p class="date">May 3, 2024</p>
       </div>
     </div>
     
@@ -320,58 +321,455 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="provider">PROVIDER</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>provider_matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">as_adjacency_matrix</span>(projected_graph<span class="sc">$</span>proj2))</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>provider.stat <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(projected_graph<span class="sc">$</span>proj2)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>provider.se <span class="ot">&lt;-</span> <span class="fu">equiv.clust</span>(provider_matrix,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a> <span class="at">equiv.fun =</span> <span class="st">"sedist"</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a> <span class="at">method =</span> <span class="st">"hamming"</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a> <span class="at">mode =</span> <span class="st">"graph"</span>,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a> <span class="at">cluster.method =</span> <span class="st">"complete"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(<span class="st">"package:igraph"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(statnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'statnet' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: tergm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tergm' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ergm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ergm' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+'ergm' 4.6.0 (2023-12-17), part of the Statnet Project
+* 'news(package="ergm")' for changes since last version
+* 'citation("ergm")' for citation information
+* 'https://statnet.org' for help, support, and other information</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>'ergm' 4 is a major update that introduces some backwards-incompatible
+changes. Please type 'news(package="ergm")' for a list of major
+changes.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'ergm'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:statnet.common':
+
+    snctrl</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: networkDynamic</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'networkDynamic' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+'networkDynamic' 0.11.4 (2023-12-10?), part of the Statnet Project
+* 'news(package="networkDynamic")' for changes since last version
+* 'citation("networkDynamic")' for citation information
+* 'https://statnet.org' for help, support, and other information</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'tergm':
+  method                   from
+  simulate_formula.network ergm</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+'tergm' 4.2.0 (2023-05-30), part of the Statnet Project
+* 'news(package="tergm")' for changes since last version
+* 'citation("tergm")' for citation information
+* 'https://statnet.org' for help, support, and other information</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'tergm'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ergm':
+
+    snctrl</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:statnet.common':
+
+    snctrl</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ergm.count</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ergm.count' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+'ergm.count' 4.1.1 (2022-05-24), part of the Statnet Project
+* 'news(package="ergm.count")' for changes since last version
+* 'citation("ergm.count")' for citation information
+* 'https://statnet.org' for help, support, and other information</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: tsna</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tsna' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+'statnet' 2019.6 (2019-06-13), part of the Statnet Project
+* 'news(package="statnet")' for changes since last version
+* 'citation("statnet")' for citation information
+* 'https://statnet.org' for help, support, and other information</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>unable to reach CRAN</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>provider.stat <span class="ot">&lt;-</span> <span class="fu">asNetwork</span>(projected_graph<span class="sc">$</span>proj2)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>provider.se <span class="ot">&lt;-</span> <span class="fu">equiv.clust</span>(provider_matrix,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a> <span class="at">equiv.fun =</span> <span class="st">"sedist"</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a> <span class="at">method =</span> <span class="st">"hamming"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a> <span class="at">mode =</span> <span class="st">"graph"</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a> <span class="at">cluster.method =</span> <span class="st">"complete"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>blk_model.provider.org <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a> provider.se, <span class="at">k =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>blk_model.provider.org <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix,</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a> provider.se, <span class="at">k =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prov_blks6 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"prov_blks6_results.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>prov_blks6 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"prov_blks6_results.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blockmodel with optimized partition</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>prov_blk_mod <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix, prov_blks6<span class="sc">$</span>best<span class="sc">$</span>best1<span class="sc">$</span>clu,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plabels =</span> <span class="fu">rownames</span>(provider_matrix))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blockmodel with optimized partition</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>prov_blk_mod <span class="ot">&lt;-</span> <span class="fu">blockmodel</span>(provider_matrix, prov_blks6<span class="sc">$</span>best<span class="sc">$</span>best1<span class="sc">$</span>clu,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">plabels =</span> <span class="fu">rownames</span>(provider_matrix))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign block membership to vertex attribute</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>provider.stat<span class="sc">%v%</span><span class="st">"role"</span><span class="ot">&lt;-</span>prov_blk_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(provider.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,prov_blk_mod<span class="sc">$</span>plabels)]</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot network using "role" to color nodes</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role"</span>, </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign block membership to vertex attribute</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>provider.stat<span class="sc">%v%</span><span class="st">"role"</span><span class="ot">&lt;-</span>prov_blk_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(provider.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,prov_blk_mod<span class="sc">$</span>plabels)]</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot network using "role" to color nodes</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role"</span>, </span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_6_drug_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggnet2</span>(provider.stat,</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span>pro_attr<span class="sc">$</span>block, </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(provider.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Provider 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_6_drug_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>attributes <span class="ot">&lt;-</span> <span class="fu">dumpAttr</span>(provider.stat)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting roles and vertex names</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>roles <span class="ot">&lt;-</span> attributes<span class="sc">$</span>vertex<span class="sc">$</span>role</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>vertex_names <span class="ot">&lt;-</span> attributes<span class="sc">$</span>vertex<span class="sc">$</span>vertex.names</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a dataframe</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>role_vertex_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">vertex.names =</span> vertex_names, <span class="at">role =</span> roles)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the first few rows of the dataframe</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(role_vertex_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               vertex.names role
+1        Elijah719 White193    3
+2         Fidel864 Swift555    3
+3        Virgen207 Hyatt152    5
+4       Zachery872 Pagac496    3
+5 Kristopher775 Schiller186    3
+6        Laine739 Torphy630    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>role_vertex_df <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(vertex.names))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  vertex.names role
+1            Zachery872 Rau926    1
+2          Zachery872 Pagac496    3
+3           Waylon572 Lakin515    3
+4           Virgen207 Hyatt152    5
+5       Vicente970 Armstrong51    5
+6            Vern731 Casper496    3
+7       Valentine262 Corwin846    3
+8        Tracy345 Wilderman619    3
+9           Tracie996 Lesch175    3
+10           Thanh759 Weber641    3
+11           Thad495 Leannon79    6
+12            Ted955 Reilly981    2
+13      Sparkle906 Bernhard322    3
+14      Soledad678 Calderón210    3
+15          Silva841 Grimes165    3
+16            Sid118 Hammes673    5
+17          Shonna561 Feest103    3
+18     Sherwood961 O'Conner199    3
+19    Sherwood961 Aufderhar910    5
+20          Shemeka786 Conn188    3
+21         Shayne60 Gutmann970    5
+22          Shayla126 White193    3
+23         Shawn523 Padberg411    3
+24           Shasta644 King743    3
+25     Sharyl439 Williamson769    3
+26       Sharron285 Okuneva707    3
+27          Sharron285 Batz141    3
+28       Shane235 Lueilwitz711    3
+29            Saul605 Ratke343    5
+30         Sasha806 D'Amore443    5
+31            Sam879 Rippin620    3
+32         Salvador46 Wolff180    3
+33     Rudolf736 Vandervort697    3
+34           Ross213 Wisozk929    3
+35       Rosanna866 DuBuque211    3
+36        Rocky100 Schmeler639    3
+37        Roberto515 Macías944    5
+38            Rhonda22 Bins636    3
+39         Rhett759 Padberg411    3
+40          Rebeca548 García15    5
+41     Rayford811 Bashirian201    3
+42       Randy380 Bergstrom287    5
+43        Quentin28 Fritsch593    3
+44       Patrina117 Strosin214    4
+45       Patricia625 Aragón562    3
+46         Parker433 Bailey598    5
+47           Orpha286 Marks830    3
+48       Olevia458 Hermiston71    3
+49         Numbers230 Stehr398    3
+50         Norah104 Jenkins714    4
+51           Nilda678 Crona259    3
+52          Neville893 Schoen8    4
+53       Nevada145 Schmeler639    3
+54       Nathanael908 Rogahn59    3
+55          Monroe732 Mills423    5
+56         Miyoko154 Paucek755    3
+57   Miguel Ángel46 Delgado712    3
+58          Mickey576 Borer986    3
+59           Mertie42 Lakin515    3
+60        Melvin857 Nikolaus26    3
+61       Maynard46 Buckridge80    3
+62       Maurice742 Pollich983    3
+63            Maude482 Veum823    5
+64           Mathew182 Howe413    5
+65         Mateo562 Barajas558    5
+66    María José279 Godínez202    3
+67         Maryann106 Hintz995    3
+68            Marth98 Mayer370    5
+69          Mario764 Aranda843    3
+70   Margene509 Schamberger479    3
+71     Marcelino726 Hilpert278    3
+72            Mana631 Boehm581    3
+73      Majorie11 Bergstrom287    3
+74      Madelaine318 Walker122    3
+75            Lynsey2 Lemke654    4
+76            Luna60 Littel644    3
+77           Louis204 Hauck852    6
+78          Lonnie913 Ferry570    3
+79          Lola232 Collado928    3
+80          Logan497 Fisher429    3
+81       Lizette501 Lebsack687    4
+82           Lezlie553 Koss676    3
+83           Levi940 Abbott774    3
+84       Leonarda398 Schumm995    3
+85           Leo278 Strosin214    3
+86            Leah288 Sauer652    3
+87        Laurie826 Pacocha935    3
+88         Lauri399 Keebler762    3
+89         Lauretta754 Dare640    3
+90      Laurena366 Anderson154    3
+91        Latrisha74 Rippin620    3
+92      Latoria810 Eichmann909    3
+93         Lanette41 Murray856    3
+94          Laine739 Torphy630    3
+95          Lady554 Kovacek682    6
+96           Lacy523 Littel644    3
+97           Kyle55 Collier206    3
+98   Kristopher775 Schiller186    3
+99           Kristin64 Will178    3
+100        King743 Predovic534    3
+101 Kimbra238 Runolfsdottir785    3
+102            Kim439 Hyatt152    5
+103         Kati243 Ruecker817    4
+104      Karla801 Cummerata161    6
+105      Kareem959 Schaefer657    3
+106        Kaila152 Dibbert990    3
+107         Justin359 Hayes766    3
+108       Junior695 Pacocha935    3
+109       Junior695 Leffler128    5
+110       Junior695 Kuhlman484    3
+111           Jules135 Emard19    5
+112       Joslyn677 Friesen796    3
+113   Josefina523 O'Connell601    1
+114          Josef103 Klein929    3
+115          Jorge203 Harvey63    3
+116      Jonathan639 Sporer811    3
+117          Jolynn62 Adams676    3
+118        Joanna347 Abbott774    5
+119        Jewel43 Kassulke119    5
+120      Jettie913 Rodriguez71    3
+121         Jess275 Gutmann970    3
+122        Jeanie708 Turner526    1
+123     Jarvis643 Ankunding277    5
+124      January966 Roberts511    3
+125           Janey243 Schoen8    3
+126         Janet238 Crooks415    3
+127        Jane262 Schmeler639    5
+128         Jamel269 Hudson301    3
+129   Jacinta658 Wintheiser220    5
+130         Isiah14 Nikolaus26    3
+131          Ina660 Hermann103    3
+132         Houston994 Funk324    5
+133        Hong136 Kassulke119    3
+134       Hellen346 Roberts511    3
+135      Heather971 Goldner995    5
+136         Harland508 Ryan260    3
+137       Harland508 Rippin620    4
+138  Harland508 Breitenberg711    3
+139        Guillermo498 Fay398    3
+140       Gordon377 Monahan736    3
+141           Gino587 Block661    1
+142     Gerardo48 Bergstrom287    3
+143           Gene733 Ratke343    3
+144         Fritz267 Kirlin939    3
+145        Freeda113 Crooks415    1
+146      Florencia449 Araña824    3
+147          Fidel864 Swift555    3
+148   Felicidad691 Luettgen772    3
+149             Fae378 Wiza601    5
+150            Ezra452 Torp761    3
+151       Estella474 O'Hara248    3
+152        Estell607 Barton704    3
+153     Erwin847 Stiedemann542    3
+154          Errol226 Kiehn525    3
+155     Enriqueta274 Barton704    3
+156    Enrique929 Caraballo427    3
+157       Emory494 Schuster709    5
+158    Elvera717 Gusikowski974    3
+159     Elmer371 Gusikowski974    3
+160          Ellyn26 Windler79    3
+161        Ellie521 Nicolas769    5
+162          Elisha578 Conn188    5
+163         Elijah719 White193    3
+164        Eliana466 Wehner319    5
+165          Eldon28 Cassin499    3
+166       Edwardo860 Larkin917    3
+167         Eddie505 Keeling57    6
+168          Dusty207 Lynch190    3
+169         Drew592 Streich926    3
+170          Derick144 King743    5
+171      Delicia67 Bernhard322    5
+172       Delbert384 Carter549    6
+173        Darrick836 Hoppe518    5
+174       Darnell564 Leannon79    4
+175       Darlene91 Collier206    3
+176        Dante562 Reinger292    4
+177         Daniel959 Wolff180    3
+178       Dana512 Wilkinson796    3
+179       Dale454 Wilderman619    3
+180     Cyrstal592 Mosciski958    3
+181    Cristopher265 Heaney114    3
+182        Cristi782 Miller503    3
+183         Cortez851 Price929    4
+184        Columbus656 Koch169    3
+185           Cody889 Ratke343    3
+186     Cleveland582 Kuphal363    3
+187           Cleo27 Lehner980    3
+188 Clemente531 Schamberger479    1
+189       Clement78 Gleason633    5
+190   Christopher407 Fisher429    5
+191         Chery887 Kohler843    3
+192          Cherish740 Toy286    5
+193      Charley358 Effertz744    3
+194     Charles364 Prosacco716    3
+195     Chantell995 Krajcik437    3
+196   Celestina960 Reichert620    3
+197      Cedrick207 Gleason633    3
+198      Carmelita854 Tromp100    5
+199            Carl856 King743    3
+200      Calandra120 Hackett68    3
+201          Bud153 Parisian75    5
+202         Buck819 Johnson679    3
+203           Bryon392 Mann644    3
+204    Brooks264 Williamson769    3
+205           Azzie965 Feil794    3
+206     Augustine565 Brekke496    3
+207           Aubrey96 Emard19    3
+208        Assunta351 Haley279    3
+209      Arturo47 Maldonado119    3
+210       Arminda86 Trantow673    3
+211      Antonia30 Elizondo706    3
+212      Antonette454 Tromp100    5
+213      Annelle169 Schmidt332    3
+214       Anderson154 Lemke654    5
+215       Anderson154 Kunze215    3
+216          Alonso270 Hand679    3
+217         Almeta56 Lehner980    5
+218        Allyson474 Doyle959    5
+219        Alberto639 Adame662    6
+220         Agnes294 Dooley940    3
+221          Adán600 Alicea505    3
+222          Abdul218 Boyer713    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pro_attr <span class="sc">%&gt;%</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(NAME))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 222 × 5
+   NAME                   GENDER CITY        type     block
+   &lt;chr&gt;                  &lt;chr&gt;  &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;
+ 1 Zachery872 Rau926      Male   walpole     PROVIDER     1
+ 2 Zachery872 Pagac496    Male   melrose     PROVIDER     3
+ 3 Waylon572 Lakin515     Male   woburn      PROVIDER     3
+ 4 Virgen207 Hyatt152     Female stoneham    PROVIDER     5
+ 5 Vicente970 Armstrong51 Male   stoneham    PROVIDER     5
+ 6 Vern731 Casper496      Male   swampscott  PROVIDER     3
+ 7 Valentine262 Corwin846 Male   taunton     PROVIDER     3
+ 8 Tracy345 Wilderman619  Male   woburn      PROVIDER     3
+ 9 Tracie996 Lesch175     Female newburyport PROVIDER     3
+10 Thanh759 Weber641      Male   attleboro   PROVIDER     3
+# ℹ 212 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting vertex attributes</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>vertex_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">role =</span> <span class="fu">get.vertex.attribute</span>(provider.stat, <span class="st">"role"</span>),</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">vertex.names =</span> <span class="fu">get.vertex.attribute</span>(provider.stat, <span class="st">"vertex.names"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Displaying the first few rows of the dataframe</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(vertex_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  role              vertex.names
+1    3        Elijah719 White193
+2    3         Fidel864 Swift555
+3    5        Virgen207 Hyatt152
+4    3       Zachery872 Pagac496
+5    3 Kristopher775 Schiller186
+6    3        Laine739 Torphy630</code></pre>
 </div>
 </div>
 </section>
 <section id="create-new-attribute-lists" class="level2">
 <h2 class="anchored" data-anchor-id="create-new-attribute-lists">Create New Attribute Lists</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pat_attr<span class="sc">$</span>block <span class="ot">&lt;-</span> pat_blk_mod<span class="sc">$</span>block.membership</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pro_attr<span class="sc">$</span>block <span class="ot">&lt;-</span> prov_blk_mod<span class="sc">$</span>block.membership</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>pat_attr_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, pat_attr)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>pro_attr_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, pro_attr)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pat_attr_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, pat_attr)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>pro_attr_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, pro_attr)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>both_attr <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(pat_attr, pro_attr)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>attribute_list <span class="ot">&lt;-</span> <span class="fu">do.call</span>(list, both_attr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>provider.st <span class="ot">&lt;-</span> <span class="fu">network</span>(provider_matrix,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">matrix.type =</span> <span class="st">"adjacency"</span>,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">vertex.attr =</span> pro_attr_list)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>provider.st</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>provider.st <span class="ot">&lt;-</span> <span class="fu">network</span>(provider_matrix,</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">directed =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">matrix.type =</span> <span class="st">"adjacency"</span>,</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">vertex.attr =</span> pro_attr_list)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>provider.st</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Network attributes:
   vertices = 222 
@@ -391,143 +789,260 @@ No edge attributes</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>provider_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(provider.st)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'igraph' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'igraph'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tigris':
+
+    blocks</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:sna':
+
+    betweenness, bonpow, closeness, components, degree, dyad.census,
+    evcent, hierarchy, is.connected, neighborhood, triad.census</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:network':
+
+    %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
+    get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
+    is.directed, list.edge.attributes, list.vertex.attributes,
+    set.edge.attribute, set.vertex.attribute</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:lubridate':
+
+    %--%, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    as_data_frame, groups, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:purrr':
+
+    compose, simplify</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidyr':
+
+    crossing</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tibble':
+
+    as_data_frame</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    decompose, spectrum</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>provider_graph <span class="ot">&lt;-</span> <span class="fu">graph_from_biadjacency_matrix</span>(provider.st)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#colors &lt;-  c("yellow", "blue", "green", "orange", "red", "purple")</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_colors &lt;- colors[pro_attr_list$block]</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">==</span> <span class="st">"BOSTON"</span>, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">==</span> <span class="st">"BOSTON"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="co">#colors &lt;-  c("yellow", "blue", "green", "orange", "red", "purple")</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_colors &lt;- colors[pro_attr_list$block]</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">==</span> <span class="st">"boston"</span>, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">==</span> <span class="st">"boston"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="post_6_drug_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>What other cities are on the provider list. Boston is not being properly represented, I have a feeling</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Boston_Neighborhoods <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ALLSTON"</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BRIGHTON"</span>,</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BOSTON"</span>,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CHARLESTOWN"</span>,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DORCHESTER"</span>,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"HYDE PARK"</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"JAMAICA PLAIN"</span>,</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MATTAPAN"</span>,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ROSLINDALE"</span>,</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ROXBURY"</span>,</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"West Roxbury"</span>,</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WEST ROXBURY"</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>Boston_Neighborhoods <span class="ot">&lt;-</span> <span class="fu">tolower</span>(Boston_Neighborhoods)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#colors &lt;-  c("yellow", "blue", "green", "orange", "red", "purple")</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_colors &lt;- colors[pro_attr_list$block]</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">%in%</span> Boston_Neighborhoods, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>block <span class="sc">==</span> <span class="st">"1"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_shape &lt;- ifelse(pro_attr_list$CITY == "BOSTON", "circle", "square")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Providers - RED = BOSTON"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"SN Graph"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_6_drug_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>So… it’s not Boston related.</p>
-<p>How about Highest populations</p>
+<p>What other cities are on the provider list. Boston is not being properly represented, I have a feeling</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>largest_pop <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="st">"Boston"</span>,</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="st">"Worcester"</span>,</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="st">"Springfield"</span>,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Cambridge"</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="st">"Lowell"</span>,</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="st">"Brockton"</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="st">"Quincy"</span>,</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="st">"Lynn"</span>,</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="st">"New Bedford"</span>,</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="st">"Fall River"</span>,</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="st">"Lawrence"</span>,</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="st">"Newton"</span>,</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="st">"Somerville"</span>,</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="st">"Framingham"</span>,</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="st">"Haverhill"</span>)</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>largest_pop <span class="ot">&lt;-</span> <span class="fu">tolower</span>(largest_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>Boston_Neighborhoods <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ALLSTON"</span>,</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BRIGHTON"</span>,</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"BOSTON"</span>,</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CHARLESTOWN"</span>,</span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DORCHESTER"</span>,</span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"HYDE PARK"</span>,</span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"JAMAICA PLAIN"</span>,</span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MATTAPAN"</span>,</span>
+<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ROSLINDALE"</span>,</span>
+<span id="cb74-11"><a href="#cb74-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ROXBURY"</span>,</span>
+<span id="cb74-12"><a href="#cb74-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"West Roxbury"</span>,</span>
+<span id="cb74-13"><a href="#cb74-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WEST ROXBURY"</span></span>
+<span id="cb74-14"><a href="#cb74-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a>Boston_Neighborhoods <span class="ot">&lt;-</span> <span class="fu">tolower</span>(Boston_Neighborhoods)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#colors &lt;-  c("yellow", "blue", "green", "orange", "red", "purple")</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_colors &lt;- colors[pro_attr_list$block]</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">%in%</span> largest_pop, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>block <span class="sc">==</span> <span class="st">"1"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_shape &lt;- ifelse(pro_attr_list$CITY == "BOSTON", "circle", "square")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="co">#colors &lt;-  c("yellow", "blue", "green", "orange", "red", "purple")</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_colors &lt;- colors[pro_attr_list$block]</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr<span class="sc">$</span>CITY <span class="sc">%in%</span> Boston_Neighborhoods, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr<span class="sc">$</span>block <span class="sc">==</span> <span class="st">"2"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_shape &lt;- ifelse(pro_attr_list$CITY == "BOSTON", "circle", "square")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Providers - RED = Largest Cities"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Providers - RED = BOSTON"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_6_drug_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>block1 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>block1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-  NAME                   GENDER CITY       type     block
-  &lt;chr&gt;                  &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;    &lt;int&gt;
-1 Ted955 Reilly981       Male   fitchburg  PROVIDER     1
-2 Shane235 Lueilwitz711  Male   worcester  PROVIDER     1
-3 Jules135 Emard19       Male   leominster PROVIDER     1
-4 Jarvis643 Ankunding277 Male   fall river PROVIDER     1
-5 Thad495 Leannon79      Male   peabody    PROVIDER     1
-6 Bud153 Parisian75      Male   worcester  PROVIDER     1</code></pre>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">"yellow"</span>, <span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"orange"</span>, <span class="st">"red"</span>, <span class="st">"purple"</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr<span class="sc">$</span>block <span class="sc">==</span> <span class="dv">2</span> , <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> colors[pro_attr<span class="sc">$</span>block]</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_shape &lt;- ifelse(pro_attr$CITY %in% Boston_Neighborhoods, "circle", "square")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>     <span class="co">#vertex.shape = vertex_shape,</span></span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Providers - Blocks???"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_6_drug_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>So… it’s not Boston related.</p>
+<p>How about Highest populations</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>largest_pop <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="st">"Boston"</span>,</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="st">"Worcester"</span>,</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="st">"Springfield"</span>,</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="st">"Cambridge"</span>,</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="st">"Lowell"</span>,</span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="st">"Brockton"</span>,</span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="st">"Quincy"</span>,</span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="st">"Lynn"</span>,</span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a><span class="st">"New Bedford"</span>,</span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a><span class="st">"Fall River"</span>,</span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a><span class="st">"Lawrence"</span>,</span>
+<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a><span class="st">"Newton"</span>,</span>
+<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a><span class="st">"Somerville"</span>,</span>
+<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a><span class="st">"Framingham"</span>,</span>
+<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a><span class="st">"Haverhill"</span>)</span>
+<span id="cb79-17"><a href="#cb79-17" aria-hidden="true" tabindex="-1"></a>largest_pop <span class="ot">&lt;-</span> <span class="fu">tolower</span>(largest_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co">#assign colors</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co">#colors &lt;-  c("yellow", "blue", "green", "orange", "red", "purple")</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_colors &lt;- colors[pro_attr_list$block]</span></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>vertex_colors <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>CITY <span class="sc">%in%</span> largest_pop, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>vertex_shape <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pro_attr_list<span class="sc">$</span>block <span class="sc">==</span> <span class="st">"6"</span>, <span class="st">"circle"</span>, <span class="st">"square"</span>)</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a><span class="co">#vertex_shape &lt;- ifelse(pro_attr_list$CITY == "BOSTON", "circle", "square")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(provider_graph, </span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">layout =</span> layout.fruchterman.reingold, </span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">4</span>, </span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> vertex_colors,</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.shape =</span> vertex_shape,</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, </span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Providers - RED = Largest Cities"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="post_6_drug_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Ted955 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Ted955 Reilly981"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>block1 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>block1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  NAME                       GENDER CITY     type     block
+  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+1 Clemente531 Schamberger479 Male   westwood PROVIDER     1
+2 Zachery872 Rau926          Male   walpole  PROVIDER     1
+3 Gino587 Block661           Male   natick   PROVIDER     1
+4 Josefina523 O'Connell601   Female medfield PROVIDER     1
+5 Jeanie708 Turner526        Female franklin PROVIDER     1
+6 Freeda113 Crooks415        Female milford  PROVIDER     1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>block2 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>block2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+  NAME             GENDER CITY      type     block
+  &lt;chr&gt;            &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;
+1 Ted955 Reilly981 Male   fitchburg PROVIDER     2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>block3 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">3</span>)</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>block3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 155 × 5
+   NAME                      GENDER CITY           type     block
+   &lt;chr&gt;                     &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt;
+ 1 Shane235 Lueilwitz711     Male   worcester      PROVIDER     3
+ 2 María José279 Godínez202  Female natick         PROVIDER     3
+ 3 Mickey576 Borer986        Female worcester      PROVIDER     3
+ 4 Cristopher265 Heaney114   Male   taunton        PROVIDER     3
+ 5 Chery887 Kohler843        Female brighton       PROVIDER     3
+ 6 Margene509 Schamberger479 Female westford       PROVIDER     3
+ 7 Shasta644 King743         Female norwood        PROVIDER     3
+ 8 Sparkle906 Bernhard322    Female hadley         PROVIDER     3
+ 9 Eldon28 Cassin499         Male   westfield      PROVIDER     3
+10 Buck819 Johnson679        Male   south hamilton PROVIDER     3
+# ℹ 145 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>Ted955 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Ted955 Reilly981"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Ted955<span class="sc">%&gt;%</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>Ted955<span class="sc">%&gt;%</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
 # Groups:   PROVIDER, CITY.x [1]
@@ -554,16 +1069,16 @@ using the `.groups` argument.</code></pre>
 <p>Gonna go ahead and say Ted’s a Cardiologist</p>
 <p>Maybe there are other doctors that are in block one that are also cardiologists?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Barbara209 Maldonado119"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Barbara209 Maldonado119"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="sc">%&gt;%</span></span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 4
 # Groups:   PROVIDER, CITY.x [0]
@@ -572,16 +1087,16 @@ using the `.groups` argument.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Gisele901 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Gisele901 Lehner980"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>Gisele901 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Gisele901 Lehner980"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>Gisele901 <span class="sc">%&gt;%</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>Gisele901 <span class="sc">%&gt;%</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 4
 # Groups:   PROVIDER, CITY.x [0]
@@ -590,15 +1105,15 @@ using the `.groups` argument.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>encounters_reasons <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>encounters_reasons <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>encounters_reasons <span class="sc">%&gt;%</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>encounters_reasons <span class="sc">%&gt;%</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 765 × 4
 # Groups:   PROVIDER, CITY.x [222]
@@ -618,16 +1133,16 @@ using the `.groups` argument.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>Alvin56 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Alvin56 Crona259"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>Alvin56 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Alvin56 Crona259"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'PATIENT', 'CITY.x'. You can
 override using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Alvin56 <span class="sc">%&gt;%</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>Alvin56 <span class="sc">%&gt;%</span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 5
 # Groups:   PROVIDER, PATIENT, CITY.x [0]
@@ -636,16 +1151,16 @@ override using the `.groups` argument.</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>Margart214 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Margart214 Bogisich202"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>Margart214 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Margart214 Bogisich202"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'PATIENT', 'CITY.x'. You can
 override using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Margart214 <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>Margart214 <span class="sc">%&gt;%</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 5
 # Groups:   PROVIDER, PATIENT, CITY.x [0]

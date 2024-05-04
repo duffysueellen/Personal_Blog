@@ -44,6 +44,20 @@ pat_blks6 <- readRDS("pat_blks6_results.rds")
 prov_blks6 <- readRDS("prov_blks6_results.rds")
 ```
 
+
+```{r}
+pat_attr <- pat_attr %>%
+  rename(block = pat_blk_mod.block.membership)
+#write.csv(pat_attr, "pat_attr.csv")
+```
+```{r}
+pro_attr <- pro_attr %>%
+  select(-block)
+pro_attr <- pro_attr %>%
+    rename(block = prov_blk_mod.block.membership)
+#write.csv(pro_attr, "pro_attr.csv")
+```
+
 ```{r}
 #combine pro and pat attr
 both_attr <- bind_rows(pat_attr, pro_attr)
@@ -53,7 +67,7 @@ head(both_attr)
 ```{r}
 #create combined attribute list
 attribute_list <- do.call(list, both_attr)
-#write.csv(attribute_list, "attribute_list.csv")
+write.csv(attribute_list, "attribute_list.csv")
 ```
 
 # Create bipartite network with attributes

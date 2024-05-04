@@ -128,9 +128,11 @@ glimpse(prov_blk_mod)
 ```
 
 ```{r}
-pro_attr$block <- prov_blk_mod$block.membership 
+block_df <- data.frame(prov_blk_mod$plabels, prov_blk_mod$block.membership)
 
-head(pro_attr)
+pro_attr <- pro_attr %>%
+left_join(block_df, by = c("NAME" = "prov_blk_mod.plabels" ))
+
 #write.csv(pro_attr, "pro_attr.csv")
 ```
 
