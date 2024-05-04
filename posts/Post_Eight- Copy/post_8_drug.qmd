@@ -1,0 +1,471 @@
+---
+title: "POST 7"
+subtitle: "Network Block Modeling - Geographical Comparisson"
+author: "Sue-Ellen Duffy"
+date: "2024-05-03"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+library(ggplot2)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(tigris)
+library(stplanr)
+```
+
+This post will explore the Synthetic Mass network data in more detail.
+
+# Read in Data
+
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post5drug_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post5drug_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post5drug_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaned <- read_csv("post5drug_data//encounters_cleaned.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post5drug_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post5drug_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post5drug_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post5drug_data/attribute_list.csv")
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+# Create bipartite network with attributes
+
+```{r}
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+
+encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
+
+projected_graph <- bipartite_projection(encounters.ig)
+```
+
+```{r}
+provider_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj2))
+library(statnet)
+provider.stat <- asNetwork(projected_graph$proj2)
+provider.ig <- graph_from_biadjacency_matrix(provider.stat)
+detach("package:igraph")
+provider.se <- equiv.clust(provider_matrix,
+ equiv.fun = "sedist",
+ method = "hamming",
+ mode = "graph",
+ cluster.method = "complete")
+```
+
+```{r}
+blk_model.provider.org <- blockmodel(provider_matrix,
+ provider.se, k = 6)
+```
+
+```{r}
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+```{r}
+# blockmodel with optimized partition
+prov_blk_mod <- blockmodel(provider_matrix, prov_blks6$best$best1$clu,
+                      plabels = rownames(provider_matrix))
+```
+
+```{r}
+#assign block membership to vertex attribute
+provider.stat%v%"role"<-prov_blk_mod$block.membership[match(provider.stat%v%"vertex.names",prov_blk_mod$plabels)]
+
+#plot network using "role" to color nodes
+GGally::ggnet2(provider.stat,
+               node.color="role", 
+               node.size=sna::degree(provider.stat, gmode="graph"),
+               node.alpha = .5)
+```
+
+```{r}
+gden(provider.stat)
+```
+```{r}
+gtrans(provider.stat)
+```
+
+```{r}
+igraph::components(provider.ig)$no
+```
+
+```{r}
+summary(provider.stat %e%"dist")
+```
+```{r}
+provider.nodes <- data.frame(
+  name = provider.stat%v%"vertex.names",
+  degree=sna::degree(provider.stat, gmode = "digraph"),
+  degree.wt = igraph::strength(provider.ig),
+  betweenness = sna::betweenness(provider.stat, gmode="digraph"),
+  close=sna::closeness(provider.stat, cmode = "suminvdir"),
+  constraint=igraph::constraint(provider.ig)
+)
+
+provider.nodes
+```
+
+
+
+
+```{r}
+# To use cug.test, we need an adjacency matrix:
+provider.mat <- provider.stat[,]
+
+# compare network transitivity to null conditional on size
+trans.cug <- cug.test(provider.mat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "size")
+
+trans.cug
+```
+
+Histogram with observed comp. replication statistics:
+
+```{r}
+# plot observed vs. simulation results
+plot(trans.cug)
+```
+
+```{r}
+# t-stst between observed and simulated networks
+(trans.cug$obs.stat - mean(trans.cug$rep.stat))/sd(trans.cug$rep.stat)
+```
+
+Let's create an easy function to return the t-stat for `cug.test`:
+
+```{r}
+cug.t <- function(cug.object){
+  (cug.object$obs.stat - mean(cug.object$rep.stat))/sd(cug.object$rep.stat)
+}
+```
+
+```{r}
+# comapre network transitivity to null conditional on size
+trans.cug <- cug.test(provider.mat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "size",
+                      reps = 100)
+trans.cug
+```
+
+```{r}
+# plot observed vs. simulated
+plot(trans.cug)
+```
+
+```{r}
+# t-stat between observed and simulated networks
+cug.t(trans.cug)
+```
+
+
+
+
+```{r}
+# compare network degree centralization to null conditional on size
+c.degree.cug <- cug.test(provider.stat,
+                         FUN = centralization,
+                         FUN.args = list(FUN = degree,
+                                      cmode = "indegree"),
+                         mode="digraph",
+                         cmode="size")
+c.degree.cug
+```
+
+```{r}
+# plot
+plot(c.degree.cug)
+```
+
+```{r}
+# t-stat
+cug.t(c.degree.cug)
+```
+
+
+```{r}
+b.degree.cug <- cug.test(provider.stat,
+                         FUN = centralization,
+                         FUN.arg = list(FUN=betweenness,
+                                        cmode = "directed"),
+                         mode = "digraph",
+                         cmode = "size",
+                         reps = 100)
+
+b.degree.cug
+```
+
+
+obs value of the tstatistic is extremely unlikely to occur under the null hypothesis, suggesting statistical significance
+```{r}
+plot(b.degree.cug)
+```
+
+```{r}
+# t-stat
+cug.t(b.degree.cug)
+```
+
+
+```{r}
+# compare network transitivity to null conditional on dyads
+trans.cug <- cug.test(provider.stat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "dyad")
+trans.cug
+```
+
+```{r}
+plot(trans.cug)
+```
+
+```{r}
+# t-stat
+cug.t(trans.cug)
+```
+
+The `edges` property is also built into the `cug.test()` function. Here we run it with only 100 reps, because this is clearly not a random network!
+
+```{r}
+# compare network transitivity to null conditional on edges (density)
+trans.cug <- cug.test(provider.stat,
+                      FUN=gtrans,
+                      mode = "digraph",
+                      cmode = "edges",
+                      reps = 100)
+
+trans.cug
+```
+
+```{r}
+plot(trans.cug)
+```
+
+```{r}
+cug.t(trans.cug)
+```
+
+
+
+
+
+
+#ENCOUNTER LEVEL DATA
+
+
+```{r}
+# To use cug.test, we need an adjacency matrix:
+encounter.mat <- encounters.stat[,]
+
+# compare network transitivity to null conditional on size
+enc.trans.cug <- cug.test(encounter.mat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "size")
+
+enc.trans.cug
+```
+```{r}
+# plot observed vs. simulation results
+plot(enc.trans.cug)
+```
+
+
+```{r}
+gden(encounters.stat)
+```
+```{r}
+igraph::components(encounters.ig)$no
+```
+
+```{r}
+summary(encounters.stat %e%"dist")
+```
+```{r}
+encounters.nodes <- data.frame(
+  name = encounters.stat%v%"vertex.names",
+  degree=sna::degree(encounters.stat, gmode = "digraph"),
+  degree.wt = igraph::strength(encounters.ig),
+  betweenness = sna::betweenness(encounters.stat, gmode="digraph"),
+  close=sna::closeness(encounters.stat, cmode = "suminvdir"),
+  constraint=igraph::constraint(encounters.ig)
+)
+
+encounters.nodes
+```
+
+
+
+
+```{r}
+# To use cug.test, we need an adjacency matrix:
+encounters.mat <- encounters.stat[,]
+
+# compare network transitivity to null conditional on size
+trans.cug <- cug.test(encounters.mat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "size",
+                      reps = 100)
+
+trans.cug
+```
+
+Histogram with observed comp. replication statistics:
+
+```{r}
+# plot observed vs. simulation results
+plot(trans.cug)
+```
+
+```{r}
+# t-stst between observed and simulated networks
+(trans.cug$obs.stat - mean(trans.cug$rep.stat))/sd(trans.cug$rep.stat)
+```
+
+Let's create an easy function to return the t-stat for `cug.test`:
+
+```{r}
+cug.t <- function(cug.object){
+  (cug.object$obs.stat - mean(cug.object$rep.stat))/sd(cug.object$rep.stat)
+}
+```
+
+```{r}
+# comapre network transitivity to null conditional on size
+trans.cug <- cug.test(encounters.mat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "size",
+                      reps = 100)
+trans.cug
+```
+
+```{r}
+# plot observed vs. simulated
+plot(trans.cug)
+```
+
+```{r}
+# t-stat between observed and simulated networks
+cug.t(trans.cug)
+```
+
+
+
+
+```{r}
+# compare network degree centralization to null conditional on size
+c.degree.cug <- cug.test(encounters.stat,
+                         FUN = centralization,
+                         FUN.args = list(FUN = degree,
+                                      cmode = "indegree"),
+                         mode="digraph",
+                         cmode="size")
+c.degree.cug
+```
+
+```{r}
+# plot
+plot(c.degree.cug)
+```
+
+```{r}
+# t-stat
+cug.t(c.degree.cug)
+```
+
+
+```{r}
+b.degree.cug <- cug.test(encounters.stat,
+                         FUN = centralization,
+                         FUN.arg = list(FUN=betweenness,
+                                        cmode = "directed"),
+                         mode = "digraph",
+                         cmode = "size",
+                         reps = 100)
+
+b.degree.cug
+```
+
+
+obs value of the tstatistic is extremely unlikely to occur under the null hypothesis, suggesting statistical significance
+```{r}
+plot(b.degree.cug)
+```
+
+```{r}
+# t-stat
+cug.t(b.degree.cug)
+```
+
+
+```{r}
+# compare network transitivity to null conditional on dyads
+trans.cug <- cug.test(encounters.stat,
+                      FUN = gtrans,
+                      mode = "digraph",
+                      cmode = "dyad")
+trans.cug
+```
+
+```{r}
+plot(trans.cug)
+```
+
+```{r}
+# t-stat
+cug.t(trans.cug)
+```
+
+The `edges` property is also built into the `cug.test()` function. Here we run it with only 100 reps, because this is clearly not a random network!
+
+```{r}
+# compare network transitivity to null conditional on edges (density)
+trans.cug <- cug.test(encounters.stat,
+                      FUN=gtrans,
+                      mode = "digraph",
+                      cmode = "edges",
+                      reps = 100)
+
+trans.cug
+```
+
+```{r}
+plot(trans.cug)
+```
+
+```{r}
+cug.t(trans.cug)
+```
+
+
