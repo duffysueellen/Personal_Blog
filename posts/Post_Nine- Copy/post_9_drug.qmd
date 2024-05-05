@@ -1,0 +1,326 @@
+---
+title: "POST 9"
+subtitle: "mostly notes"
+author: "Sue-Ellen Duffy"
+date: "2024-05-03"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+library(ggplot2)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(tigris)
+library(stplanr)
+```
+
+This post will explore the Synthetic Mass network data in more detail.
+
+# Read in Data
+
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post5drug_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post5drug_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post5drug_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaned <- read_csv("post5drug_data//encounters_cleaned.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post5drug_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post5drug_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post5drug_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post5drug_data/attribute_list.csv")
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+# Create bipartite network with attributes
+
+```{r}
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+
+encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
+
+attributes <- bind_rows(pat_attr, pro_attr)
+```
+
+
+
+# create an adjacency matrix using sna
+```{r}
+encounters.sna <- network(as.matrix(encounters.stat), directed = F)
+# check the vertex names
+encounters.sna %v% "vertex.names"
+encounters.m <- encounters.sna[,] # extract an adjacency matrix from the network object
+encounters.m
+```
+
+```{r}
+orgorg <- t(encounters.m) %*% encounters.m
+diag(orgorg) <- 0
+```
+
+```{r}
+orgorg2 <-   encounters.m %*% t(encounters.m)
+diag(orgorg2) <- 0
+```
+
+```{r}
+#overlap?
+overlap <- graph_from_adjacency_matrix(orgorg2, 
+                                        mode = "undirected", 
+                                        weighted = TRUE)
+
+overlap
+
+```
+```{r}
+#overlap?
+overlap1 <- graph_from_adjacency_matrix(orgorg, 
+                                        mode = "undirected", 
+                                        weighted = TRUE)
+
+overlap1
+
+```
+
+```{r}
+E(overlap)$weight
+```
+
+```{r}
+E(overlap1)$weight
+```
+
+```{r}
+library(ade4) # If you have not already done so
+g <- graph.data.frame(encounters_cleaned, directed=FALSE)
+bipartite_matrix <- as_incidence_matrix(encounters.ig)  # Extract the matrix
+
+women_jaccard <- dist.binary(bipartite_matrix, method=1, upper=TRUE, diag = FALSE) # Method #1 is "Jaccard Index"
+event_jaccard <- dist.binary(t(bipartite_matrix), method=1, upper=TRUE, diag = FALSE) 
+
+women_jaccard <- as.matrix(women_jaccard)   
+diag(women_jaccard)<-0
+
+# women_jaccard          # Look at the matrix before you binarize
+jaccard_women <- ifelse(women_jaccard>0.95, 1, 0)     # Binarize
+
+# jaccard_women      # Take a look at the matrix if you like.
+
+jacc_women <- graph_from_adjacency_matrix(jaccard_women,    # Create an igraph network
+                                        mode = "undirected")
+plot(jacc_women, names = NA)
+```
+
+```{r}
+bipartite_matrix <- as_incidence_matrix(encounters.ig)  # Extract the matrix
+
+women_correl <- cor(t(bipartite_matrix))
+event_correl <- cor(bipartite_matrix)
+
+women_correl <- as.matrix(women_correl)   
+# women_correl          # Look at the matrix before you binarize
+correl_women <- ifelse(women_correl>0.6, 1, 0)    # Binarize 
+diag(correl_women)<-0
+# correl_women    # Take a look at the matrix if you like
+
+
+corr_women <- graph_from_adjacency_matrix(correl_women,     # Create an igraph network
+                                        mode = "undirected")
+plot(corr_women)
+
+```
+
+```{r}
+library(psych)
+
+bipartite_matrix <- as_incidence_matrix(encounters.ig)  # Extract the matrix
+
+women_Q <-YuleCor(t(bipartite_matrix))$rho
+event_Q <-YuleCor(bipartite_matrix)$rho
+
+women_Q <- as.matrix(women_Q) 
+women_Q
+```
+
+```{r}
+Q_women <- ifelse(women_Q>0.9, 1, 0) # Binarize
+diag(Q_women)<-0
+# Q_women    # Take a look at the matrix
+
+YQ_women <- graph_from_adjacency_matrix(Q_women,     # Create an igraph network
+                                        mode = "undirected")
+plot(YQ_women, layout = layout_with_fr)
+```
+
+```{r}
+layouts <- grep("^layout_", ls("package:igraph"), value=TRUE)[-1] 
+
+# Remove layouts that do not apply to our graph.
+
+layouts <- layouts[!grepl("bipartite|merge|norm|sugiyama|tree", layouts)]
+
+
+par(mfrow=c(3,3), mar=c(1,1,1,1))
+
+for (layout in layouts) {
+
+  print(layout)
+
+  l <- do.call(layout, list(encounters.ig)) 
+
+  plot(encounters.ig, vertex.label = NA,      vertex.label.dist = 2, 
+     vertex.size = 3, vertex.label.cex = 0.2, edge.arrow.mode=0, layout=l, main=layout) }
+```
+
+```{r}
+edge_density(encounters.ig, loops=F)
+
+transitivity(encounters.ig, type="global")  # net is treated as an undirected network
+
+transitivity(as.undirected(encounters.ig, mode="collapse")) # same as above
+
+transitivity(encounters.ig, type="local")
+
+triad_census(encounters.ig)
+```
+
+
+```{r}
+net <- encounters.ig
+diameter(net, directed=F, weights=NA)
+diameter(net, directed=F)
+diam <- get_diameter(net, directed=T)
+
+diam
+class(diam)
+as.vector(diam)
+
+vcol <- rep("gray40", vcount(net))
+
+vcol[diam] <- "gold"
+
+ecol <- rep("gray80", ecount(net))
+
+ecol[E(net, path=diam)] <- "orange" 
+
+# E(net, path=diam) finds edges along a path, here 'diam'
+
+plot(net, vertex.color=vcol,  vertex.label = NA,      vertex.label.dist = 2, 
+     vertex.size = 3, vertex.label.cex = 0.2, edge.color=ecol, vertex.name = NA, edge.arrow.mode=0)
+```
+
+#deg <- degree(net, mode="all")
+
+#hist(deg, breaks=1:vcount(net)-1, main="Histogram of node degree")
+
+#deg.dist <- degree_distribution(net, cumulative=T, mode="all")
+
+#plot( x=0:max(deg), y=1-deg.dist, pch=19, cex=1.2, col="orange", 
+
+     # xlab="Degree", ylab="Cumulative Frequency")
+
+#degree(net, mode="in")
+
+centr_degree(net, mode="in", normalized=T)
+
+#closeness(net, mode="all", weights=NA) 
+
+centr_clo(net, mode="all", normalized=T) 
+
+eigen_centrality(net, directed=F, weights=NA)
+
+centr_eigen(net, directed=F, normalized=T) 
+
+betweenness(net, directed=F, weights=NA)
+
+edge_betweenness(net, directed=F, weights=NA)
+
+centr_betw(net, directed=F, normalized=T)
+
+
+
+```{r}
+hs <- hub_score(net, weights=NA)$vector
+
+as <- authority_score(net, weights=NA)$vector
+
+
+
+par(mfrow=c(1,2))
+
+ plot(net,  vertex.label = NA,      vertex.label.dist = 2, 
+     vertex.label.cex = 0.2,vertex.size=hs*50, main="Hubs")
+
+ plot(net,  vertex.label = NA,      vertex.label.dist = 2, 
+   vertex.label.cex = 0.2,vertex.size=as*30, main="Authorities")
+ 
+ mean_distance(net, directed=F)
+ 
+ distances(net) # with edge weights
+
+distances(net, weights=NA) # ignore weights
+
+kc <- coreness(net, mode="all")
+
+plot(net, vertex.size=kc*6, vertex.label=kc, vertex.color=kc)
+```
+
+```{r}
+# Calculate assortativity
+assortativity_degree(net, directed=F)
+```
+assortativity_degree() checks assortativity in node degrees
+
+# Create Gender Matrix
+```{r}
+gender <- attributes %>%
+  select(NAME, GENDER) 
+gender
+```
+
+
+```{r}
+# first create a matrix
+gender.m <- matrix(0, 
+                   nrow = nrow(gender),
+                   ncol = nrow(gender))
+dim(gender.m)
+
+for(i in 1:nrow(gender)){
+  for(j in 1:nrow(gender)){
+    gender.m[i, j] <- ifelse(gender$GENDER[i] == gender$GENDER[j], 1, 0)
+  }
+}
+
+diag(gender.m) <- 0
+
+colnames(gender.m) <- gender$NAME
+rownames(gender.m) <- gender$NAME
+
+gender.m
+```
+
+
+gender.m + 2* encounters.m
