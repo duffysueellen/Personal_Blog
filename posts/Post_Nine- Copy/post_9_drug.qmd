@@ -69,109 +69,105 @@ attributes <- bind_rows(pat_attr, pro_attr)
 # create an adjacency matrix using sna
 ```{r}
 encounters.sna <- network(as.matrix(encounters.stat), directed = F)
-# check the vertex names
-encounters.sna %v% "vertex.names"
 encounters.m <- encounters.sna[,] # extract an adjacency matrix from the network object
-encounters.m
+```
+
+# Matrix Multiplication - For Overlap Count 
+Cross-Product Method with manual matrix multiplication
+Multiply a two-mode matrix by its transpose to produce a one-mode network that reflects the ties between the nodes in one of the two modes
+```{r}
+patient.m <- t(encounters.m) %*% encounters.m
+diag(patient.m) <- 0
 ```
 
 ```{r}
-orgorg <- t(encounters.m) %*% encounters.m
-diag(orgorg) <- 0
-```
-
-```{r}
-orgorg2 <-   encounters.m %*% t(encounters.m)
-diag(orgorg2) <- 0
+provider.m <-   encounters.m %*% t(encounters.m)
+diag(provider.m) <- 0
 ```
 
 ```{r}
 #overlap?
-overlap <- graph_from_adjacency_matrix(orgorg2, 
+patient.ig <- graph_from_adjacency_matrix(patient.m, 
                                         mode = "undirected", 
                                         weighted = TRUE)
 
-overlap
-
+patient.ig
 ```
 ```{r}
 #overlap?
-overlap1 <- graph_from_adjacency_matrix(orgorg, 
+provider.ig <- graph_from_adjacency_matrix(provider.m, 
                                         mode = "undirected", 
                                         weighted = TRUE)
 
-overlap1
-
+provider.ig
 ```
 
 ```{r}
-E(overlap)$weight
+E(patient.ig)$weight
 ```
 
 ```{r}
-E(overlap1)$weight
+E(provider.ig)$weight
 ```
+SO providers it seems overlap with the same patients with the most being 4 times an overlap.
 
 ```{r}
-library(ade4) # If you have not already done so
-g <- graph.data.frame(encounters_cleaned, directed=FALSE)
-bipartite_matrix <- as_incidence_matrix(encounters.ig)  # Extract the matrix
+library(ade4) 
+g <- graph_from_data_frame(encounters_cleaned, directed=FALSE)
+bipartite_matrix <- as_biadjacency_matrix(encounters.ig)  # Extract the matrix
 
-women_jaccard <- dist.binary(bipartite_matrix, method=1, upper=TRUE, diag = FALSE) # Method #1 is "Jaccard Index"
-event_jaccard <- dist.binary(t(bipartite_matrix), method=1, upper=TRUE, diag = FALSE) 
+patient_jaccard <- dist.binary(bipartite_matrix, method=1, upper=TRUE, diag = FALSE) # Method #1 is "Jaccard Index"
+provider_jaccard <- dist.binary(t(bipartite_matrix), method=1, upper=TRUE, diag = FALSE) 
 
-women_jaccard <- as.matrix(women_jaccard)   
-diag(women_jaccard)<-0
+patient_jaccard <- as.matrix(patient_jaccard)   
+diag(patient_jaccard)<-0
 
 # women_jaccard          # Look at the matrix before you binarize
-jaccard_women <- ifelse(women_jaccard>0.95, 1, 0)     # Binarize
+patient_jaccard <- ifelse(patient_jaccard>0.95, 1, 0)     # Binarize
 
 # jaccard_women      # Take a look at the matrix if you like.
 
-jacc_women <- graph_from_adjacency_matrix(jaccard_women,    # Create an igraph network
+jacc_patient <- graph_from_adjacency_matrix(patient_jaccard,    # Create an igraph network
                                         mode = "undirected")
-plot(jacc_women, names = NA)
+plot(jacc_patient,vertex.label = NA,      vertex.label.dist = 2, 
+     vertex.size = 3, vertex.label.cex = 0.2,)
 ```
 
 ```{r}
-bipartite_matrix <- as_incidence_matrix(encounters.ig)  # Extract the matrix
+patient_correl <- cor(t(bipartite_matrix))
+provider_correl <- cor(bipartite_matrix)
 
-women_correl <- cor(t(bipartite_matrix))
-event_correl <- cor(bipartite_matrix)
+patient_correl <- as.matrix(patient_correl)   
+# patient_correl          # Look at the matrix before you binarize
+correl_patient <- ifelse(patient_correl>0.6, 1, 0)    # Binarize 
+diag(correl_patient)<-0
 
-women_correl <- as.matrix(women_correl)   
-# women_correl          # Look at the matrix before you binarize
-correl_women <- ifelse(women_correl>0.6, 1, 0)    # Binarize 
-diag(correl_women)<-0
-# correl_women    # Take a look at the matrix if you like
-
-
-corr_women <- graph_from_adjacency_matrix(correl_women,     # Create an igraph network
+corr_patient <- graph_from_adjacency_matrix(correl_patient, 
                                         mode = "undirected")
-plot(corr_women)
+plot(corr_patient,     vertex.label.dist = .5, 
+     vertex.size = 3, vertex.label.cex = .8)
 
 ```
 
 ```{r}
 library(psych)
 
-bipartite_matrix <- as_incidence_matrix(encounters.ig)  # Extract the matrix
+patient_Q <-YuleCor(t(bipartite_matrix))$rho
+provider_Q <-YuleCor(bipartite_matrix)$rho
 
-women_Q <-YuleCor(t(bipartite_matrix))$rho
-event_Q <-YuleCor(bipartite_matrix)$rho
-
-women_Q <- as.matrix(women_Q) 
-women_Q
+patient_Q <- as.matrix(patient_Q) 
+head(patient_Q, 10,10)
 ```
 
 ```{r}
-Q_women <- ifelse(women_Q>0.9, 1, 0) # Binarize
-diag(Q_women)<-0
-# Q_women    # Take a look at the matrix
+Q_patient <- ifelse(patient_Q>0.9, 1, 0) # Binarize
+diag(Q_patient)<-0
+# Q_patient    # Take a look at the matrix
 
-YQ_women <- graph_from_adjacency_matrix(Q_women,     # Create an igraph network
+YQ_patient <- graph_from_adjacency_matrix(Q_patient,     # Create an igraph network
                                         mode = "undirected")
-plot(YQ_women, layout = layout_with_fr)
+plot(YQ_patient,   vertex.label.dist = 1, 
+     vertex.size = 5, vertex.label.cex = .8, layout = layout_with_fr)
 ```
 
 ```{r}
@@ -201,95 +197,92 @@ transitivity(encounters.ig, type="global")  # net is treated as an undirected ne
 
 transitivity(as.undirected(encounters.ig, mode="collapse")) # same as above
 
-transitivity(encounters.ig, type="local")
-
 triad_census(encounters.ig)
 ```
 
 
 ```{r}
-net <- encounters.ig
-diameter(net, directed=F, weights=NA)
-diameter(net, directed=F)
-diam <- get_diameter(net, directed=T)
+diameter(encounters.ig, directed=F, weights=NA)
+diameter(encounters.ig, directed=F)
+diam <- get_diameter(encounters.ig, directed=T)
 
 diam
 class(diam)
 as.vector(diam)
 
-vcol <- rep("gray40", vcount(net))
+vcol <- rep("gray40", vcount(encounters.ig))
 
 vcol[diam] <- "gold"
 
-ecol <- rep("gray80", ecount(net))
+ecol <- rep("gray80", ecount(encounters.ig))
 
-ecol[E(net, path=diam)] <- "orange" 
+ecol[E(encounters.ig, path=diam)] <- "orange" 
 
-# E(net, path=diam) finds edges along a path, here 'diam'
+# E(encounters.ig, path=diam) finds edges along a path, here 'diam'
 
-plot(net, vertex.color=vcol,  vertex.label = NA,      vertex.label.dist = 2, 
+plot(encounters.ig, vertex.color=vcol,  vertex.label = NA,      vertex.label.dist = 2, 
      vertex.size = 3, vertex.label.cex = 0.2, edge.color=ecol, vertex.name = NA, edge.arrow.mode=0)
 ```
 
-#deg <- degree(net, mode="all")
+#deg <- degree(encounters.ig, mode="all")
 
-#hist(deg, breaks=1:vcount(net)-1, main="Histogram of node degree")
+#hist(deg, breaks=1:vcount(encounters.ig)-1, main="Histogram of node degree")
 
-#deg.dist <- degree_distribution(net, cumulative=T, mode="all")
+#deg.dist <- degree_distribution(encounters.ig, cumulative=T, mode="all")
 
 #plot( x=0:max(deg), y=1-deg.dist, pch=19, cex=1.2, col="orange", 
 
      # xlab="Degree", ylab="Cumulative Frequency")
 
-#degree(net, mode="in")
+#degree(encounters.ig, mode="in")
 
-centr_degree(net, mode="in", normalized=T)
+centr_degree(encounters.ig, mode="in", normalized=T)
 
-#closeness(net, mode="all", weights=NA) 
+#closeness(encounters.ig, mode="all", weights=NA) 
 
-centr_clo(net, mode="all", normalized=T) 
+centr_clo(encounters.ig, mode="all", normalized=T) 
 
-eigen_centrality(net, directed=F, weights=NA)
+eigen_centrality(encounters.ig, directed=F, weights=NA)
 
-centr_eigen(net, directed=F, normalized=T) 
+centr_eigen(encounters.ig, directed=F, normalized=T) 
 
-betweenness(net, directed=F, weights=NA)
+betweenness(encounters.ig, directed=F, weights=NA)
 
-edge_betweenness(net, directed=F, weights=NA)
+edge_betweenness(encounters.ig, directed=F, weights=NA)
 
-centr_betw(net, directed=F, normalized=T)
+centr_betw(encounters.ig, directed=F, normalized=T)
 
 
 
 ```{r}
-hs <- hub_score(net, weights=NA)$vector
+hs <- hub_score(encounters.ig, weights=NA)$vector
 
-as <- authority_score(net, weights=NA)$vector
+as <- authority_score(encounters.ig, weights=NA)$vector
 
 
 
 par(mfrow=c(1,2))
 
- plot(net,  vertex.label = NA,      vertex.label.dist = 2, 
+ plot(encounters.ig,  vertex.label = NA,      vertex.label.dist = 2, 
      vertex.label.cex = 0.2,vertex.size=hs*50, main="Hubs")
 
- plot(net,  vertex.label = NA,      vertex.label.dist = 2, 
+ plot(encounters.ig,  vertex.label = NA,      vertex.label.dist = 2, 
    vertex.label.cex = 0.2,vertex.size=as*30, main="Authorities")
  
- mean_distance(net, directed=F)
+ mean_distance(encounters.ig, directed=F)
  
- distances(net) # with edge weights
+#distances(encounters.ig) # with edge weights
 
-distances(net, weights=NA) # ignore weights
+#distances(encounters.ig, weights=NA) # ignore weights
 
-kc <- coreness(net, mode="all")
+kc <- coreness(encounters.ig, mode="all")
 
-plot(net, vertex.size=kc*6, vertex.label=kc, vertex.color=kc)
+plot(encounters.ig, vertex.size=kc*6, vertex.label=kc, vertex.color=kc)
 ```
 
 ```{r}
 # Calculate assortativity
-assortativity_degree(net, directed=F)
+assortativity_degree(encounters.ig, directed=F)
 ```
 assortativity_degree() checks assortativity in node degrees
 
@@ -318,9 +311,7 @@ diag(gender.m) <- 0
 
 colnames(gender.m) <- gender$NAME
 rownames(gender.m) <- gender$NAME
-
-gender.m
 ```
 
 
-gender.m + 2* encounters.m
+gender.m + 2*encounters.m
