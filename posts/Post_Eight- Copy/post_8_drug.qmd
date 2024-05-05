@@ -2,7 +2,7 @@
 title: "POST 8"
 subtitle: "CUG"
 author: "Sue-Ellen Duffy"
-date: "2024-05-03"
+date: "2024-05-04"
 categories: [code, analysis, block_model]
 ---
 
@@ -65,6 +65,8 @@ projected_graph <- bipartite_projection(encounters.ig)
 ```
 
 ```{r}
+#| warning: false
+#| message: false
 provider_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj2))
 library(statnet)
 provider.stat <- asNetwork(projected_graph$proj2)
@@ -106,6 +108,7 @@ GGally::ggnet2(provider.stat,
 ```{r}
 gden(provider.stat)
 ```
+
 ```{r}
 gtrans(provider.stat)
 ```
@@ -117,6 +120,7 @@ igraph::components(provider.ig)$no
 ```{r}
 summary(provider.stat %e%"dist")
 ```
+
 ```{r}
 provider.nodes <- data.frame(
   name = provider.stat%v%"vertex.names",
@@ -129,9 +133,6 @@ provider.nodes <- data.frame(
 
 provider.nodes
 ```
-
-
-
 
 ```{r}
 # To use cug.test, we need an adjacency matrix:
@@ -186,9 +187,6 @@ plot(trans.cug)
 cug.t(trans.cug)
 ```
 
-
-
-
 ```{r}
 # compare network degree centralization to null conditional on size
 c.degree.cug <- cug.test(provider.stat,
@@ -210,7 +208,6 @@ plot(c.degree.cug)
 cug.t(c.degree.cug)
 ```
 
-
 ```{r}
 b.degree.cug <- cug.test(provider.stat,
                          FUN = centralization,
@@ -223,8 +220,8 @@ b.degree.cug <- cug.test(provider.stat,
 b.degree.cug
 ```
 
-
 obs value of the tstatistic is extremely unlikely to occur under the null hypothesis, suggesting statistical significance
+
 ```{r}
 plot(b.degree.cug)
 ```
@@ -233,7 +230,6 @@ plot(b.degree.cug)
 # t-stat
 cug.t(b.degree.cug)
 ```
-
 
 ```{r}
 # compare network transitivity to null conditional on dyads
@@ -274,13 +270,7 @@ plot(trans.cug)
 cug.t(trans.cug)
 ```
 
-
-
-
-
-
 #ENCOUNTER LEVEL DATA
-
 
 ```{r}
 # To use cug.test, we need an adjacency matrix:
@@ -294,15 +284,16 @@ enc.trans.cug <- cug.test(encounter.mat,
 
 enc.trans.cug
 ```
+
 ```{r}
 # plot observed vs. simulation results
 plot(enc.trans.cug)
 ```
 
-
 ```{r}
 gden(encounters.stat)
 ```
+
 ```{r}
 igraph::components(encounters.ig)$no
 ```
@@ -310,6 +301,7 @@ igraph::components(encounters.ig)$no
 ```{r}
 summary(encounters.stat %e%"dist")
 ```
+
 ```{r}
 encounters.nodes <- data.frame(
   name = encounters.stat%v%"vertex.names",
@@ -322,9 +314,6 @@ encounters.nodes <- data.frame(
 
 encounters.nodes
 ```
-
-
-
 
 ```{r}
 # To use cug.test, we need an adjacency matrix:
@@ -380,9 +369,6 @@ plot(trans.cug)
 cug.t(trans.cug)
 ```
 
-
-
-
 ```{r}
 # compare network degree centralization to null conditional on size
 c.degree.cug <- cug.test(encounters.stat,
@@ -404,7 +390,6 @@ plot(c.degree.cug)
 cug.t(c.degree.cug)
 ```
 
-
 ```{r}
 b.degree.cug <- cug.test(encounters.stat,
                          FUN = centralization,
@@ -417,8 +402,8 @@ b.degree.cug <- cug.test(encounters.stat,
 b.degree.cug
 ```
 
-
 obs value of the tstatistic is extremely unlikely to occur under the null hypothesis, suggesting statistical significance
+
 ```{r}
 plot(b.degree.cug)
 ```
@@ -427,7 +412,6 @@ plot(b.degree.cug)
 # t-stat
 cug.t(b.degree.cug)
 ```
-
 
 ```{r}
 # compare network transitivity to null conditional on dyads
@@ -467,5 +451,3 @@ plot(trans.cug)
 ```{r}
 cug.t(trans.cug)
 ```
-
-
