@@ -1,6 +1,6 @@
 ---
-title: "POST 9"
-subtitle: "mostly notes"
+title: "POST 10"
+subtitle: "Gender Matrix"
 author: "Sue-Ellen Duffy"
 date: "2024-05-05"
 categories: [code, analysis, block_model]
