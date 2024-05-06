@@ -2,7 +2,7 @@
 title: "POST 6"
 subtitle: "Network Block Modeling - Geographical Comparisson"
 author: "Sue-Ellen Duffy"
-date: "2024-05-03"
+date: "2024-05-01"
 categories: [code, analysis, block_model]
 ---
 
@@ -159,8 +159,6 @@ prov_blk_mod <- blockmodel(provider_matrix, prov_blks6$best$best1$clu,
                       plabels = rownames(provider_matrix))
 ```
 
-
-
 ```{r}
 #assign block membership to vertex attribute
 provider.stat%v%"role"<-prov_blk_mod$block.membership[match(provider.stat%v%"vertex.names",prov_blk_mod$plabels)]
@@ -178,6 +176,7 @@ GGally::ggnet2(provider.stat,
                node.size=sna::degree(provider.stat, gmode="graph"),
                node.alpha = .5) + ggtitle("Provider 6 Block Model Network")
 ```
+
 ```{r}
 attributes <- dumpAttr(provider.stat)
 # Extracting roles and vertex names
@@ -255,7 +254,6 @@ plot(provider_graph,
 
 What other cities are on the provider list. Boston is not being properly represented, I have a feeling
 
-
 ```{r}
 Boston_Neighborhoods <- c(
   "ALLSTON",
@@ -296,6 +294,7 @@ plot(provider_graph,
      vertex.label.cex = 0.2, 
      main = "Providers - RED = BOSTON")
 ```
+
 ```{r}
 #assign colors
 colors <-  c("yellow", "blue", "green", "orange", "red", "purple")
@@ -318,7 +317,6 @@ plot(provider_graph,
      vertex.label.cex = 0.2, 
      main = "Providers - Blocks???")
 ```
-
 
 So... it's not Boston related.
 
@@ -366,48 +364,99 @@ plot(provider_graph,
      main = "Providers - RED = Largest Cities")
 ```
 
+# BLOCK ATTRIBUTES:
+
+Where are the blocks located? Are there any overlaps?
+
 ```{r}
-block1 <- pro_attr %>%
-  filter(block == 1)
-block1
+# CITY
+# Define a function to summarize encounters for a given block
+summarize_block <- function(block_num, pro_attr, encounters_cleaned) {
+  # Filter provider names for the given block
+  block_providers <- pro_attr %>%
+    filter(block == block_num) %>%
+    pull(NAME)
+  
+  # Filter encounters for providers in the given block
+  block_df <- encounters_cleaned %>%
+    filter(PROVIDER %in% block_providers) %>%
+    group_by(CITY.x) %>%
+    summarize(COUNT = n()) %>%
+    ungroup() %>%
+    arrange(desc(COUNT))
+  
+  # Calculate the total count of encounters
+  total_count <- sum(block_df$COUNT)
+  
+  # Calculate the percentage of total encounters for each ENCOUNTERCLASS
+  block_df <- block_df %>%
+    mutate(PERCENT = (COUNT / total_count) * 100)
+  
+  return(block_df)
+}
+
+# Call the function for each block and store the results in a list
+block_results <- lapply(1:6, function(block_num) {
+  summarize_block(block_num, pro_attr, encounters_cleaned)
+})
+
+# View the summary data for each block
+names(block_results) <- paste0("Block", 1:6)
+print(block_results)
+
 ```
 Block 1 is right outside of Boston
-```{r}
-block2 <- pro_attr %>%
-  filter(block == 2)
-block2
-```
 Block 2, only one provider, Fitchburg.
-
-```{r}
-block3 <- pro_attr %>%
-  filter(block == 3)
-block3
-```
 Block 3 is everywhere.
-
-
-```{r}
-block4 <- pro_attr %>%
-  filter(block == 4)
-block4
-```
 Block 4 is Heavy Waltham representation
-```{r}
-block5 <- pro_attr %>%
-  filter(block == 5)
-block5
-```
-Block 5 is a bit of everyone
-
-
-```{r}
-block6 <- pro_attr %>%
-  filter(block == 6)
-block6
-```
+Block 5 is a bit of everyone.
 Block 6 is Northshore.
 
+
+What are the types of encounters within the blocks?
+```{r}
+# ENCOUNTERCLASS
+# Define a function to summarize encounters for a given block
+summarize_block <- function(block_num, pro_attr, encounters_cleaned) {
+  # Filter provider names for the given block
+  block_providers <- pro_attr %>%
+    filter(block == block_num) %>%
+    pull(NAME)
+  
+  # Filter encounters for providers in the given block
+  block_df <- encounters_cleaned %>%
+    filter(PROVIDER %in% block_providers) %>%
+    group_by(ENCOUNTERCLASS) %>%
+    summarize(COUNT = n()) %>%
+    ungroup() %>%
+    arrange(desc(COUNT))
+  
+  # Calculate the total count of encounters
+  total_count <- sum(block_df$COUNT)
+  
+  # Calculate the percentage of total encounters for each ENCOUNTERCLASS
+  block_df <- block_df %>%
+    mutate(PERCENT = (COUNT / total_count) * 100)
+  
+  return(block_df)
+}
+
+# Call the function for each block and store the results in a list
+block_results <- lapply(1:6, function(block_num) {
+  summarize_block(block_num, pro_attr, encounters_cleaned)
+})
+
+# View the summary data for each block
+names(block_results) <- paste0("Block", 1:6)
+print(block_results)
+
+```
+
+
+
+
+
+Group 2: Ted 
 ```{r}
 Ted955 <- encounters_cleaned %>% 
     filter(PROVIDER == "Ted955 Reilly981") %>% 
@@ -419,7 +468,7 @@ Ted955%>%
 
 Gonna go ahead and say Ted's a Cardiologist
 
-Maybe there are other doctors that are in block one that are also cardiologists?
+What type of doctors make up block 6?
 
 ```{r}
 Barbara209 <- encounters_cleaned %>% 
@@ -427,40 +476,5 @@ Barbara209 <- encounters_cleaned %>%
     group_by(PROVIDER, CITY.x, REASONDESCRIPTION)%>%
   summarize(COUNT = n()) 
 Barbara209 %>%
-  arrange(desc(COUNT))
-```
-
-```{r}
-Gisele901 <- encounters_cleaned %>% 
-    filter(PROVIDER == "Gisele901 Lehner980") %>% 
-    group_by(PROVIDER, CITY.x, REASONDESCRIPTION)%>%
-  summarize(COUNT = n()) 
-Gisele901 %>%
-  arrange(desc(COUNT))
-```
-
-```{r}
-encounters_reasons <- encounters_cleaned %>% 
-    group_by(PROVIDER, CITY.x, REASONDESCRIPTION)%>%
-    summarize(COUNT = n()) 
-encounters_reasons %>%
-  arrange(desc(COUNT))
-```
-
-```{r}
-Alvin56 <- encounters_cleaned %>% 
-    filter(PROVIDER == "Alvin56 Crona259") %>% 
-    group_by(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)%>%
-  summarize(COUNT = n()) 
-Alvin56 %>%
-  arrange(desc(COUNT))
-```
-
-```{r}
-Margart214 <- encounters_cleaned %>% 
-    filter(PROVIDER == "Margart214 Bogisich202") %>% 
-    group_by(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)%>%
-  summarize(COUNT = n()) 
-Margart214 %>%
   arrange(desc(COUNT))
 ```

@@ -754,129 +754,242 @@ Attaching package: 'igraph'</code></pre>
 <p><img src="post_6_drug_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+</section>
+<section id="block-attributes" class="level1">
+<h1>BLOCK ATTRIBUTES:</h1>
+<p>Where are the blocks located? Are there any overlaps?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>block1 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>block1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CITY</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to summarize encounters for a given block</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>summarize_block <span class="ot">&lt;-</span> <span class="cf">function</span>(block_num, pro_attr, encounters_cleaned) {</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter provider names for the given block</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  block_providers <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(block <span class="sc">==</span> block_num) <span class="sc">%&gt;%</span></span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(NAME)</span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter encounters for providers in the given block</span></span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>  block_df <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">%in%</span> block_providers) <span class="sc">%&gt;%</span></span>
+<span id="cb80-12"><a href="#cb80-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(CITY.x) <span class="sc">%&gt;%</span></span>
+<span id="cb80-13"><a href="#cb80-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb80-14"><a href="#cb80-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb80-15"><a href="#cb80-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span>
+<span id="cb80-16"><a href="#cb80-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-17"><a href="#cb80-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the total count of encounters</span></span>
+<span id="cb80-18"><a href="#cb80-18" aria-hidden="true" tabindex="-1"></a>  total_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(block_df<span class="sc">$</span>COUNT)</span>
+<span id="cb80-19"><a href="#cb80-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-20"><a href="#cb80-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the percentage of total encounters for each ENCOUNTERCLASS</span></span>
+<span id="cb80-21"><a href="#cb80-21" aria-hidden="true" tabindex="-1"></a>  block_df <span class="ot">&lt;-</span> block_df <span class="sc">%&gt;%</span></span>
+<span id="cb80-22"><a href="#cb80-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">PERCENT =</span> (COUNT <span class="sc">/</span> total_count) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb80-23"><a href="#cb80-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb80-24"><a href="#cb80-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(block_df)</span>
+<span id="cb80-25"><a href="#cb80-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb80-26"><a href="#cb80-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-27"><a href="#cb80-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the function for each block and store the results in a list</span></span>
+<span id="cb80-28"><a href="#cb80-28" aria-hidden="true" tabindex="-1"></a>block_results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(block_num) {</span>
+<span id="cb80-29"><a href="#cb80-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_block</span>(block_num, pro_attr, encounters_cleaned)</span>
+<span id="cb80-30"><a href="#cb80-30" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb80-31"><a href="#cb80-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-32"><a href="#cb80-32" aria-hidden="true" tabindex="-1"></a><span class="co"># View the summary data for each block</span></span>
+<span id="cb80-33"><a href="#cb80-33" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(block_results) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Block"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb80-34"><a href="#cb80-34" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(block_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 5
-  NAME                       GENDER CITY     type     block
-  &lt;chr&gt;                      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
-1 Clemente531 Schamberger479 Male   westwood PROVIDER     1
-2 Zachery872 Rau926          Male   walpole  PROVIDER     1
-3 Gino587 Block661           Male   natick   PROVIDER     1
-4 Josefina523 O'Connell601   Female medfield PROVIDER     1
-5 Jeanie708 Turner526        Female franklin PROVIDER     1
-6 Freeda113 Crooks415        Female milford  PROVIDER     1</code></pre>
+<pre><code>$Block1
+# A tibble: 6 × 3
+  CITY.x   COUNT PERCENT
+  &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;
+1 natick      84  62.7  
+2 walpole     34  25.4  
+3 medfield     5   3.73 
+4 milford      5   3.73 
+5 westwood     5   3.73 
+6 franklin     1   0.746
+
+$Block2
+# A tibble: 1 × 3
+  CITY.x    COUNT PERCENT
+  &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt;
+1 fitchburg   123     100
+
+$Block3
+# A tibble: 86 × 3
+   CITY.x      COUNT PERCENT
+   &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt;
+ 1 attleboro     182    6.52
+ 2 boston        152    5.45
+ 3 worcester     141    5.05
+ 4 new bedford   138    4.94
+ 5 northampton   129    4.62
+ 6 taunton       121    4.34
+ 7 weymouth      100    3.58
+ 8 melrose        91    3.26
+ 9 ware           90    3.22
+10 framingham     80    2.87
+# ℹ 76 more rows
+
+$Block4
+# A tibble: 3 × 3
+  CITY.x     COUNT PERCENT
+  &lt;chr&gt;      &lt;int&gt;   &lt;dbl&gt;
+1 waltham      661   94.2 
+2 auburndale    28    3.99
+3 waban         13    1.85
+
+$Block5
+# A tibble: 23 × 3
+   CITY.x         COUNT PERCENT
+   &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+ 1 peabody          742   34.2 
+ 2 leominster       309   14.2 
+ 3 hyannis          198    9.12
+ 4 attleboro        117    5.39
+ 5 stoneham         107    4.93
+ 6 middleton         88    4.06
+ 7 cambridge         70    3.23
+ 8 worcester         70    3.23
+ 9 fitchburg         68    3.13
+10 south yarmouth    68    3.13
+# ℹ 13 more rows
+
+$Block6
+# A tibble: 3 × 3
+  CITY.x  COUNT PERCENT
+  &lt;chr&gt;   &lt;int&gt;   &lt;dbl&gt;
+1 lynn      181   95.8 
+2 peabody     6    3.17
+3 saugus      2    1.06</code></pre>
 </div>
 </div>
-<p>Block 1 is right outside of Boston</p>
+<p>Block 1 is right outside of Boston Block 2, only one provider, Fitchburg. Block 3 is everywhere. Block 4 is Heavy Waltham representation Block 5 is a bit of everyone. Block 6 is Northshore.</p>
+<p>What are the types of encounters within the blocks?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>block2 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>block2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ENCOUNTERCLASS</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to summarize encounters for a given block</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>summarize_block <span class="ot">&lt;-</span> <span class="cf">function</span>(block_num, pro_attr, encounters_cleaned) {</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter provider names for the given block</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>  block_providers <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(block <span class="sc">==</span> block_num) <span class="sc">%&gt;%</span></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(NAME)</span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter encounters for providers in the given block</span></span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>  block_df <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span></span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">%in%</span> block_providers) <span class="sc">%&gt;%</span></span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(ENCOUNTERCLASS) <span class="sc">%&gt;%</span></span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb82-15"><a href="#cb82-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span>
+<span id="cb82-16"><a href="#cb82-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb82-17"><a href="#cb82-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the total count of encounters</span></span>
+<span id="cb82-18"><a href="#cb82-18" aria-hidden="true" tabindex="-1"></a>  total_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(block_df<span class="sc">$</span>COUNT)</span>
+<span id="cb82-19"><a href="#cb82-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb82-20"><a href="#cb82-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the percentage of total encounters for each ENCOUNTERCLASS</span></span>
+<span id="cb82-21"><a href="#cb82-21" aria-hidden="true" tabindex="-1"></a>  block_df <span class="ot">&lt;-</span> block_df <span class="sc">%&gt;%</span></span>
+<span id="cb82-22"><a href="#cb82-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">PERCENT =</span> (COUNT <span class="sc">/</span> total_count) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb82-23"><a href="#cb82-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb82-24"><a href="#cb82-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(block_df)</span>
+<span id="cb82-25"><a href="#cb82-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb82-26"><a href="#cb82-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-27"><a href="#cb82-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the function for each block and store the results in a list</span></span>
+<span id="cb82-28"><a href="#cb82-28" aria-hidden="true" tabindex="-1"></a>block_results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="cf">function</span>(block_num) {</span>
+<span id="cb82-29"><a href="#cb82-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_block</span>(block_num, pro_attr, encounters_cleaned)</span>
+<span id="cb82-30"><a href="#cb82-30" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb82-31"><a href="#cb82-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-32"><a href="#cb82-32" aria-hidden="true" tabindex="-1"></a><span class="co"># View the summary data for each block</span></span>
+<span id="cb82-33"><a href="#cb82-33" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(block_results) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Block"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb82-34"><a href="#cb82-34" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(block_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 5
-  NAME             GENDER CITY      type     block
-  &lt;chr&gt;            &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt;
-1 Ted955 Reilly981 Male   fitchburg PROVIDER     2</code></pre>
+<pre><code>$Block1
+# A tibble: 8 × 3
+  ENCOUNTERCLASS COUNT PERCENT
+  &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+1 ambulatory        63  47.0  
+2 wellness          34  25.4  
+3 outpatient        20  14.9  
+4 emergency          9   6.72 
+5 urgentcare         5   3.73 
+6 hospice            1   0.746
+7 inpatient          1   0.746
+8 snf                1   0.746
+
+$Block2
+# A tibble: 6 × 3
+  ENCOUNTERCLASS COUNT PERCENT
+  &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+1 ambulatory        64  52.0  
+2 inpatient         19  15.4  
+3 outpatient        18  14.6  
+4 wellness          15  12.2  
+5 emergency          6   4.88 
+6 hospice            1   0.813
+
+$Block3
+# A tibble: 10 × 3
+   ENCOUNTERCLASS COUNT PERCENT
+   &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+ 1 ambulatory      1255 45.0   
+ 2 wellness         701 25.1   
+ 3 outpatient       519 18.6   
+ 4 emergency        197  7.06  
+ 5 inpatient         63  2.26  
+ 6 urgentcare        23  0.824 
+ 7 home              15  0.537 
+ 8 snf                9  0.322 
+ 9 hospice            8  0.287 
+10 virtual            1  0.0358
+
+$Block4
+# A tibble: 7 × 3
+  ENCOUNTERCLASS COUNT PERCENT
+  &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+1 ambulatory       397  56.6  
+2 urgentcare       139  19.8  
+3 outpatient       102  14.5  
+4 emergency         33   4.70 
+5 wellness          27   3.85 
+6 inpatient          3   0.427
+7 hospice            1   0.142
+
+$Block5
+# A tibble: 9 × 3
+  ENCOUNTERCLASS COUNT PERCENT
+  &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+1 ambulatory      1126 51.9   
+2 outpatient       321 14.8   
+3 urgentcare       305 14.1   
+4 wellness         267 12.3   
+5 emergency         80  3.69  
+6 home              33  1.52  
+7 inpatient         33  1.52  
+8 snf                4  0.184 
+9 virtual            1  0.0461
+
+$Block6
+# A tibble: 8 × 3
+  ENCOUNTERCLASS COUNT PERCENT
+  &lt;chr&gt;          &lt;int&gt;   &lt;dbl&gt;
+1 ambulatory        61  32.3  
+2 outpatient        53  28.0  
+3 wellness          48  25.4  
+4 urgentcare        15   7.94 
+5 emergency          7   3.70 
+6 inpatient          2   1.06 
+7 snf                2   1.06 
+8 hospice            1   0.529</code></pre>
 </div>
 </div>
-<p>Block 2, only one provider, Fitchburg.</p>
+<p>Group 2: Ted</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>block3 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">3</span>)</span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>block3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 155 × 5
-   NAME                      GENDER CITY           type     block
-   &lt;chr&gt;                     &lt;chr&gt;  &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt;
- 1 Shane235 Lueilwitz711     Male   worcester      PROVIDER     3
- 2 María José279 Godínez202  Female natick         PROVIDER     3
- 3 Mickey576 Borer986        Female worcester      PROVIDER     3
- 4 Cristopher265 Heaney114   Male   taunton        PROVIDER     3
- 5 Chery887 Kohler843        Female brighton       PROVIDER     3
- 6 Margene509 Schamberger479 Female westford       PROVIDER     3
- 7 Shasta644 King743         Female norwood        PROVIDER     3
- 8 Sparkle906 Bernhard322    Female hadley         PROVIDER     3
- 9 Eldon28 Cassin499         Male   westfield      PROVIDER     3
-10 Buck819 Johnson679        Male   south hamilton PROVIDER     3
-# ℹ 145 more rows</code></pre>
-</div>
-</div>
-<p>Block 3 is everywhere.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>block4 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">4</span>)</span>
-<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>block4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 5
-   NAME                  GENDER CITY       type     block
-   &lt;chr&gt;                 &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt;
- 1 Harland508 Rippin620  Male   auburndale PROVIDER     4
- 2 Lizette501 Lebsack687 Female waban      PROVIDER     4
- 3 Darnell564 Leannon79  Male   waltham    PROVIDER     4
- 4 Lynsey2 Lemke654      Female waltham    PROVIDER     4
- 5 Neville893 Schoen8    Male   waltham    PROVIDER     4
- 6 Norah104 Jenkins714   Female waltham    PROVIDER     4
- 7 Patrina117 Strosin214 Female waltham    PROVIDER     4
- 8 Kati243 Ruecker817    Female waltham    PROVIDER     4
- 9 Cortez851 Price929    Male   waltham    PROVIDER     4
-10 Dante562 Reinger292   Male   auburndale PROVIDER     4</code></pre>
-</div>
-</div>
-<p>Block 4 is Heavy Waltham representation</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>block5 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">5</span>)</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>block5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 43 × 5
-   NAME                   GENDER CITY       type     block
-   &lt;chr&gt;                  &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt;
- 1 Jules135 Emard19       Male   leominster PROVIDER     5
- 2 Jarvis643 Ankunding277 Male   fall river PROVIDER     5
- 3 Bud153 Parisian75      Male   worcester  PROVIDER     5
- 4 Cherish740 Toy286      Female leominster PROVIDER     5
- 5 Jane262 Schmeler639    Female somerset   PROVIDER     5
- 6 Joanna347 Abbott774    Female peabody    PROVIDER     5
- 7 Mathew182 Howe413      Male   stoneham   PROVIDER     5
- 8 Emory494 Schuster709   Male   stoneham   PROVIDER     5
- 9 Marth98 Mayer370       Female greenfield PROVIDER     5
-10 Rebeca548 García15     Female brockton   PROVIDER     5
-# ℹ 33 more rows</code></pre>
-</div>
-</div>
-<p>Block 5 is a bit of everyone</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>block6 <span class="ot">&lt;-</span> pro_attr <span class="sc">%&gt;%</span></span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(block <span class="sc">==</span> <span class="dv">6</span>)</span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>block6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 5
-  NAME                  GENDER CITY    type     block
-  &lt;chr&gt;                 &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
-1 Thad495 Leannon79     Male   peabody PROVIDER     6
-2 Karla801 Cummerata161 Female lynn    PROVIDER     6
-3 Alberto639 Adame662   Male   saugus  PROVIDER     6
-4 Eddie505 Keeling57    Female lynn    PROVIDER     6
-5 Lady554 Kovacek682    Female lynn    PROVIDER     6
-6 Delbert384 Carter549  Male   lynn    PROVIDER     6
-7 Louis204 Hauck852     Male   lynn    PROVIDER     6</code></pre>
-</div>
-</div>
-<p>Block 6 is Northshore.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>Ted955 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Ted955 Reilly981"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>Ted955 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Ted955 Reilly981"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>Ted955<span class="sc">%&gt;%</span></span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>Ted955<span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
 # Groups:   PROVIDER, CITY.x [1]
@@ -901,18 +1014,18 @@ using the `.groups` argument.</code></pre>
 </div>
 </div>
 <p>Gonna go ahead and say Ted’s a Cardiologist</p>
-<p>Maybe there are other doctors that are in block one that are also cardiologists?</p>
+<p>What type of doctors make up block 6?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Barbara209 Maldonado119"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Barbara209 Maldonado119"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
 using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="sc">%&gt;%</span></span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>Barbara209 <span class="sc">%&gt;%</span></span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 4
 # Groups:   PROVIDER, CITY.x [0]
@@ -920,91 +1033,8 @@ using the `.groups` argument.</code></pre>
 #   COUNT &lt;int&gt;</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>Gisele901 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Gisele901 Lehner980"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
-using the `.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>Gisele901 <span class="sc">%&gt;%</span></span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 4
-# Groups:   PROVIDER, CITY.x [0]
-# ℹ 4 variables: PROVIDER &lt;chr&gt;, CITY.x &lt;chr&gt;, REASONDESCRIPTION &lt;chr&gt;,
-#   COUNT &lt;int&gt;</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>encounters_reasons <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'PROVIDER', 'CITY.x'. You can override
-using the `.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>encounters_reasons <span class="sc">%&gt;%</span></span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 765 × 4
-# Groups:   PROVIDER, CITY.x [222]
-   PROVIDER              CITY.x     REASONDESCRIPTION                      COUNT
-   &lt;chr&gt;                 &lt;chr&gt;      &lt;chr&gt;                                  &lt;int&gt;
- 1 Joanna347 Abbott774   peabody    Chronic kidney disease stage 4 (disor…   518
- 2 Patrina117 Strosin214 waltham    Chronic kidney disease stage 4 (disor…   216
- 3 Cortez851 Price929    waltham    &lt;NA&gt;                                     139
- 4 Joanna347 Abbott774   peabody    &lt;NA&gt;                                     131
- 5 Jewel43 Kassulke119   attleboro  &lt;NA&gt;                                     115
- 6 Jules135 Emard19      leominster &lt;NA&gt;                                     113
- 7 Patrina117 Strosin214 waltham    End-stage renal disease (disorder)       113
- 8 Randy380 Bergstrom287 hyannis    Dependent drug abuse (disorder)          108
- 9 Saul605 Ratke343      middleton  &lt;NA&gt;                                      88
-10 Bud153 Parisian75     worcester  &lt;NA&gt;                                      69
-# ℹ 755 more rows</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>Alvin56 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Alvin56 Crona259"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'PROVIDER', 'PATIENT', 'CITY.x'. You can
-override using the `.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>Alvin56 <span class="sc">%&gt;%</span></span>
-<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 5
-# Groups:   PROVIDER, PATIENT, CITY.x [0]
-# ℹ 5 variables: PROVIDER &lt;chr&gt;, PATIENT &lt;chr&gt;, CITY.x &lt;chr&gt;,
-#   REASONDESCRIPTION &lt;chr&gt;, COUNT &lt;int&gt;</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>Margart214 <span class="ot">&lt;-</span> encounters_cleaned <span class="sc">%&gt;%</span> </span>
-<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(PROVIDER <span class="sc">==</span> <span class="st">"Margart214 Bogisich202"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(PROVIDER, PATIENT, CITY.x, REASONDESCRIPTION)<span class="sc">%&gt;%</span></span>
-<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">COUNT =</span> <span class="fu">n</span>()) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'PROVIDER', 'PATIENT', 'CITY.x'. You can
-override using the `.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>Margart214 <span class="sc">%&gt;%</span></span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(COUNT))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 5
-# Groups:   PROVIDER, PATIENT, CITY.x [0]
-# ℹ 5 variables: PROVIDER &lt;chr&gt;, PATIENT &lt;chr&gt;, CITY.x &lt;chr&gt;,
-#   REASONDESCRIPTION &lt;chr&gt;, COUNT &lt;int&gt;</code></pre>
-</div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
