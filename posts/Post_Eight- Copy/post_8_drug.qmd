@@ -79,7 +79,6 @@ provider.se <- equiv.clust(provider_matrix,
  cluster.method = "complete")
 ```
 
-
 # ANALYSIS
 
 ```{r}
