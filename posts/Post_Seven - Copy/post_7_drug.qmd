@@ -73,13 +73,12 @@ encounters.stat2 <- asNetwork(encounters.ig)
 projected_graph <- bipartite_projection(encounters.ig)
 ```
 
-```{r}
-colnames(encounters_cleaned)
-```
 
 ## PROVIDER
 
 ```{r}
+#| warning: false
+#| message: false
 provider_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj2))
 library(intergraph)
 detach("package:igraph")
@@ -144,127 +143,12 @@ head(vertex_data)
 
 ```
 
-## Create New Attribute Lists
 
-```{r}
-pat_attr_list <- do.call(list, pat_attr)
-pro_attr_list <- do.call(list, pro_attr)
-both_attr <- bind_rows(pat_attr, pro_attr)
-attribute_list <- do.call(list, both_attr)
-```
-
-```{r}
-provider.st <- network(provider_matrix,
-                       directed = FALSE,
-                       matrix.type = "adjacency",
-                       vertex.attr = pro_attr_list)
-provider.st
-```
-
-```{r}
-#| warning: false
-#| message: false
-
-library(igraph)
-provider_graph <- graph_from_biadjacency_matrix(provider.st)
-
-```
-
-```{r}
-Boston_Neighborhoods <- c(
-  "ALLSTON",
-  "BRIGHTON",
-  "BOSTON",
-  "CHARLESTOWN",
-  "DORCHESTER",
-  "HYDE PARK",
-  "JAMAICA PLAIN",
-  "MATTAPAN",
-  "ROSLINDALE",
-  "ROXBURY",
-  "West Roxbury",
-  "WEST ROXBURY"
-)
-Boston_Neighborhoods <- tolower(Boston_Neighborhoods)
-```
-
-How about Highest populations
-
-```{r}
-largest_pop <- c(
-"Boston",
-"Worcester",
-"Springfield",
-"Cambridge",
-"Lowell",
-"Brockton",
-"Quincy",
-"Lynn",
-"New Bedford",
-"Fall River",
-"Lawrence",
-"Newton",
-"Somerville",
-"Framingham",
-"Haverhill")
-largest_pop <- tolower(largest_pop)
-```
-
-# Blocks
-
-```{r}
-block1 <- pro_attr %>%
-  filter(block == 1)
-block1
-```
-
-Block 1 is right outside of Boston
-
-```{r}
-block2 <- pro_attr %>%
-  filter(block == 2)
-block2
-```
-
-Block 2, only one provider, Fitchburg.
-
-```{r}
-block3 <- pro_attr %>%
-  filter(block == 3)
-block3
-```
-
-Block 3 is everywhere.
-
-```{r}
-block4 <- pro_attr %>%
-  filter(block == 4)
-block4
-```
-
-Block 4 is Heavy Waltham representation
-
-```{r}
-block5 <- pro_attr %>%
-  filter(block == 5)
-block5
-```
-
-Block 5 is a bit of everyone
-
-```{r}
-block6 <- pro_attr %>%
-  filter(block == 6)
-block6
-```
-
-Block 6 is Northshore.
 
 #So, lets geographically map this network
 
 ```{r}
 library(leaflet)
-
 ```
 
 #add lat and lon back into the attributes
@@ -338,6 +222,7 @@ encounters.geo.stat <- network(encounters_el,
 ```
 
 ```{r}
+library(igraph)
 #create igraph
 encounters.geo.ig <- graph_from_biadjacency_matrix(encounters.geo.stat)
 ```
@@ -347,6 +232,8 @@ encounters.geo.stat2 <- asNetwork(encounters.geo.ig)
 ```
 
 ```{r}
+#| warning: false
+#| message: false
 detach("package:igraph")
 
 # Extracting the coordinates from the network object
@@ -368,12 +255,13 @@ block <- get.vertex.attribute(encounters.geo.stat, "block")
 # Assuming coords_lon and coords are your longitude and latitude coordinates
 
 # Define colors based on block values
-colors <- ifelse(block == "1", "red",
-                 ifelse(block == "2", "blue",
-                  ifelse(block == "3", "green",
-                   ifelse(block == "4", "yellow",
-                    ifelse(block == "5", "pink", 
-                           "black")))))  # Add more colors as needed
+colors <-  ifelse(block == "1", "red",
+                 ifelse(block == "2", "orange",
+                  ifelse(block == "3", "yellow",
+                   ifelse(block == "4", "green",
+                    ifelse(block == "5", "blue", 
+                      ifelse(block == "6", "purple", 
+                           "black")))))) # Add more colors as needed
 
 # Creating a Leaflet map
 leaflet() %>%
@@ -414,11 +302,12 @@ pro_block <- get.vertex.attribute(provider.geo.stat, "block")
 
 # Define colors based on block values
 pro_colors <- ifelse(block == "1", "red",
-                 ifelse(block == "2", "blue",
-                  ifelse(block == "3", "green",
-                   ifelse(block == "4", "yellow",
-                    ifelse(block == "5", "pink", 
-                           "black")))))  # Add more colors as needed
+                 ifelse(block == "2", "orange",
+                  ifelse(block == "3", "yellow",
+                   ifelse(block == "4", "green",
+                    ifelse(block == "5", "blue", 
+                      ifelse(block == "6", "purple", 
+                           "black"))))))  # Add more colors as needed
 
 # Creating a Leaflet map
 leaflet() %>%
