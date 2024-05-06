@@ -470,11 +470,3 @@ Gonna go ahead and say Ted's a Cardiologist
 
 What type of doctors make up block 6?
 
-```{r}
-Barbara209 <- encounters_cleaned %>% 
-    filter(PROVIDER == "Barbara209 Maldonado119") %>% 
-    group_by(PROVIDER, CITY.x, REASONDESCRIPTION)%>%
-  summarize(COUNT = n()) 
-Barbara209 %>%
-  arrange(desc(COUNT))
-```
