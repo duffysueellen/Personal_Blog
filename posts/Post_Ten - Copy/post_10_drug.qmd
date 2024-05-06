@@ -84,6 +84,7 @@ gender_edgelist <- encounter_attributes %>%
   distinct(PATIENT, PROVIDER, GENDER_SAMENESS)
 
 ```
+
 Check Gender Edgelist
 
 ```{r}
@@ -92,19 +93,18 @@ dim(gender_edgelist)
 gender_edgelist <- data.frame(gender_edgelist)
 class(gender_edgelist)
 ```
+
 ```{r}
 g_attr_list <- (do.call(list, gender_sameness_df))
 ```
 
 ## Create Gender Matrix
+
 ```{r}
 g.stat <- network(gender_edgelist, directed = FALSE, bipartite = TRUE, matrix.type = "edgelist", vertex.attr = g_attr_list)
 # create bipartite network with attributes
 gender.ig <- graph_from_biadjacency_matrix(g.stat, weight = TRUE)
 ```
-
-
-
 
 ```{r}
 V(gender.ig)$shape <- ifelse(V(gender.ig)$type, "square", "circle")
@@ -141,6 +141,7 @@ legend("topright",
        title = "Nodes: Who")                     # Legend title
 
 ```
+
 The above graph does not represent the data well. There are too many inconsistencies.
 
 ```{r}
@@ -168,9 +169,7 @@ GGally::ggnet2(g.stat,
 
 ```
 
-
 I also feel these can't be true. Looking at the way the colors change in vary scenarios between female and male nodes, these are not consistent.
-
 
 ```{r}
 # create bipartite network with attributes
@@ -227,12 +226,8 @@ print(total_corr_gender_encounters)
 
 A correlation of 0.098 suggests a weak positive correlation, with some tendency for the matrices to move together, but the relationship is not strong.
 
-
-
 ```{r}
 library(statnet)
 
 
 ```
-
-
