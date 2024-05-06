@@ -2,7 +2,7 @@
 title: "POST 2"
 subtitle: "Network Exploration"
 author: "Sue-Ellen Duffy"
-date: "2024-05-02"
+date: "2024-04-26"
 categories: [code, analysis]
 ---
 
