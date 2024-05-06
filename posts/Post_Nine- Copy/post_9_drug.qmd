@@ -86,20 +86,16 @@ diag(provider.m) <- 0
 ```
 
 ```{r}
-#overlap?
 patient.ig <- graph_from_adjacency_matrix(patient.m, 
                                         mode = "undirected", 
                                         weighted = TRUE)
-
 patient.ig
 ```
 
 ```{r}
-#overlap?
 provider.ig <- graph_from_adjacency_matrix(provider.m, 
                                         mode = "undirected", 
                                         weighted = TRUE)
-
 provider.ig
 ```
 
@@ -178,7 +174,6 @@ layouts <- grep("^layout_", ls("package:igraph"), value=TRUE)[-1]
 # Remove layouts that do not apply to our graph.
 
 layouts <- layouts[!grepl("bipartite|merge|norm|sugiyama|tree", layouts)]
-
 
 par(mfrow=c(3,3), mar=c(1,1,1,1))
 
@@ -315,4 +310,6 @@ colnames(gender.m) <- gender$NAME
 rownames(gender.m) <- gender$NAME
 ```
 
-gender.m + 2\*encounters.m
+gender.m + 2\*encounters.m  
+
+The above code doesn't work - but I think this would give the graph I want?

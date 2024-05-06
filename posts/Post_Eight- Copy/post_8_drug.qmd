@@ -24,7 +24,7 @@ library(tigris)
 library(stplanr)
 ```
 
-This post will explore the Synthetic Mass network data in more detail.
+This post is an attempt to make a separate gender matrix and run some CUG analysis
 
 # Read in Data
 
@@ -79,31 +79,8 @@ provider.se <- equiv.clust(provider_matrix,
  cluster.method = "complete")
 ```
 
-```{r}
-blk_model.provider.org <- blockmodel(provider_matrix,
- provider.se, k = 6)
-```
 
-```{r}
-prov_blks6 <- readRDS("prov_blks6_results.rds")
-```
-
-```{r}
-# blockmodel with optimized partition
-prov_blk_mod <- blockmodel(provider_matrix, prov_blks6$best$best1$clu,
-                      plabels = rownames(provider_matrix))
-```
-
-```{r}
-#assign block membership to vertex attribute
-provider.stat%v%"role"<-prov_blk_mod$block.membership[match(provider.stat%v%"vertex.names",prov_blk_mod$plabels)]
-
-#plot network using "role" to color nodes
-GGally::ggnet2(provider.stat,
-               node.color="role", 
-               node.size=sna::degree(provider.stat, gmode="graph"),
-               node.alpha = .5)
-```
+# ANALYSIS
 
 ```{r}
 gden(provider.stat)

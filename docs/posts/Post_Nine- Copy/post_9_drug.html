@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Sue-Ellen Duffy">
-<meta name="dcterms.date" content="2024-05-03">
+<meta name="dcterms.date" content="2024-05-05">
 
 <title>Social_Networks_Blog_Space - POST 9</title>
 <style>
@@ -165,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 3, 2024</p>
+        <p class="date">May 5, 2024</p>
       </div>
     </div>
     
@@ -252,16 +252,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(provider.m) <span class="ot">&lt;-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#overlap?</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>patient.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(patient.m, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">mode =</span> <span class="st">"undirected"</span>, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">weighted =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>patient.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>patient.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(patient.m, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">mode =</span> <span class="st">"undirected"</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">weighted =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>patient.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 3b195d3 UNW- 222 497 -- 
+<pre><code>IGRAPH 5d3c26e UNW- 222 497 -- 
 + attr: name (v/c), weight (e/n)
-+ edges from 3b195d3 (vertex names):
++ edges from 5d3c26e (vertex names):
  [1] Elijah719 White193--Fidel864 Swift555       
  [2] Elijah719 White193--Virgen207 Hyatt152      
  [3] Elijah719 White193--Zachery872 Pagac496     
@@ -274,16 +272,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#overlap?</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>provider.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(provider.m, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">mode =</span> <span class="st">"undirected"</span>, </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">weighted =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>provider.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>provider.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(provider.m, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">mode =</span> <span class="st">"undirected"</span>, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">weighted =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>provider.ig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 3b1f31b UNW- 86 265 -- 
+<pre><code>IGRAPH 5d42e38 UNW- 86 265 -- 
 + attr: name (v/c), weight (e/n)
-+ edges from 3b1f31b (vertex names):
++ edges from 5d42e38 (vertex names):
  [1] Adam631 Hoppe518       --Alissa315 Altenwerth646
  [2] Adam631 Hoppe518       --Johnny786 Smith67      
  [3] Adam631 Hoppe518       --Mose244 Cummerata161   
@@ -865,17 +861,16 @@ Chaya236 Sporer811               0.257159556</code></pre>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>layouts <span class="ot">&lt;-</span> layouts[<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"bipartite|merge|norm|sugiyama|tree"</span>, layouts)]</span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (layout <span class="cf">in</span> layouts) {</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(layout)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  l <span class="ot">&lt;-</span> <span class="fu">do.call</span>(layout, <span class="fu">list</span>(encounters.ig)) </span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(encounters.ig, <span class="at">vertex.label =</span> <span class="cn">NA</span>,      <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">3</span>, <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, <span class="at">edge.arrow.mode=</span><span class="dv">0</span>, <span class="at">layout=</span>l, <span class="at">main=</span>layout) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (layout <span class="cf">in</span> layouts) {</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(layout)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  l <span class="ot">&lt;-</span> <span class="fu">do.call</span>(layout, <span class="fu">list</span>(encounters.ig)) </span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(encounters.ig, <span class="at">vertex.label =</span> <span class="cn">NA</span>,      <span class="at">vertex.label.dist =</span> <span class="dv">2</span>, </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size =</span> <span class="dv">3</span>, <span class="at">vertex.label.cex =</span> <span class="fl">0.2</span>, <span class="at">edge.arrow.mode=</span><span class="dv">0</span>, <span class="at">layout=</span>l, <span class="at">main=</span>layout) }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "layout_as_star"</code></pre>
 </div>
@@ -970,7 +965,7 @@ graph. All connections will be treated as mutual.</code></pre>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>diam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 15/308 vertices, named, from 3afea81:
+<pre><code>+ 15/308 vertices, named, from 5d1ed35:
  [1] Aubrey96 Emard19       Gino587 Vandervort697  Jettie913 Rodriguez71 
  [4] Dortha70 Rutherford999 Anderson154 Lemke654   Johnnie679 Hand679    
  [7] Ted955 Reilly981       Sabine292 Feil794      Gino587 Block661      
@@ -1100,6 +1095,7 @@ graph. All connections will be treated as mutual.</code></pre>
 <span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(gender.m) <span class="ot">&lt;-</span> gender<span class="sc">$</span>NAME</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>gender.m + 2*encounters.m</p>
+<p>The above code doesn’t work - but I think this would give the graph I want?</p>
 
 
 </section>
