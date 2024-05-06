@@ -2,7 +2,7 @@
 title: "POST 9"
 subtitle: "mostly notes"
 author: "Sue-Ellen Duffy"
-date: "2024-05-03"
+date: "2024-05-05"
 categories: [code, analysis, block_model]
 ---
 
@@ -64,17 +64,17 @@ encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
 attributes <- bind_rows(pat_attr, pro_attr)
 ```
 
-
-
 # create an adjacency matrix using sna
+
 ```{r}
 encounters.sna <- network(as.matrix(encounters.stat), directed = F)
 encounters.m <- encounters.sna[,] # extract an adjacency matrix from the network object
 ```
 
-# Matrix Multiplication - For Overlap Count 
-Cross-Product Method with manual matrix multiplication
-Multiply a two-mode matrix by its transpose to produce a one-mode network that reflects the ties between the nodes in one of the two modes
+# Matrix Multiplication - For Overlap Count
+
+Cross-Product Method with manual matrix multiplication Multiply a two-mode matrix by its transpose to produce a one-mode network that reflects the ties between the nodes in one of the two modes
+
 ```{r}
 patient.m <- t(encounters.m) %*% encounters.m
 diag(patient.m) <- 0
@@ -93,6 +93,7 @@ patient.ig <- graph_from_adjacency_matrix(patient.m,
 
 patient.ig
 ```
+
 ```{r}
 #overlap?
 provider.ig <- graph_from_adjacency_matrix(provider.m, 
@@ -109,6 +110,7 @@ E(patient.ig)$weight
 ```{r}
 E(provider.ig)$weight
 ```
+
 SO providers it seems overlap with the same patients with the most being 4 times an overlap.
 
 ```{r}
@@ -200,7 +202,6 @@ transitivity(as.undirected(encounters.ig, mode="collapse")) # same as above
 triad_census(encounters.ig)
 ```
 
-
 ```{r}
 diameter(encounters.ig, directed=F, weights=NA)
 diameter(encounters.ig, directed=F)
@@ -224,35 +225,35 @@ plot(encounters.ig, vertex.color=vcol,  vertex.label = NA,      vertex.label.dis
      vertex.size = 3, vertex.label.cex = 0.2, edge.color=ecol, vertex.name = NA, edge.arrow.mode=0)
 ```
 
-#deg <- degree(encounters.ig, mode="all")
+#deg \<- degree(encounters.ig, mode="all")
 
 #hist(deg, breaks=1:vcount(encounters.ig)-1, main="Histogram of node degree")
 
-#deg.dist <- degree_distribution(encounters.ig, cumulative=T, mode="all")
+#deg.dist \<- degree_distribution(encounters.ig, cumulative=T, mode="all")
 
-#plot( x=0:max(deg), y=1-deg.dist, pch=19, cex=1.2, col="orange", 
+#plot( x=0:max(deg), y=1-deg.dist, pch=19, cex=1.2, col="orange",
 
-     # xlab="Degree", ylab="Cumulative Frequency")
+```         
+ # xlab="Degree", ylab="Cumulative Frequency")
+```
 
 #degree(encounters.ig, mode="in")
 
 centr_degree(encounters.ig, mode="in", normalized=T)
 
-#closeness(encounters.ig, mode="all", weights=NA) 
+#closeness(encounters.ig, mode="all", weights=NA)
 
-centr_clo(encounters.ig, mode="all", normalized=T) 
+centr_clo(encounters.ig, mode="all", normalized=T)
 
 eigen_centrality(encounters.ig, directed=F, weights=NA)
 
-centr_eigen(encounters.ig, directed=F, normalized=T) 
+centr_eigen(encounters.ig, directed=F, normalized=T)
 
 betweenness(encounters.ig, directed=F, weights=NA)
 
 edge_betweenness(encounters.ig, directed=F, weights=NA)
 
 centr_betw(encounters.ig, directed=F, normalized=T)
-
-
 
 ```{r}
 hs <- hub_score(encounters.ig, weights=NA)$vector
@@ -284,15 +285,16 @@ plot(encounters.ig, vertex.size=kc*6, vertex.label=kc, vertex.color=kc)
 # Calculate assortativity
 assortativity_degree(encounters.ig, directed=F)
 ```
+
 assortativity_degree() checks assortativity in node degrees
 
 # Create Gender Matrix
+
 ```{r}
 gender <- attributes %>%
   select(NAME, GENDER) 
 gender
 ```
-
 
 ```{r}
 # first create a matrix
@@ -313,5 +315,4 @@ colnames(gender.m) <- gender$NAME
 rownames(gender.m) <- gender$NAME
 ```
 
-
-gender.m + 2*encounters.m
+gender.m + 2\*encounters.m

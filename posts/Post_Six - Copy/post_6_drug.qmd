@@ -2,7 +2,7 @@
 title: "POST 6"
 subtitle: "Network Block Modeling - Geographical Comparisson"
 author: "Sue-Ellen Duffy"
-date: "2024-05-01"
+date: "2024-05-02"
 categories: [code, analysis, block_model]
 ---
 
@@ -405,15 +405,11 @@ names(block_results) <- paste0("Block", 1:6)
 print(block_results)
 
 ```
-Block 1 is right outside of Boston
-Block 2, only one provider, Fitchburg.
-Block 3 is everywhere.
-Block 4 is Heavy Waltham representation
-Block 5 is a bit of everyone.
-Block 6 is Northshore.
 
+Block 1 is right outside of Boston Block 2, only one provider, Fitchburg. Block 3 is everywhere. Block 4 is Heavy Waltham representation Block 5 is a bit of everyone. Block 6 is Northshore.
 
 What are the types of encounters within the blocks?
+
 ```{r}
 # ENCOUNTERCLASS
 # Define a function to summarize encounters for a given block
@@ -452,11 +448,8 @@ print(block_results)
 
 ```
 
+Group 2: Ted
 
-
-
-
-Group 2: Ted 
 ```{r}
 Ted955 <- encounters_cleaned %>% 
     filter(PROVIDER == "Ted955 Reilly981") %>% 
@@ -469,4 +462,3 @@ Ted955%>%
 Gonna go ahead and say Ted's a Cardiologist
 
 What type of doctors make up block 6?
-

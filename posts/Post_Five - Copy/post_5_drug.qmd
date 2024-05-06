@@ -2,7 +2,7 @@
 title: "POST 5"
 subtitle: "Network Block Modeling - Geographical Comparisson"
 author: "Sue-Ellen Duffy"
-date: "2024-05-03"
+date: "2024-05-01"
 categories: [code, analysis, block_model]
 ---
 
@@ -44,12 +44,12 @@ pat_blks6 <- readRDS("pat_blks6_results.rds")
 prov_blks6 <- readRDS("prov_blks6_results.rds")
 ```
 
-
 ```{r}
 pat_attr <- pat_attr %>%
   rename(block = pat_blk_mod.block.membership)
 #write.csv(pat_attr, "pat_attr.csv")
 ```
+
 ```{r}
 pro_attr <- pro_attr %>%
   select(-block)

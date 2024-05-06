@@ -170,7 +170,6 @@ provider_graph <- graph_from_biadjacency_matrix(provider.st)
 
 ```
 
-
 ```{r}
 Boston_Neighborhoods <- c(
   "ALLSTON",
@@ -261,16 +260,19 @@ block6
 
 Block 6 is Northshore.
 
-#So, lets geographically map this network 
+#So, lets geographically map this network
+
 ```{r}
 library(leaflet)
 
 ```
 
 #add lat and lon back into the attributes
+
 ```{r}
 head(encounters_cleaned)
 ```
+
 ```{r}
 df_reconnected <- merge(pro_attr, encounters_cleaned, by.x = "NAME", by.y = "PROVIDER", all.x = TRUE)
 
@@ -293,6 +295,7 @@ df_coords <- df_coords %>%
 # Display the resulting dataframe
 head(df_coords)
 ```
+
 ```{r}
 pat_df_coords <- df_reconnected %>%
   select(PATIENT, GENDER.y, RACE, CITY.y,  LAT.y, LON.y) %>%
@@ -319,7 +322,6 @@ merged_df <- merge(pat_df_coords, pat_attr[, c("NAME", "block")], by = "NAME", a
 both_df <- bind_rows(merged_df, df_coords)
 head(both_df)
 ```
-
 
 ```{r}
 pro_attr_list_zip <- do.call(list,df_coords)
@@ -358,7 +360,6 @@ leaflet() %>%
   addMarkers(lng = coords_lon, lat = coords)
 ```
 
-
 ```{r}
 
 block <- get.vertex.attribute(encounters.geo.stat, "block")
@@ -383,8 +384,8 @@ leaflet() %>%
 
 ```
 
-
 try for providers only?
+
 ```{r}
 provider.geo.stat <- network(provider_matrix,
                        directed = FALSE,
@@ -403,7 +404,6 @@ leaflet() %>%
   # Adding markers for each coordinate
   addMarkers(lng = pro_coords_lon, lat = pro_coords)
 ```
-
 
 ```{r}
 
@@ -428,4 +428,3 @@ leaflet() %>%
                    color = pro_colors)
 
 ```
-
