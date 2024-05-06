@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(patient.se, <span class="at">main =</span> <span class="st">"patient"</span>)</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(patient.se, <span class="at">main =</span> <span class="st">"Patient Block Model (6)"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(patient.se<span class="sc">$</span>cluster, <span class="at">k =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_3_drug_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
@@ -278,7 +278,7 @@ Block 6 0.000000000 1.00000000 1.0000000 0.000000000 0.0000000     NaN</code></p
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">abline</span>(<span class="at">v =</span> j<span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">h =</span> j<span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">xpd=</span><span class="cn">FALSE</span>)</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> }</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(pat_blk_model.patient.org, <span class="at">main =</span> <span class="st">"patient"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(pat_blk_model.patient.org, <span class="at">main =</span> <span class="st">"Patient Block Model (6)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_3_drug_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -340,7 +340,8 @@ Block 6       0 0.00800000 0.01500000 0.006666667 0.02800000 0.018775510</code><
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pat_attr <span class="ot">&lt;-</span> pat_attr <span class="sc">%&gt;%</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(block_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"NAME"</span> <span class="ot">=</span> <span class="st">"pat_blk_mod.plabels"</span> ))</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(pat_attr, "pat_attr.csv")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#write.csv(pat_attr, "pat_attr.csv")</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>role<span class="ot">&lt;-</span>pat_blk_mod<span class="sc">$</span>block.membership[<span class="fu">match</span>(patient.stat<span class="sc">%v%</span><span class="st">"vertex.names"</span>,pat_blk_mod<span class="sc">$</span>plabels)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.block</span>(pat_blk_mod, <span class="at">main =</span> <span class="st">"patient"</span>,</span>
@@ -359,7 +360,7 @@ Block 6       0 0.00800000 0.01500000 0.006666667 0.02800000 0.018775510</code><
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span><span class="st">"role"</span>, </span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(patient.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>)<span class="sc">+</span> <span class="fu">ggtitle</span>(</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Patient 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Patient Block Model Network (6)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'GGally':
   method from   
@@ -415,7 +416,7 @@ Block 6       0 0.00800000 0.01500000 0.006666667 0.02800000 0.018775510</code><
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.color=</span> pat_attr<span class="sc">$</span>pat_blk_mod.block.membership, </span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.size=</span>sna<span class="sc">::</span><span class="fu">degree</span>(patient.stat, <span class="at">gmode=</span><span class="st">"graph"</span>),</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">node.alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Patient 6 Block Model Network"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Patient Block Model Network (6)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post_3_drug_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -446,7 +447,7 @@ Block 6       0 0.00800000 0.01500000 0.006666667 0.02800000 0.018775510</code><
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>patients_jaccard.ig <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(patients_jaccard_bi, <span class="at">mode =</span> <span class="st">"undirected"</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(patients_jaccard.ig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH c7d922b UN-- 86 3390 -- 
+<pre><code>IGRAPH ab63274 UN-- 86 3390 -- 
 + attr: name (v/c)</code></pre>
 </div>
 </div>
