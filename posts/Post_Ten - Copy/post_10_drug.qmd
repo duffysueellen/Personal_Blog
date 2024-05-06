@@ -51,6 +51,7 @@ prov_blks6 <- readRDS("prov_blks6_results.rds")
 ```
 
 # Create Gender Matrix
+
 ```{r}
 #create edgelist
 # Sample dataframe
@@ -72,82 +73,99 @@ calculate_gender_sameness <- function(gender1, gender2) {
 
 # Apply function to create gender sameness column
 encounter_attributes$GENDER_SAMENESS <- mapply(calculate_gender_sameness, encounter_attributes$GENDER.x, encounter_attributes$GENDER.y)
+
+gender_sameness_df <- encounter_attributes %>%
+  select(PATIENT, PROVIDER, GENDER.x, GENDER.y, GENDER_SAMENESS) %>% 
+  distinct(PATIENT, PROVIDER, GENDER.x, GENDER.y, GENDER_SAMENESS)
+
+gender_edgelist <- encounter_attributes %>% 
+  select(PATIENT, PROVIDER, GENDER_SAMENESS) %>%
+  distinct(PATIENT, PROVIDER, GENDER_SAMENESS)
+
 ```
-library(Matrix)
+Check Gender Edgelist
 
-## Create Binary Encounter Matrix
 ```{r}
-# Extract unique patients and providers
-patients <- unique(encounters_el$PATIENT)
-providers <- unique(encounters_el$PROVIDER)
-
-# Create an empty biadjacency matrix
-encounters_matrix <- matrix(0, nrow = length(patients), ncol = length(providers),
-                            dimnames = list(patients, providers))
-
-# Populate the matrix based on encounter COUNT
-for (i in 1:nrow(encounters_el)) {
-  patient <- encounters_el$PATIENT[i]
-  provider <- encounters_el$PROVIDER[i]
-  count <- encounters_el$COUNT[i]
-  
-  # Update matrix based on encounter COUNT
-  if (count > 0) {
-    encounters_matrix[patient, provider] <- 1  # Encounter
-  } else {
-    encounters_matrix[patient, provider] <- 0  # No encounter
-  }
-}
+head(gender_edgelist)
+dim(gender_edgelist)
+gender_edgelist <- data.frame(gender_edgelist)
+class(gender_edgelist)
+```
+```{r}
+g_attr_list <- (do.call(list, gender_sameness_df))
 ```
 
-## Create Gender Sameness Matrix
+## Create Gender Matrix
 ```{r}
-# Step 1: Extract genders of patients and providers
-patients <- rownames(encounters_matrix)
-providers <- colnames(encounters_matrix)
-
-# Extract genders of patients and providers
-patient_genders <- encounter_attributes$GENDER.x
-provider_genders <- encounter_attributes$GENDER.y
-
-# Step 2: Create a new matrix indicating gender sameness only for encounters
-gender_sameness_matrix <- matrix(0, nrow = length(patients), ncol = length(providers),
-                                 dimnames = list(patients, providers))
-
-for (i in 1:length(patients)) {
-  for (j in 1:length(providers)) {
-    if (encounters_matrix[i, j] == 1) {  # Check if encounter exists
-      # Determine gender sameness based on the 1-4 scale
-      if (patient_genders[i] == "Female" && provider_genders[j] == "Female") {
-        gender_sameness_matrix[i, j] <- 1  # Female patient and female provider
-      } else if (patient_genders[i] == "Male" && provider_genders[j] == "Male") {
-        gender_sameness_matrix[i, j] <- 2  # Male patient and male provider
-      } else if (patient_genders[i] == "Female" && provider_genders[j] == "Male") {
-        gender_sameness_matrix[i, j] <- 3  # Female patient and male provider
-      } else if (patient_genders[i] == "Male" && provider_genders[j] == "Female") {
-        gender_sameness_matrix[i, j] <- 4  # Male patient and female provider
-      }
-    }
-  }
-}
-
-# Step 3: Convert the matrix into an adjacency matrix format
-gender_sameness_adj_matrix <- gender_sameness_matrix  # Use the gender sameness matrix as the adjacency matrix
+g.stat <- network(gender_edgelist, directed = FALSE, bipartite = TRUE, matrix.type = "edgelist", vertex.attr = g_attr_list)
+# create bipartite network with attributes
+gender.ig <- graph_from_biadjacency_matrix(g.stat, weight = TRUE)
 ```
 
-## Graph
-```{r}
-gender_graph <- graph_from_biadjacency_matrix(gender_sameness_adj_matrix, weight = "TRUE")
 
-library(igraph)
+
+
+```{r}
+V(gender.ig)$shape <- ifelse(V(gender.ig)$type, "square", "circle")
 
 # Define color palette for the GENDER_SAMENESS attribute
-color_palette <- c("blue", "green", "orange", "red")
+color_palette <- c("pink", "turquoise", "purple", "lightblue")
 
 # Map color palette to the GENDER_SAMENESS values
-edge_colors <- color_palette[encounter_attributes$GENDER_SAMENESS]
+edge_colors <- color_palette[g_attr_list$GENDER_SAMENESS]
+
+vertex_colors <- ifelse(g_attr_list$GENDER.x == "Female", "pink", "turquoise")
 
 # Plot the graph with colored edges
-plot(gender_graph, vertex.size = 1, vertex.label.cex = 0.8, vertex.label = NA, edge.color = edge_colors)
+plot(gender.ig, layout = layout.fruchterman.reingold, 
+     vertex.size = 2, 
+     vertex.label.cex = 0.8, 
+     vertex.color = vertex_colors,
+     vertex.label = NA, 
+     edge.color = edge_colors,
+     edge.width = 5,
+     main = "Patient Provider Incidence Graph with Gender Information")
+     
+     
+# Define legend for vertex colors
+legend("topleft",
+       legend = c("FF", "MM", "FM", "MF"),  # You can customize these labels
+       fill = c("pink", "turquoise", "purple", "lightblue"),   # Fill colors corresponding to vertex colors
+       title = paste("Edges: Gender", "\n", "Patient:Provider"))              # Legend title
+
+# Define legend for vertex shapes
+legend("topright",
+       legend = c("Patient", "Provider"),  # You can customize these labels
+       pch = c(1, 0),                      # Point shapes corresponding to vertex shapes
+       title = "Nodes: Who")                     # Legend title
 
 ```
+The above graph does not represent the data well. There are too many inconsistencies.
+
+```{r}
+# Define the custom color palette based on the values of g_attr_list$GENDER_SAMENESS
+custom_color_palette <- c( "turquoise", "purple", "gray", "pink")
+
+# Get unique values of g_attr_list$GENDER_SAMENESS
+unique_values <- unique(g_attr_list$GENDER_SAMENESS)
+
+# Create a color mapping between unique values and custom colors
+color_mapping <- setNames(custom_color_palette, unique_values)
+
+# Map the edge colors using the color mapping
+edge_colors <- sapply(g_attr_list$GENDER_SAMENESS, function(value) color_mapping[value])
+
+
+
+# Plot the graph with edge colors
+GGally::ggnet2(g.stat, 
+               edge.color = edge_colors,
+               edge.size = 1,
+               node.size = 2,
+               node.color = attribute_list$GENDER)
+
+
+```
+
+
+I also feel these can't be true. Looking at the way the colors change in vary scenarios between female and male nodes, these are not consistent.
