@@ -1,0 +1,153 @@
+---
+title: "POST 9"
+subtitle: "mostly notes"
+author: "Sue-Ellen Duffy"
+date: "2024-05-05"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+library(ggplot2)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(tigris)
+library(stplanr)
+```
+
+This post will explore the a Gender Matrix
+
+# Read in Data
+
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post5drug_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post5drug_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post5drug_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaned <- read_csv("post5drug_data//encounters_cleaned.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post5drug_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post5drug_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post5drug_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post5drug_data/attribute_list.csv")
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+# Create Gender Matrix
+```{r}
+#create edgelist
+# Sample dataframe
+
+# Function to calculate gender sameness
+calculate_gender_sameness <- function(gender1, gender2) {
+  if (gender1 == "Female" && gender2 == "Female") {
+    return(1)  # Female patient and female provider
+  } else if (gender1 == "Male" && gender2 == "Male") {
+    return(2)  # Male patient and male provider
+  } else if (gender1 == "Female" && gender2 == "Male") {
+    return(3)  # Female patient and male provider
+  } else if (gender1 == "Male" && gender2 == "Female") {
+    return(4)  # Male patient and female provider
+  } else {
+    return(NA) # Unknown or missing values
+  }
+}
+
+# Apply function to create gender sameness column
+encounter_attributes$GENDER_SAMENESS <- mapply(calculate_gender_sameness, encounter_attributes$GENDER.x, encounter_attributes$GENDER.y)
+```
+library(Matrix)
+
+## Create Binary Encounter Matrix
+```{r}
+# Extract unique patients and providers
+patients <- unique(encounters_el$PATIENT)
+providers <- unique(encounters_el$PROVIDER)
+
+# Create an empty biadjacency matrix
+encounters_matrix <- matrix(0, nrow = length(patients), ncol = length(providers),
+                            dimnames = list(patients, providers))
+
+# Populate the matrix based on encounter COUNT
+for (i in 1:nrow(encounters_el)) {
+  patient <- encounters_el$PATIENT[i]
+  provider <- encounters_el$PROVIDER[i]
+  count <- encounters_el$COUNT[i]
+  
+  # Update matrix based on encounter COUNT
+  if (count > 0) {
+    encounters_matrix[patient, provider] <- 1  # Encounter
+  } else {
+    encounters_matrix[patient, provider] <- 0  # No encounter
+  }
+}
+```
+
+## Create Gender Sameness Matrix
+```{r}
+# Step 1: Extract genders of patients and providers
+patients <- rownames(encounters_matrix)
+providers <- colnames(encounters_matrix)
+
+# Extract genders of patients and providers
+patient_genders <- encounter_attributes$GENDER.x
+provider_genders <- encounter_attributes$GENDER.y
+
+# Step 2: Create a new matrix indicating gender sameness only for encounters
+gender_sameness_matrix <- matrix(0, nrow = length(patients), ncol = length(providers),
+                                 dimnames = list(patients, providers))
+
+for (i in 1:length(patients)) {
+  for (j in 1:length(providers)) {
+    if (encounters_matrix[i, j] == 1) {  # Check if encounter exists
+      # Determine gender sameness based on the 1-4 scale
+      if (patient_genders[i] == "Female" && provider_genders[j] == "Female") {
+        gender_sameness_matrix[i, j] <- 1  # Female patient and female provider
+      } else if (patient_genders[i] == "Male" && provider_genders[j] == "Male") {
+        gender_sameness_matrix[i, j] <- 2  # Male patient and male provider
+      } else if (patient_genders[i] == "Female" && provider_genders[j] == "Male") {
+        gender_sameness_matrix[i, j] <- 3  # Female patient and male provider
+      } else if (patient_genders[i] == "Male" && provider_genders[j] == "Female") {
+        gender_sameness_matrix[i, j] <- 4  # Male patient and female provider
+      }
+    }
+  }
+}
+
+# Step 3: Convert the matrix into an adjacency matrix format
+gender_sameness_adj_matrix <- gender_sameness_matrix  # Use the gender sameness matrix as the adjacency matrix
+```
+
+## Graph
+```{r}
+gender_graph <- graph_from_biadjacency_matrix(gender_sameness_adj_matrix, weight = "TRUE")
+
+library(igraph)
+
+# Define color palette for the GENDER_SAMENESS attribute
+color_palette <- c("blue", "green", "orange", "red")
+
+# Map color palette to the GENDER_SAMENESS values
+edge_colors <- color_palette[encounter_attributes$GENDER_SAMENESS]
+
+# Plot the graph with colored edges
+plot(gender_graph, vertex.size = 1, vertex.label.cex = 0.8, vertex.label = NA, edge.color = edge_colors)
+
+```
