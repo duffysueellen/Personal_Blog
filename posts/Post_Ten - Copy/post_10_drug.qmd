@@ -16,6 +16,7 @@ library(readr)
 library(igraph)
 library(sna)
 library(intergraph)
+library(statnet)
 library(ggplot2)
 library(sf)
 library(tidyverse)
@@ -169,3 +170,69 @@ GGally::ggnet2(g.stat,
 
 
 I also feel these can't be true. Looking at the way the colors change in vary scenarios between female and male nodes, these are not consistent.
+
+
+```{r}
+# create bipartite network with attributes
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+encounters.stat
+```
+
+```{r}
+library(ggplot2)
+library(statnet)
+
+# Assuming g.stat and encounters.stat are network objects
+# If they are adjacency matrices, you can convert them to network objects using network() function
+
+# Calculate correlation coefficient between g.stat and encounters.stat
+correlation <- cor(as.sociomatrix(g.stat), as.sociomatrix(encounters.stat))
+
+# Convert the correlation matrix to a data frame
+correlation_df <- as.data.frame(as.table(correlation))
+names(correlation_df) <- c("Network1", "Network2", "Correlation")
+
+# Create a heatmap using ggplot2
+ggplot(correlation_df, aes(Network1, Network2, fill = Correlation)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "lightblue", high = "darkblue") +
+  theme_minimal() +
+  labs(title = "Correlation Between Network Objects",
+       x = "Network 1", y = "Network 2")
+
+```
+
+```{r}
+# Convert the network objects to adjacency matrices
+adj_matrix_g_stat <- as.sociomatrix(g.stat)
+adj_matrix_encounters_stat <- as.sociomatrix(encounters.stat)
+
+# Calculate the correlation coefficient between the adjacency matrices
+corr_gender_encounters <- cor(adj_matrix_g_stat, adj_matrix_encounters_stat)
+
+# Flatten the adjacency matrices into vectors
+vector_g_stat <- as.vector(adj_matrix_g_stat)
+vector_encounters_stat <- as.vector(adj_matrix_encounters_stat)
+
+# Calculate the correlation coefficient between the vectors
+total_corr_gender_encounters <- cor(vector_g_stat, vector_encounters_stat)
+
+# Print the correlation coefficient
+print(total_corr_gender_encounters)
+```
+
+A correlation of 0.098 suggests a weak positive correlation, with some tendency for the matrices to move together, but the relationship is not strong.
+
+
+
+```{r}
+library(statnet)
+
+
+```
+
+
