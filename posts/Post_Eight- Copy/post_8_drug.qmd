@@ -100,15 +100,15 @@ summary(provider.stat %e%"dist")
 
 ```{r}
 provider.nodes <- data.frame(
-  name = provider.stat%v%"vertex.names",
-  degree=sna::degree(provider.stat, gmode = "digraph"),
-  degree.wt = igraph::strength(provider.ig),
-  betweenness = sna::betweenness(provider.stat, gmode="digraph"),
-  close=sna::closeness(provider.stat, cmode = "suminvdir"),
-  constraint=igraph::constraint(provider.ig)
+  name = provider.stat %v% "vertex.names",
+  degree = round(sna::degree(provider.stat, gmode = "digraph"), 2),
+  degree.wt = round(igraph::strength(provider.ig), 2),
+  betweenness = round(sna::betweenness(provider.stat, gmode = "digraph"), 2),
+  close = round(sna::closeness(provider.stat, cmode = "suminvdir"), 2),
+  constraint = round(igraph::constraint(provider.ig), 2)
 )
 
-provider.nodes
+head(provider.nodes, 10)
 ```
 
 ```{r}

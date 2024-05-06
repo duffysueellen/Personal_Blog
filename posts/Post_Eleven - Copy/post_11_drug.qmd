@@ -1,0 +1,139 @@
+---
+title: "POST 11"
+subtitle: "mostly notes"
+author: "Sue-Ellen Duffy"
+date: "2024-05-05"
+categories: [code, analysis, block_model]
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(readr)
+library(igraph)
+library(sna)
+library(intergraph)
+library(ggplot2)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(tigris)
+library(stplanr)
+```
+
+This post will explore the Provider Network
+
+# Read in Data
+
+```{r}
+#| warning: false
+#| message: false
+pat_attr <- read_csv("post5drug_data/pat_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+pro_attr <- read_csv("post5drug_data/pro_attr.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaning <- read_csv("post5drug_data//encounters_cleaning.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_cleaned <- read_csv("post5drug_data//encounters_cleaned.csv", 
+    col_types = cols(...1 = col_skip()))
+encounter_attributes <- read_csv("post5drug_data/encounter_attributes.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_el  <- read_csv("post5drug_data/encounters_el.csv", 
+    col_types = cols(...1 = col_skip()))
+encounters_st_3 <- read_csv("post5drug_data/encounters.st.3.csv", 
+    col_types = cols(...1 = col_skip()))
+attribute_list <- read.csv("post5drug_data/attribute_list.csv")
+pat_blks6 <- readRDS("pat_blks6_results.rds")
+prov_blks6 <- readRDS("prov_blks6_results.rds")
+```
+
+```{r}
+encounters.stat <- network(encounters_el,
+                         directed = FALSE,
+                         bipartite = TRUE,
+                         matrix.type = "edgelist",
+                         vertex.attr = attribute_list)
+
+encounters.ig <- graph_from_biadjacency_matrix(encounters.stat)
+
+projected_graph <- bipartite_projection(encounters.ig)
+```
+
+```{r}
+#| warning: false
+#| message: false
+provider_matrix <- as.matrix(as_adjacency_matrix(projected_graph$proj2))
+library(statnet)
+provider.stat <- asNetwork(projected_graph$proj2)
+provider.ig <- graph_from_biadjacency_matrix(provider.stat)
+detach("package:igraph")
+provider.se <- equiv.clust(provider_matrix,
+ equiv.fun = "sedist",
+ method = "hamming",
+ mode = "graph",
+ cluster.method = "complete")
+```
+
+# ANALYSIS
+
+## Encounters Network
+
+```{r}
+gden(encounters.stat)
+```
+
+```{r}
+igraph::transitivity(encounters.ig)
+```
+
+```{r}
+igraph::components(encounters.ig)$no
+```
+
+```{r}
+encounters.nodes <- data.frame(
+  degree = round(sna::degree(encounters.stat, gmode = "digraph"), 2),
+  degree.wt = round(igraph::strength(encounters.ig), 2),
+  betweenness = round(sna::betweenness(encounters.stat, gmode = "digraph"), 2),
+  close = round(sna::closeness(encounters.stat, cmode = "suminvdir"), 2),
+  constraint = round(igraph::constraint(encounters.ig), 2)
+)
+
+head(encounters.nodes, 10)
+```
+
+## Providers Network
+
+```{r}
+gden(provider.stat)
+```
+
+```{r}
+gtrans(provider.stat)
+```
+
+```{r}
+igraph::components(provider.ig)$no
+```
+
+```{r}
+summary(provider.stat %e%"dist")
+```
+
+## Provider Nodes
+
+```{r}
+provider.nodes <- data.frame(
+  name = provider.stat %v% "vertex.names",
+  degree = round(sna::degree(provider.stat, gmode = "digraph"), 2),
+  degree.wt = round(igraph::strength(provider.ig), 2),
+  betweenness = round(sna::betweenness(provider.stat, gmode = "digraph"), 2),
+  close = round(sna::closeness(provider.stat, cmode = "suminvdir"), 2),
+  constraint = round(igraph::constraint(provider.ig), 2)
+)
+
+head(provider.nodes, 10)
+```
