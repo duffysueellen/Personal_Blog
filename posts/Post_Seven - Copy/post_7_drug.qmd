@@ -24,7 +24,7 @@ library(tigris)
 library(stplanr)
 ```
 
-This post will explore the Synthetic Mass network data in more detail.
+This post will explore the Block Modeling attributes with emphasis on geographical comparison. Including maps!
 
 # Read in Data
 
@@ -72,7 +72,6 @@ encounters.stat2 <- asNetwork(encounters.ig)
 ```{r}
 projected_graph <- bipartite_projection(encounters.ig)
 ```
-
 
 ## PROVIDER
 
@@ -142,8 +141,6 @@ vertex_data <- data.frame(
 head(vertex_data)
 
 ```
-
-
 
 #So, lets geographically map this network
 
@@ -223,6 +220,8 @@ encounters.geo.stat <- network(encounters_el,
 
 ```{r}
 library(igraph)
+#| warning: false
+#| message: false
 #create igraph
 encounters.geo.ig <- graph_from_biadjacency_matrix(encounters.geo.stat)
 ```
@@ -236,15 +235,23 @@ encounters.geo.stat2 <- asNetwork(encounters.geo.ig)
 #| message: false
 detach("package:igraph")
 
+```
+
+```{r}
+gender <- get.vertex.attribute(encounters.geo.stat, "GENDER")
+
+colors <- ifelse(gender == "Female", "pink",
+                 ifelse(gender == "Male", "turquoise", "black"))
+
 # Extracting the coordinates from the network object
 coords <- get.vertex.attribute(encounters.geo.stat, "LAT" )  # Assuming latitude is stored in an attribute named "lat"
 coords_lon <- get.vertex.attribute(encounters.geo.stat, "LON")  # Assuming longitude is stored in an attribute named "lon"
 
 # Creating a Leaflet map
 leaflet() %>%
-  addTiles() %>%
+  addProviderTiles("CartoDB.Positron") %>%
   # Adding markers for each coordinate
-  addMarkers(lng = coords_lon, lat = coords)
+  addCircleMarkers(lng = coords_lon, lat = coords, color = colors)
 ```
 
 ```{r}
@@ -265,7 +272,7 @@ colors <-  ifelse(block == "1", "red",
 
 # Creating a Leaflet map
 leaflet() %>%
-  addTiles() %>%
+  addProviderTiles("CartoDB.Positron") %>%
   # Adding markers for each coordinate with color based on block attribute
   addCircleMarkers(lng = coords_lon, lat = coords,
                    color = colors)

@@ -158,7 +158,9 @@ GGally::ggnet2(patient.stat,
                node.alpha = .5)+ ggtitle(
                "Patient Block Model Network (6)")
 ```
+
 ## Attempt to recreate the above block model network
+
 ```{r}
 attributes <- dumpAttr(patient.stat)
 # Extracting roles and vertex names
@@ -176,6 +178,7 @@ head(role_vertex_df %>%
 head(pat_attr %>%
   arrange(desc(NAME)))
 ```
+
 ```{r}
 set.seed(1)
 #plot network using "role" to color nodes
@@ -186,7 +189,6 @@ GGally::ggnet2(patient.stat,
                "Patient Block Model Network (6)")
 
 ```
-
 
 ```{r}
 library(ade4)

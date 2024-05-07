@@ -16,6 +16,7 @@ library(readr)
 library(igraph)
 library(sna)
 library(ggplot2)
+library(kableExtra)
 library(patchwork)
 ```
 
@@ -151,14 +152,43 @@ legend("topleft",
 ```{r}
 #Calculating centrality
 types <- V(incidence_graph)$type
-deg<- igraph::degree(incidence_graph)
-bet <- igraph::betweenness(incidence_graph)
-clos <- igraph::closeness(incidence_graph)
-eig <- eigen_centrality(incidence_graph)$vector
-const <- constraint(incidence_graph)
+types <- ifelse(types, "PROVIDER", "PATIENT")
+deg<- round(igraph::degree(incidence_graph),2)
+bet <- round(igraph::betweenness(incidence_graph),2)
+clos <- round(igraph::closeness(incidence_graph),4)
+eig <- round(eigen_centrality(incidence_graph)$vector,2)
+const <- round(constraint(incidence_graph),2)
 cent_df <- data.frame(types, deg, bet, clos, eig, const)
-head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)
+head(cent_df[order(cent_df$deg, decreasing = TRUE),], 10)%>%
+  kbl(caption = "Centrality Measures for Encounter Network") %>%
+  kable_classic()
+summary(cent_df)
 
+```
+
+```{r}
+# Distribution visualization
+hist(cent_df$deg, main = "Degree Centrality Distribution", xlab = "Degree")
+```
+
+```{r}
+# Correlation analysis
+correlation_matrix <- cor(cent_df[, c("deg", "bet", "clos", "eig", "const")])
+correlation_matrix <- round(correlation_matrix, 2)
+correlation_matrix %>% kbl(caption = "Correlation Matrix of Centrality Measures for Encounter Network") %>%
+  kable_classic()
+```
+
+Positive Correlation: The correlation of 0.73 between degree and betweenness centrality (deg and bet) suggests that nodes with higher degree tend to also have higher betweenness centrality.
+
+Negative Correlation: The correlation of -0.83 between degree and constraint (deg and const) suggests that nodes with higher degree tend to have lower constraint.
+
+
+Weak Correlation: The correlation between closeness centrality and other measures (bet, eig, const) is relatively weak, with coefficients close to 0, indicating weak or no linear relationship.
+
+Higher eigenvector centrality and betweenness centrality are positively correlated. These nodes have strong influence and act as important intermediaries in the network. 
+
+```{r}
 #provider only
 pro_cent_df <- cent_df %>%
   filter(types =="TRUE")
