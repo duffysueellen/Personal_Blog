@@ -227,7 +227,72 @@ print(total_corr_gender_encounters)
 A correlation of 0.098 suggests a weak positive correlation, with some tendency for the matrices to move together, but the relationship is not strong.
 
 ```{r}
-library(statnet)
 
+# Define custom colors for GENDER_SAMENESS levels
+custom_colors <- c("pink", "turquoise", "purple", "green")
+
+# Plot the data with custom color scale
+ggplot(gender_sameness_df, aes(x = PATIENT, y = PROVIDER, color = factor(GENDER_SAMENESS))) +
+  geom_point(size = 3) +
+  scale_color_manual(values = custom_colors, 
+                     breaks = c(1, 2, 3, 4),  # Specify breaks to align colors with levels
+                     labels = c("F:F", "M:M", "F:M", "M:F"),  # Labels for the legend
+                     name = "Patient:Provider") +
+  labs(title = "Genders of Patients and Providers",
+       x = "Patient",
+       y = "Provider") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+```{r}
+# Convert the data frame into a contingency table
+patient_provider_gender_sameness <- table(gender_sameness_df$GENDER_SAMENESS )
+
+# Perform chi-square test for independence
+chi_square_test <- chisq.test(patient_provider_gender_sameness)
+
+# Print the results
+print(chi_square_test)
+
+```
+Based on the results of Pearson's chi-squared test with Yates' continuity correction, we fail to reject the null hypothesis. In other words, we do not find significant evidence to suggest that the variables are associated.
+
+
+```{r}
+gender_marital_df <- encounter_attributes %>% 
+  select(PATIENT, PROVIDER, GENDER_SAMENESS, MARITAL)
+```
+
+```{r}
+# Convert the data frame into a contingency table
+patient_provider_gender_sameness_marital <- table(gender_marital_df$GENDER_SAMENESS, gender_marital_df$MARITAL)
+
+# Perform chi-square test for independence
+chi_square_test <- chisq.test(patient_provider_gender_sameness_marital)
+
+# Print the results
+print(chi_square_test)
+
+```
+The result of Pearson's Chi-squared test indicates a significant association between the variables. The test statistic, denoted as X-squared, has a value of 504.57 with 9 degrees of freedom. Additionally, the p-value is less than 2.2e-16, which is extremely small. Therefore, we reject the null hypothesis of independence, suggesting that there is a significant relationship between patient-provider gender sameness and marital status.
+
+
+
+```{r}
+gender_RACE_df <- encounter_attributes %>% 
+  select(PATIENT, PROVIDER, GENDER_SAMENESS, RACE)
+```
+
+```{r}
+# Convert the data frame into a contingency table
+patient_provider_gender_sameness_RACE <- table(gender_RACE_df$GENDER_SAMENESS, gender_RACE_df$RACE)
+
+# Perform chi-square test for independence
+chi_square_test <- chisq.test(patient_provider_gender_sameness_RACE)
+
+# Print the results
+print(chi_square_test)
 
 ```

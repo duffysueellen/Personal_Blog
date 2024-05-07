@@ -228,6 +228,25 @@ largest_pop <- c(
 largest_pop <- tolower(largest_pop)
 ```
 
+
+```{r}
+# block model graph using ggnet2
+GGally::ggnet2(provider.stat,
+       node.color = ifelse(pro_attr$CITY %in% largest_pop, "Yes", "No"),
+       node.size=sna::degree(provider.stat, gmode="graph"),
+       node.alpha = .8,
+       size.legend = "Degree", # legend title for node size
+       color.palette = "Dark2", # color palette 
+       color.legend = "Largest Population Cities", # legend title for node color
+       legend.position = "bottom", # legend at the bottom
+       label = NA, # node labels
+       label.size = 3, # label size
+       label.trim = TRUE # trim long labels
+) +
+  ggtitle("Providers in Cities with 10 Largest Populations in Mass") +
+  theme(plot.title = element_text(hjust = 0.5)) # center align plot title
+```
+
 ```{r}
 #assign colors
 vertex_color <-  ifelse(pro_attr_list$CITY %in% largest_pop, "red", "gray")
@@ -253,7 +272,6 @@ legend("topright",
        title = "Nodes: Who")                     # Legend title
 
 ```
-
 
 ```{r}
 #assign colors
@@ -292,9 +310,8 @@ legend("topright",
        title = "Nodes: Who")                     # Legend title
 
 ```
-I'm not sure why some of the colors are missing from this graph. 
-Let's remove the "Largest City" attribute
 
+I'm not sure why some of the colors are missing from this graph. Let's remove the "Largest City" attribute
 
 ```{r}
 #assign colors

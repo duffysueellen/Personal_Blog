@@ -77,7 +77,6 @@ projected_graph <- bipartite_projection(encounters.ig)
 colnames(encounters_cleaned)
 ```
 
-
 ## PROVIDER
 
 ```{r}
@@ -118,17 +117,59 @@ provider.stat%v%"role"<-prov_blk_mod$block.membership[match(provider.stat%v%"ver
 #plot network using "role" to color nodes
 GGally::ggnet2(provider.stat,
                node.color="role", 
-               node.size=sna::degree(provider.stat, gmode="graph"),
-               node.alpha = .5) + ggtitle("Provider 6 Block Model Network")
+               node.shape = pro_attr$GENDER,
+               color.palette = "Set1", # color palette 
+               color.legend = "Block", # legend title for node color
+               node.size=sna::degree(provider.stat, gmode= "graph"),
+               node.alpha = 1) + ggtitle("Provider Block Model Network (6)")
 ```
+
+```{r}
+# block model graph using ggnet2
+GGally::ggnet2(provider.stat,
+       node.color = "role",
+        node.size=sna::degree(provider.stat, gmode= "graph"),
+       node.alpha = 1,
+       size.legend = "Degree", # legend title for node size
+       color.palette = "Set3", # color palette 
+       color.legend = "Block", # legend title for node color
+       legend.position = "bottom", # legend at the bottom
+       label = NA, # node labels
+       label.size = 3, # label size
+       label.trim = TRUE # trim long labels
+) +
+  ggtitle("Provider Block Model Network (6)") +
+  theme(plot.title = element_text(hjust = 0.5)) # center align plot title
+```
+
+```{r}
+# block model graph using ggnet2
+GGally::ggnet2(provider.stat,
+       node.color = "role",
+       node.size=sna::degree(provider.stat, gmode= "graph"),
+       node.alpha = 1,
+       size.legend = "Degree", # legend title for node size
+       color.palette = "Set3", # color palette 
+       color.legend = "Block", # legend title for node color
+       legend.position = "bottom", # legend at the bottom
+       label = NA, # node labels
+       label.size = 3, # label size
+       label.trim = TRUE # trim long labels
+) +
+  ggtitle("Provider Block Model Network (6)") +
+  theme(plot.title = element_text(hjust = 0.5)) # center align plot title
+```
+
 
 ```{r}
 GGally::ggnet2(provider.stat,
                node.color=pro_attr$block, 
                node.size=sna::degree(provider.stat, gmode="graph"),
-               node.alpha = .5) + ggtitle("Provider 6 Block Model Network")
+               node.alpha = .5) + ggtitle("Provider Block Model Network (6)")
 ```
+
 Hmm, this doesn't look at all like the graph showing blocks... Not sure what's going on here. I'll attempt to assign attributes a different way.
+
 ```{r}
 attributes <- dumpAttr(provider.stat)
 # Extracting roles and vertex names
@@ -171,7 +212,6 @@ provider.st <- network(provider_matrix,
                        matrix.type = "adjacency",
                        vertex.attr = pro_attr_list)
 ```
-
 
 # BLOCK ATTRIBUTES:
 
@@ -217,6 +257,25 @@ print(block_results)
 
 Block 1 is right outside of Boston Block 2, only one provider, Fitchburg. Block 3 is everywhere. Block 4 is Heavy Waltham representation Block 5 is a bit of everyone. Block 6 is Northshore.
 
+```{r}
+library(treemapify)
+# Combine the data frames into one long data frame
+combined_df <- bind_rows(block_results, .id = "Block")
+
+# View the combined data frame
+print(combined_df)
+
+ggplot(combined_df, aes(x= Block, y = PERCENT, fill = CITY.x)) + geom_bar(stat = "identity") +
+    labs(title = "Encounters by City of Provider and Block",
+         x = "Description",
+         y = "Percent of Each Block",
+         fill = "GENDER") +
+    theme_minimal()
+
+ggplot(combined_df, aes(area=PERCENT, fill=CITY.x)) + geom_treemap() + facet_wrap("Block") +   labs(title = "Encounters by City of Provider and Block")
+```
+
+
 What are the types of encounters within the blocks?
 
 ```{r}
@@ -256,8 +315,32 @@ names(block_results) <- paste0("Block", 1:6)
 print(block_results)
 
 ```
-
 ```{r}
+library(treemapify)
+# Combine the data frames into one long data frame
+combined_df <- bind_rows(block_results, .id = "Block")
+
+# View the combined data frame
+print(combined_df)
+
+ggplot(combined_df, aes(x= Block, y = PERCENT, fill = ENCOUNTERCLASS)) + geom_bar(stat = "identity") +
+    labs(title = "Class of Encounters by Blocks",
+         x = "Description",
+         y = "Percent of Each Block",
+         fill = "GENDER") +
+    theme_minimal()
+
+ggplot(combined_df, aes(area=PERCENT, fill=ENCOUNTERCLASS)) + geom_treemap() + facet_wrap("Block") +   labs(title = "Class of Encounters by Blocks")
+```
+
+
+# DESCRIPTION
+```{r}
+
+encounters_cleaned <- encounters_cleaned %>%
+  mutate(
+    DESCRIPTION = tolower(DESCRIPTION))
+    
 # DESCRIPTION
 # Define a function to summarize encounters for a given block
 summarize_block <- function(block_num, pro_attr, encounters_cleaned) {
@@ -296,6 +379,27 @@ print(block_results)
 ```
 
 ```{r}
+library(treemapify)
+# Combine the data frames into one long data frame
+combined_df <- bind_rows(block_results, .id = "Block")
+
+# View the combined data frame
+print(combined_df)
+
+ggplot(combined_df, aes(x= Block, y = PERCENT, fill = DESCRIPTION)) + geom_bar(stat = "identity") +
+    labs(title = "Encounters by Gender of Patient and Block",
+         x = "Description",
+         y = "Percent of Each Block",
+         fill = "GENDER") +
+    theme_minimal()
+
+ggplot(combined_df, aes(area=PERCENT, fill=DESCRIPTION)) + geom_treemap() + facet_wrap("Block")
+```
+
+
+
+
+```{r}
 # GENDER of PROVIDERS
 # Define a function to summarize encounters for a given block
 summarize_block <- function(block_num, pro_attr, encounters_cleaned) {
@@ -332,6 +436,22 @@ names(block_results) <- paste0("Block", 1:6)
 print(block_results)
 
 ```
+```{r}
+# Combine the data frames into one long data frame
+combined_df <- bind_rows(block_results, .id = "Block")
+
+# View the combined data frame
+print(combined_df)
+
+ggplot(combined_df, aes(x= GENDER.x, y = PERCENT, fill = GENDER.x)) + geom_bar(stat = "identity") +
+    labs(title = "Percent of Provider Encounters by Gender and Block",
+         x = "Gender of Provider",
+         y = "Percent of Each Block",
+         fill = "GENDER") +
+    theme_minimal() + facet_wrap("Block")
+```
+
+
 
 ```{r}
 # GENDER of PATIENTS
@@ -370,6 +490,23 @@ names(block_results) <- paste0("Block", 1:6)
 print(block_results)
 
 ```
+
+```{r}
+# Combine the data frames into one long data frame
+combined_df <- bind_rows(block_results, .id = "Block")
+
+# View the combined data frame
+print(combined_df)
+
+ggplot(combined_df, aes(x= GENDER.y, y = PERCENT, fill = GENDER.y)) + geom_bar(stat = "identity") +
+    labs(title = "Encounters by Gender of Patient and Block",
+         x = "Gender of Patient",
+         y = "Percent of Each Block",
+         fill = "GENDER") +
+    theme_minimal() + facet_wrap("Block")
+```
+
+
 ```{r}
 # RACE of PATIENTS
 # Define a function to summarize encounters for a given block
@@ -446,7 +583,6 @@ print(block_results)
 
 ```
 
-
 ```{r}
 # AGE of PATIENTS
 # Define a function to summarize encounters for a given block
@@ -484,7 +620,6 @@ names(block_results) <- paste0("Block", 1:6)
 print(block_results) 
 
 ```
-
 
 Group 2: Ted
 
