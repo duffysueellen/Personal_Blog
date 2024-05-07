@@ -444,19 +444,22 @@ count_range <- range(E(g)$COUNT)
 edge_widths <- ifelse(E(g)$COUNT < 5, 1,
                       ifelse(E(g)$COUNT < 20, 50,
                              3 * (E(g)$COUNT - count_range[1]) / (count_range[2] - count_range[1])))
-edge_widths <- edge_widths *300
 
-edge_widths <- ifelse(E(g)$COUNT < 5, 0.5, ifelse(E(g)$COUNT < 20, 1, 2))
+
+edge_widths <- ifelse(E(g)$COUNT < 5, 0.5, 
+                      ifelse(E(g)$COUNT < 20, .8, 
+                             ifelse(E(g)$COUNT < 50, 1, 1.5)))
 edge_colors <- ifelse(E(g)$COUNT < 5, "lightblue", 
                       ifelse(E(g)$COUNT <= 20, "blue",
                              ifelse(E(g)$COUNT <= 100, "darkblue","red")))
+edge_widths <- edge_widths *3
 ```
 
 ```{r}
 plot(g, 
      layout = layout.fruchterman.reingold, 
      vertex.label.dist = 2, 
-     vertex.size = 2, 
+     vertex.size = 5, 
      vertex.color = vertex_colors,
      vertex.shape = vertex_shape,
      edge.label = NA,
@@ -464,21 +467,19 @@ plot(g,
      vertex.label.cex = 0.2, 
      edge.width = edge_widths,
      edge.color = edge_colors,
-     main = "SN Graph")
+     main = "Network of Encounters and Gender")
 # Define legend for vertex colors
 legend("bottomright",
-       legend = c("Female", "Male"),  # You can customize these labels
-       fill = c("pink", "turquoise"),   # Fill colors corresponding to vertex colors
-       title = "Nodes: Gender")              # Legend title
+       legend = c("Female", "Male"),
+       fill = c("pink", "turquoise"))     
 
 # Define legend for vertex shapes
-legend("topright",
-       legend = c("Patient", "Provider"),  # You can customize these labels
-       pch = c(1, 0),                      # Point shapes corresponding to vertex shapes
-       title = "Nodes: Who")                     # Legend title
+legend("right",
+       legend = c("Patient", "Provider"), 
+       pch = c(1, 0))
 
 # Define legend for edge colors
-legend("topleft",
+legend("topright",
        legend = c("1-4", "5-19", "20-99", "100+"),  # You can customize these labels
        col = c("lightblue", "blue","darkblue", "red"),  # Line colors corresponding to edge colors
        lwd = 2,                            # Line width

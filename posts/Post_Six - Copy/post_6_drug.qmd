@@ -160,7 +160,6 @@ GGally::ggnet2(provider.stat,
   theme(plot.title = element_text(hjust = 0.5)) # center align plot title
 ```
 
-
 ```{r}
 GGally::ggnet2(provider.stat,
                node.color=pro_attr$block, 

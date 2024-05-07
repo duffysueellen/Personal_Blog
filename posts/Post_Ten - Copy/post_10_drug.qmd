@@ -246,6 +246,38 @@ ggplot(gender_sameness_df, aes(x = PATIENT, y = PROVIDER, color = factor(GENDER_
 
 ```
 
+#Gender Graph
+
+```{r}
+# block model graph using ggnet2
+GGally::ggnet2(encounters.stat,
+       node.color = attribute_list$GENDER,
+       node.alpha = 1,
+       node.size=sna::degree(encounters.stat, gmode = "graph"),
+       node.shape = attribute_list$type,
+       size.legend = "Degree", # legend title for node size
+       color.palette = "Set1", # color palette 
+       color.legend = "Gender", # legend title for node color
+       legend.position = "bottom", # legend at the bottom
+       edge.color = "COUNT",
+       edge.alpha = .5,
+       label = NA, # node labels
+       label.size = 3, # label size
+       label.trim = TRUE # trim long labels
+) +
+  ggtitle("Provider Block Model Network (6)") +
+  theme(plot.title = element_text(hjust = 0.5)) # center align plot title
+
+```
+
+
+
+
+
+
+
+
+# Chi Tests
 ```{r}
 # Convert the data frame into a contingency table
 patient_provider_gender_sameness <- table(gender_sameness_df$GENDER_SAMENESS )
