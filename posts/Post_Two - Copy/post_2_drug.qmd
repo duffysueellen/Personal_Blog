@@ -154,7 +154,7 @@ legend("topleft",
 types <- V(incidence_graph)$type
 types <- ifelse(types, "PROVIDER", "PATIENT")
 deg<- round(igraph::degree(incidence_graph),2)
-bet <- round(igraph::betweenness(incidence_graph),2)
+bet <- round(igraph::betweenness(incidence_graph), 0)
 clos <- round(igraph::closeness(incidence_graph),4)
 eig <- round(eigen_centrality(incidence_graph)$vector,2)
 const <- round(constraint(incidence_graph),2)
@@ -183,10 +183,9 @@ Positive Correlation: The correlation of 0.73 between degree and betweenness cen
 
 Negative Correlation: The correlation of -0.83 between degree and constraint (deg and const) suggests that nodes with higher degree tend to have lower constraint.
 
-
 Weak Correlation: The correlation between closeness centrality and other measures (bet, eig, const) is relatively weak, with coefficients close to 0, indicating weak or no linear relationship.
 
-Higher eigenvector centrality and betweenness centrality are positively correlated. These nodes have strong influence and act as important intermediaries in the network. 
+Higher eigenvector centrality and betweenness centrality are positively correlated. These nodes have strong influence and act as important intermediaries in the network.
 
 ```{r}
 #provider only

@@ -270,14 +270,8 @@ GGally::ggnet2(encounters.stat,
 
 ```
 
-
-
-
-
-
-
-
 # Chi Tests
+
 ```{r}
 # Convert the data frame into a contingency table
 patient_provider_gender_sameness <- table(gender_sameness_df$GENDER_SAMENESS )
@@ -289,8 +283,8 @@ chi_square_test <- chisq.test(patient_provider_gender_sameness)
 print(chi_square_test)
 
 ```
-Based on the results of Pearson's chi-squared test with Yates' continuity correction, we fail to reject the null hypothesis. In other words, we do not find significant evidence to suggest that the variables are associated.
 
+Based on the results of Pearson's chi-squared test with Yates' continuity correction, we fail to reject the null hypothesis. In other words, we do not find significant evidence to suggest that the variables are associated.
 
 ```{r}
 gender_marital_df <- encounter_attributes %>% 
@@ -308,9 +302,8 @@ chi_square_test <- chisq.test(patient_provider_gender_sameness_marital)
 print(chi_square_test)
 
 ```
+
 The result of Pearson's Chi-squared test indicates a significant association between the variables. The test statistic, denoted as X-squared, has a value of 504.57 with 9 degrees of freedom. Additionally, the p-value is less than 2.2e-16, which is extremely small. Therefore, we reject the null hypothesis of independence, suggesting that there is a significant relationship between patient-provider gender sameness and marital status.
-
-
 
 ```{r}
 gender_RACE_df <- encounter_attributes %>% 

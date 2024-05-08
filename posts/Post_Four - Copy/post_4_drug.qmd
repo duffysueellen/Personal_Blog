@@ -100,7 +100,7 @@ plot.block<-function(x=blk_mod, main=NULL, cex.lab=.00001,show_labels = FALSE){
  abline(v = j- 0.5, h = j- 0.5, lty = 3, xpd=FALSE)
  }
  
-plot.block(blk_model.provider.org, main = "provider")
+plot.block(blk_model.provider.org, main = "Provider Block Model (6)")
 ```
 
 ```{r}
