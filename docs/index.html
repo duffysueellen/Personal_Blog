@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -47,7 +47,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -56,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -94,16 +101,43 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Social_Networks_Blog_Space</span>
     </a>
@@ -115,23 +149,23 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -144,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       
     
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(13)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(11)</span></div><div class="category" data-category="block_model">block_model <span class="quarto-category-count">(9)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(11)</span></div><div class="category" data-category="geography">geography <span class="quarto-category-count">(1)</span></div><div class="category" data-category="provider network">provider network <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(11)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(11)</span></div><div class="category" data-category="block_model">block_model <span class="quarto-category-count">(9)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(11)</span></div><div class="category" data-category="geography">geography <span class="quarto-category-count">(1)</span></div><div class="category" data-category="provider network">provider network <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -168,63 +202,22 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1715058715332" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="0" data-categories="code,analysis,block_model" data-listing-date-sort="1714881600000" data-listing-file-modified-sort="1715021970107" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="327">
 <div class="thumbnail">
-<p><a href="./posts/Post_One - Copy/post_1_drug.html"> <p class="card-img-top"><img src="posts\Post_One - Copy\SyntheticMassLogo.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external"></a></p><a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_One - Copy/post_1_drug.html">
 <h3 class="no-anchor listing-title">
-POST 1
+<a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external">POST 11</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external">mostly notes</a>
 </div>
-<div class="listing-description">
-<em>Research Question</em>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Post_One - Copy/post_1_drug.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1715058707541" data-listing-reading-time-sort="10">
-<div class="thumbnail">
-<p><a href="./posts/Post_Two - Copy/post_2_drug.html"> <p class="card-img-top"><img src="posts\Post_Two - Copy\post_2_drug_files\figure-html\unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Post_Two - Copy/post_2_drug.html">
-<h3 class="no-anchor listing-title">
-POST 2
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-This post will explore the Synthetic Mass network data in more detail.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/Post_Two - Copy/post_2_drug.html"> </a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="code,analysis,block_model" data-listing-date-sort="1714881600000" data-listing-file-modified-sort="1715021970107" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
-<div class="thumbnail">
-<p><a href="./posts/Post_Eleven - Copy/post_11_drug.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/Post_Eleven - Copy/post_11_drug.html">
-<h3 class="no-anchor listing-title">
-POST 11
-</h3>
-<div class="listing-subtitle">
-mostly notes
-</div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -236,14 +229,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Eleven - Copy/post_11_drug.html">
 <div class="listing-description">
-This post will explore the Provider Network
+<a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external">This post will explore the Provider Network</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Eleven - Copy/post_11_drug.html">
+<a href="./posts/Post_Eleven - Copy/post_11_drug.html" class="no-external">
 <div class="listing-date">
 May 5, 2024
 </div>
@@ -253,19 +244,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="code,analysis,block_model" data-listing-date-sort="1714881600000" data-listing-file-modified-sort="1714960132933" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="1" data-categories="code,analysis,block_model" data-listing-date-sort="1714881600000" data-listing-file-modified-sort="1714960132933" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1193">
 <div class="thumbnail">
-<p><a href="./posts/Post_Nine- Copy/post_9_drug.html"> <p class="card-img-top"><img src="posts\Post_Nine- Copy\post_9_drug_files\figure-html\unnamed-chunk-11-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external"></a></p><a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Nine- Copy\post_9_drug_files\figure-html\unnamed-chunk-11-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Nine- Copy/post_9_drug.html">
 <h3 class="no-anchor listing-title">
-POST 9
+<a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external">POST 9</a>
 </h3>
 <div class="listing-subtitle">
-mostly notes
+<a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external">mostly notes</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -277,14 +268,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Nine- Copy/post_9_drug.html">
 <div class="listing-description">
-This post will explore the Synthetic Mass network data in more detail.
+<a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external">This post will explore the Synthetic Mass network data in more detail.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Nine- Copy/post_9_drug.html">
+<a href="./posts/Post_Nine- Copy/post_9_drug.html" class="no-external">
 <div class="listing-date">
 May 5, 2024
 </div>
@@ -294,19 +283,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="code,analysis,block_model" data-listing-date-sort="1714881600000" data-listing-file-modified-sort="1715053120596" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="2" data-categories="code,analysis,block_model" data-listing-date-sort="1714881600000" data-listing-file-modified-sort="1715195900669" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1532">
 <div class="thumbnail">
-<p><a href="./posts/Post_Ten - Copy/post_10_drug.html"> <p class="card-img-top"><img src="posts\Post_Ten - Copy\post_10_drug_files\figure-html\unnamed-chunk-7-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external"></a></p><a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Ten - Copy\post_10_drug_files\figure-html\unnamed-chunk-7-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Ten - Copy/post_10_drug.html">
 <h3 class="no-anchor listing-title">
-POST 10
+<a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external">POST 10</a>
 </h3>
 <div class="listing-subtitle">
-Gender Matrix
+<a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external">Gender Matrix</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -318,14 +307,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Ten - Copy/post_10_drug.html">
 <div class="listing-description">
-This post will explore the a Gender Matrix
+<a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external">This post will explore the a Gender Matrix</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Ten - Copy/post_10_drug.html">
+<a href="./posts/Post_Ten - Copy/post_10_drug.html" class="no-external">
 <div class="listing-date">
 May 5, 2024
 </div>
@@ -335,19 +322,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="code,analysis,block_model" data-listing-date-sort="1714795200000" data-listing-file-modified-sort="1715022236182" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="3" data-categories="code,analysis,block_model" data-listing-date-sort="1714795200000" data-listing-file-modified-sort="1715022236182" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2069">
 <div class="thumbnail">
-<p><a href="./posts/Post_Eight- Copy/post_8_drug.html"> <p class="card-img-top"><img src="posts\Post_Eight- Copy\post_8_drug_files\figure-html\unnamed-chunk-11-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external"></a></p><a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Eight- Copy\post_8_drug_files\figure-html\unnamed-chunk-11-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Eight- Copy/post_8_drug.html">
 <h3 class="no-anchor listing-title">
-POST 8
+<a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external">POST 8</a>
 </h3>
 <div class="listing-subtitle">
-CUG
+<a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external">CUG</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -359,14 +346,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Eight- Copy/post_8_drug.html">
 <div class="listing-description">
-This post is an attempt to make a separate gender matrix and run some CUG analysis
+<a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external">This post is an attempt to make a separate gender matrix and run some CUG analysis</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Eight- Copy/post_8_drug.html">
+<a href="./posts/Post_Eight- Copy/post_8_drug.html" class="no-external">
 <div class="listing-date">
 May 4, 2024
 </div>
@@ -376,19 +361,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="code,analysis,block_model" data-listing-date-sort="1714708800000" data-listing-file-modified-sort="1715058670244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="4" data-categories="code,analysis,block_model" data-listing-date-sort="1714708800000" data-listing-file-modified-sort="1715058670244" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1335">
 <div class="thumbnail">
-<p><a href="./posts/Post_Seven - Copy/post_7_drug.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external"></a></p><a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Seven - Copy/post_7_drug.html">
 <h3 class="no-anchor listing-title">
-POST 7
+<a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external">POST 7</a>
 </h3>
 <div class="listing-subtitle">
-Network Block Modeling - Geographical Comparisson
+<a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external">Network Block Modeling - Geographical Comparisson</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -400,14 +385,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Seven - Copy/post_7_drug.html">
 <div class="listing-description">
-This post will explore the Block Modeling attributes with emphasis on geographical comparison. Including maps!
+<a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external">This post will explore the Block Modeling attributes with emphasis on geographical comparison. Including maps!</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Seven - Copy/post_7_drug.html">
+<a href="./posts/Post_Seven - Copy/post_7_drug.html" class="no-external">
 <div class="listing-date">
 May 3, 2024
 </div>
@@ -417,19 +400,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="code,analysis,block_model" data-listing-date-sort="1714622400000" data-listing-file-modified-sort="1715053117815" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="5" data-categories="code,analysis,block_model" data-listing-date-sort="1714622400000" data-listing-file-modified-sort="1715053117815" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2818">
 <div class="thumbnail">
-<p><a href="./posts/Post_Six - Copy/post_6_drug.html"> <p class="card-img-top"><img src="posts\Post_Six - Copy\post_6_drug_files\figure-html\unnamed-chunk-12-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external"></a></p><a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Six - Copy\post_6_drug_files\figure-html\unnamed-chunk-12-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Six - Copy/post_6_drug.html">
 <h3 class="no-anchor listing-title">
-POST 6
+<a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external">POST 6</a>
 </h3>
 <div class="listing-subtitle">
-Network Block Modeling - Geographical Comparisson
+<a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external">Network Block Modeling - Geographical Comparisson</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -441,14 +424,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Six - Copy/post_6_drug.html">
 <div class="listing-description">
-This post will explore block attributes in the Provider Network data.
+<a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external">This post will explore block attributes in the Provider Network data.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Six - Copy/post_6_drug.html">
+<a href="./posts/Post_Six - Copy/post_6_drug.html" class="no-external">
 <div class="listing-date">
 May 2, 2024
 </div>
@@ -458,19 +439,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="code,analysis,block_model,provider network,geography" data-listing-date-sort="1714536000000" data-listing-file-modified-sort="1715051620467" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="quarto-post image-right" data-index="6" data-categories="code,analysis,block_model,provider network,geography" data-listing-date-sort="1714536000000" data-listing-file-modified-sort="1715051620467" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1885">
 <div class="thumbnail">
-<p><a href="./posts/Post_Five - Copy/post_5_drug.html"> <p class="card-img-top"><img src="posts\Post_Five - Copy\post_5_drug_files\figure-html\unnamed-chunk-13-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external"></a></p><a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Five - Copy\post_5_drug_files\figure-html\unnamed-chunk-13-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Five - Copy/post_5_drug.html">
 <h3 class="no-anchor listing-title">
-POST 5
+<a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external">POST 5</a>
 </h3>
 <div class="listing-subtitle">
-Network Block Modeling - Geographical Comparisson
+<a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external">Network Block Modeling - Geographical Comparisson</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -488,14 +469,12 @@ provider network
 geography
 </div>
 </div>
-<a href="./posts/Post_Five - Copy/post_5_drug.html">
 <div class="listing-description">
-This post will explore the Provider Network in more including replicating block membership and plotting cities as attributes
+<a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external">This post will explore the Provider Network in more including replicating block membership and plotting cities as attributes</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Five - Copy/post_5_drug.html">
+<a href="./posts/Post_Five - Copy/post_5_drug.html" class="no-external">
 <div class="listing-date">
 May 1, 2024
 </div>
@@ -505,19 +484,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="code,analysis,block_model" data-listing-date-sort="1714276800000" data-listing-file-modified-sort="1714955147692" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="7" data-categories="code,analysis,block_model" data-listing-date-sort="1714276800000" data-listing-file-modified-sort="1715071263231" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="621">
 <div class="thumbnail">
-<p><a href="./posts/Post_Four - Copy/post_4_drug.html"> <p class="card-img-top"><img src="posts\Post_Four - Copy\post_4_drug_files\figure-html\unnamed-chunk-7-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external"></a></p><a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Four - Copy\post_4_drug_files\figure-html\unnamed-chunk-7-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Four - Copy/post_4_drug.html">
 <h3 class="no-anchor listing-title">
-POST 4
+<a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external">POST 4</a>
 </h3>
 <div class="listing-subtitle">
-Network Block Modeling - Providers
+<a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external">Network Block Modeling - Providers</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -529,14 +508,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Four - Copy/post_4_drug.html">
 <div class="listing-description">
-This post will explore the Synthetic Mass network data in more detail.
+<a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external">This post will explore the Synthetic Mass network data in more detail.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Four - Copy/post_4_drug.html">
+<a href="./posts/Post_Four - Copy/post_4_drug.html" class="no-external">
 <div class="listing-date">
 Apr 28, 2024
 </div>
@@ -546,19 +523,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="code,analysis,block_model" data-listing-date-sort="1714190400000" data-listing-file-modified-sort="1715037378196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="8" data-categories="code,analysis,block_model" data-listing-date-sort="1714190400000" data-listing-file-modified-sort="1715065516810" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="756">
 <div class="thumbnail">
-<p><a href="./posts/Post_Three - Copy/post_3_drug.html"> <p class="card-img-top"><img src="posts\Post_Three - Copy\post_3_drug_files\figure-html\unnamed-chunk-7-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external"></a></p><a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Three - Copy\post_3_drug_files\figure-html\unnamed-chunk-7-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Three - Copy/post_3_drug.html">
 <h3 class="no-anchor listing-title">
-POST 3
+<a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external">POST 3</a>
 </h3>
 <div class="listing-subtitle">
-Network Block Modeling - Patients
+<a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external">Network Block Modeling - Patients</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -570,14 +547,12 @@ analysis
 block_model
 </div>
 </div>
-<a href="./posts/Post_Three - Copy/post_3_drug.html">
 <div class="listing-description">
-This post will explore the Synthetic Mass network data in more detail.
+<a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external">This post will explore the Synthetic Mass network data in more detail.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Three - Copy/post_3_drug.html">
+<a href="./posts/Post_Three - Copy/post_3_drug.html" class="no-external">
 <div class="listing-date">
 Apr 27, 2024
 </div>
@@ -587,19 +562,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="code,analysis" data-listing-date-sort="1714104000000" data-listing-file-modified-sort="1715058702988" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="quarto-post image-right" data-index="9" data-categories="code,analysis" data-listing-date-sort="1714104000000" data-listing-file-modified-sort="1715068357295" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1862">
 <div class="thumbnail">
-<p><a href="./posts/Post_Two - Copy/post_2_drug.html"> <p class="card-img-top"><img src="posts\Post_Two - Copy\post_2_drug_files\figure-html\unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external"></a></p><a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_Two - Copy\post_2_drug_files\figure-html\unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_Two - Copy/post_2_drug.html">
 <h3 class="no-anchor listing-title">
-POST 2
+<a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external">POST 2</a>
 </h3>
 <div class="listing-subtitle">
-Network Exploration
+<a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external">Network Exploration</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -608,14 +583,12 @@ code
 analysis
 </div>
 </div>
-<a href="./posts/Post_Two - Copy/post_2_drug.html">
 <div class="listing-description">
-This post will explore the Synthetic Mass network data in more detail.
+<a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external">This post will explore the Synthetic Mass network data in more detail.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_Two - Copy/post_2_drug.html">
+<a href="./posts/Post_Two - Copy/post_2_drug.html" class="no-external">
 <div class="listing-date">
 Apr 26, 2024
 </div>
@@ -625,19 +598,19 @@ Sue-Ellen Duffy
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="code,analysis" data-listing-date-sort="1714017600000" data-listing-file-modified-sort="1715053852134" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="10" data-categories="code,analysis" data-listing-date-sort="1714017600000" data-listing-file-modified-sort="1715053852134" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2930">
 <div class="thumbnail">
-<p><a href="./posts/Post_One - Copy/post_1_drug.html"> <p class="card-img-top"><img src="posts\Post_One - Copy\SyntheticMassLogo.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external"></a></p><a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external">
+<p class="card-img-top"><img src="posts\Post_One - Copy\SyntheticMassLogo.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Post_One - Copy/post_1_drug.html">
 <h3 class="no-anchor listing-title">
-POST 1
+<a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external">POST 1</a>
 </h3>
 <div class="listing-subtitle">
-Data Cleaning, Exploration, and Network Analysis
+<a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external">Data Cleaning, Exploration, and Network Analysis</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -646,14 +619,12 @@ code
 analysis
 </div>
 </div>
-<a href="./posts/Post_One - Copy/post_1_drug.html">
 <div class="listing-description">
-<em>Research Question</em>
+<a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external"><em>Research Question</em></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Post_One - Copy/post_1_drug.html">
+<a href="./posts/Post_One - Copy/post_1_drug.html" class="no-external">
 <div class="listing-date">
 Apr 25, 2024
 </div>
@@ -747,10 +718,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -760,8 +748,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -773,7 +770,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -817,6 +937,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -842,6 +963,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -902,6 +1049,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
